@@ -2859,14 +2859,46 @@ Process.prototype.reportRedditPostInfo = function (redditPostFactor, post) {
 	else if(redditPostFactor == "content"){
 		redditValue = post['content'];
 	}
+	else if(redditPostFactor == "subreddit"){
+		redditValue = post['subreddit'];
+	}
+	else if(redditPostFactor == "author"){
+		redditValue = post['author'];
+	}
+	else if(redditPostFactor == "date"){
+		redditValue = post['created'];
+		//TODO. Need to convert this date to a better form...
+		//Ex: returns 1414102416...
+	}
+	else if(redditPostFactor == "ups"){
+		//TODO. ups is always returning 0, when it should be returning a number.
+		//From print statements in reddit.py, this is what the CORGIS library is returning.
+		redditValue = post['ups'];
+		if (redditValue == 0){
+			redditValue = "0";
+		}
+	}
+	else if(redditPostFactor == "downs"){
+		//TODO. Same issue as ups.
+		redditValue = post['downs'];
+		if (redditValue == 0){
+			redditValue = "0";
+		}
+	}
+	else if(redditPostFactor == "id"){
+		redditValue = post['id'];
+	}
+	else if(redditPostFactor == "is_url"){
+		redditValue = post['is_url'];
+	}
 
-	
+	//If redditValue is not equal to null or undefined. (if it is not falsy).
 	if (redditValue){
 		return redditValue;
 	} else {
 		return null;
 		//Do not return undefined. Returning either null or "" is better.
-		//"Say null" will Say 0. 'Say ""' will not even display the bubble.
+		//"Say null" will Say 0. 'Say """ will not even display the bubble.
 	}
 	
 	
