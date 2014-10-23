@@ -2601,6 +2601,283 @@ Process.prototype.reportDate = function (datefn) {
     return result;
 };
 
+Process.prototype.retrieveWeatherData = function (location) {
+	//TODO. add in 15minute expiration, if wanted.
+	if ( ! cacheController.hasCachedWeatherReport(location) ){
+		//Use AJAX to retrieve data. ASYNCHRONOUS, so that program will not stop.
+		var urlBase = "http://127.0.0.1:5000/weather";
+		var isAsync = true;
+		Process.prototype.weatherAjaxRequest(urlBase, location, isAsync);
+	}
+	return;
+};
+
+
+Process.prototype.encodeQueryData = function (data) {
+   var ret = [];
+   for (var d in data)
+      ret.push(encodeURIComponent(d) + "=" + encodeURIComponent(data[d]));
+   return ret.join("&");
+};
+
+Process.prototype.weatherAjaxRequest = function (urlBase, location, isAsync) {
+	var data = { 'location': location };
+	var urlParams = Process.prototype.encodeQueryData(data);
+	console.log(urlParams);
+	var urlString = urlBase + "?" + urlParams;
+	
+	var xmlhttp;
+	
+    if (window.XMLHttpRequest) {
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp = new XMLHttpRequest();
+    } else {
+        // code for IE6, IE5
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 ) {
+           if(xmlhttp.status == 200){
+        	   //Only place code here if async is true.
+               //If async is false, put the code after xmlhttp.send().
+        	   if(isAsync){
+        			var json = JSON.parse( xmlhttp.responseText );
+        			console.log(json);
+        			var weatherReport = json.weatherReport;
+        			cacheController.addWeatherReport(location, weatherReport);
+        	   }
+           }
+           else if(xmlhttp.status == 400) {
+              alert('There was an error 400');
+           }
+           else {
+               alert('something else other than 200 was returned');
+           }
+        }
+    };
+	xmlhttp.open("GET", urlString, isAsync);
+    xmlhttp.send();
+    if (isAsync == false){
+    	return xmlhttp.responseText;
+    }
+    else {
+    	return;
+    }
+    
+};
+
+Process.prototype.redditAjaxRequest = function (urlBase, subreddit, isAsync) {
+	console.log(subreddit);
+	var data = { 'subreddit': subreddit };
+	var urlParams = Process.prototype.encodeQueryData(data);
+	console.log(urlParams);
+	var urlString = urlBase + "?" + urlParams;
+	
+	var xmlhttp;
+	
+    if (window.XMLHttpRequest) {
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp = new XMLHttpRequest();
+    } else {
+        // code for IE6, IE5
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 ) {
+           if(xmlhttp.status == 200){
+        	   //Only place code here if async is true.
+               //If async is false, put the code after xmlhttp.send().
+        	   if(isAsync){
+        			var json = JSON.parse( xmlhttp.responseText );
+        			console.log(json);
+        			var redditReport = json['redditReport'];
+        			//cacheController.addWeatherReport(location, weatherReport);
+        	   }
+           }
+           else if(xmlhttp.status == 400) {
+              alert('There was an error 400');
+           }
+           else {
+               alert('something else other than 200 was returned');
+           }
+        }
+    };
+	xmlhttp.open("GET", urlString, isAsync);
+    xmlhttp.send();
+    if (isAsync == false){
+    	return xmlhttp.responseText;
+    }
+    else {
+    	return;
+    }
+    
+};
+
+
+
+Process.prototype.reportWeather = function (weatherFactor, location) {
+
+	var weatherReport = null;
+	if ( ! cacheController.hasCachedWeatherReport(location) ){
+		 //A direct call to the weather service API right
+		 //from here would cause a cross-site scripting error, correct?
+		 //
+		 //To fix this, we will make a call to our server, which then calls
+		 //the weather service (through a Python library maybe).		 
+		
+		//Use AJAX to retrieve data.
+		var urlBase = "http://127.0.0.1:5000/weather";
+		var isAsync = false;
+		var ajaxResponse = Process.prototype.weatherAjaxRequest(urlBase, location, isAsync);
+		
+		var json = JSON.parse( ajaxResponse );
+		console.log(json);
+		weatherReport = json.weatherReport;
+		cacheController.addWeatherReport(location, weatherReport);
+		
+	} else {
+		weatherReport = cacheController.getCachedWeatherReport(location);
+	}
+	
+	
+	var weatherValue = "";
+	if (weatherReport != null) {
+		if (this.inputOption(weatherFactor) === 'temperature in F'){
+			weatherValue = weatherReport.weather.temperature;
+		}
+		else if ((this.inputOption(weatherFactor) === 'windchill in F')) {
+			weatherValue = weatherReport.weather.windchill;
+		}
+		else if ((this.inputOption(weatherFactor) === 'humidity')) {
+			weatherValue = weatherReport.weather.humidity;
+		}
+		else if ((this.inputOption(weatherFactor) === 'windspeed in mph')) {
+			weatherValue = weatherReport.weather.wind_speed;
+		}
+		else if ((this.inputOption(weatherFactor) === 'wind direction in degrees')) {
+			weatherValue = weatherReport.weather.wind_direction;
+		}
+		else if ((this.inputOption(weatherFactor) === 'weather description')) {
+			weatherValue = weatherReport.weather.description;
+		}
+		else if ((this.inputOption(weatherFactor) === 'weather image')) {
+			weatherValue = weatherReport.weather.image_url;
+		}
+		else if ((this.inputOption(weatherFactor) === 'visibility in miles')) {
+			weatherValue = weatherReport.weather.visibility;
+		}
+		else if ((this.inputOption(weatherFactor) === 'dewpoint in F')) {
+			weatherValue = weatherReport.weather.dewpoint;
+		}
+		else if ((this.inputOption(weatherFactor) === 'pressure in inches')) {
+			weatherValue = weatherReport.weather.pressure;
+		}
+		else {
+			weatherValue = "";
+		}
+	}
+	
+	return weatherValue;
+
+};
+
+
+
+Process.prototype.reportLowHighTemp = function (temperatureFactor, location, temperatureDays) {
+	var weatherReport = null;
+	if ( ! cacheController.hasCachedWeatherReport(location) ){
+		//Use AJAX to retrieve data.
+		var urlBase = "http://127.0.0.1:5000/weather";
+		var isAsync = false;
+		var ajaxResponse = Process.prototype.weatherAjaxRequest(urlBase, location, isAsync);
+		
+		var json = JSON.parse( ajaxResponse );
+		console.log(json);
+		weatherReport = json.weatherReport;
+		cacheController.addWeatherReport(location, weatherReport);
+		
+	} else {
+		weatherReport = cacheController.getCachedWeatherReport(location);
+	}
+	
+	var weatherValue = 20;
+	if (weatherReport != null) {
+		if (this.inputOption(temperatureFactor) === 'low temperature in F'){
+			if (this.inputOption(temperatureDays) === 'Today'){
+				var temp1 = weatherReport.forecasts[0].temperature;
+				var temp2 = weatherReport.forecasts[1].temperature;
+				weatherValue = temp1 < temp2 ? temp1 : temp2;
+			}
+		}
+		else if ((this.inputOption(temperatureFactor) === 'high temperature in F')) {
+			;
+		}
+		else {
+			weatherValue = "";
+		}
+	}
+	
+	return weatherValue;
+	
+};
+
+
+Process.prototype.reportPrecipitation = function (precipFactor, location, precipDays) {
+	return '70';
+};
+
+
+Process.prototype.reportRedditPosts = function (subreddit) {
+	var urlBase = "http://127.0.0.1:5000/reddit";
+	var isAsync = false;
+	var ajaxResponse = Process.prototype.redditAjaxRequest(urlBase, subreddit, isAsync);
+	
+	var json = JSON.parse( ajaxResponse );
+	console.log(json);
+	
+	var redditReport = json['redditReport'];
+	var redditPosts = redditReport['posts'];
+	var redditList = new List(redditPosts);
+	return redditList;
+	
+	
+};
+
+Process.prototype.reportRedditComments = function (post) {
+	return '70';
+};
+
+Process.prototype.reportRedditPostInfo = function (redditPostFactor, post) {
+	var redditValue;
+	
+	//Make sure to use == instead of === because type coercion is needed.
+	if(redditPostFactor == "title"){
+		redditValue = post['title'];
+	}
+	else if(redditPostFactor == "content"){
+		redditValue = post['content'];
+	}
+
+	
+	if (redditValue){
+		return redditValue;
+	} else {
+		return null;
+		//Do not return undefined. Returning either null or "" is better.
+		//"Say null" will Say 0. 'Say ""' will not even display the bubble.
+	}
+	
+	
+};
+
+Process.prototype.reportRedditCommentInfo = function (redditCommentFactor, comment) {
+	return '70';
+};
+
+
+
 // Process code mapping
 
 /*
@@ -3222,3 +3499,45 @@ UpvarReference.prototype.toString = function () {
 UpvarReference.prototype.names = VariableFrame.prototype.names;
 UpvarReference.prototype.allNames = VariableFrame.prototype.allNames;
 UpvarReference.prototype.allNamesDict = VariableFrame.prototype.allNamesDict;
+
+
+
+function CacheController() {
+	this.weatherCache = { };
+	this.redditCache = { };
+	this.crimesCache = { };
+	
+	/* 
+	 * This is the dictionary structure of cacheController, for example:
+	 * cacheController
+	 * 		weatherCache
+	 * 			(location) "Blacksburg, VA": weatherReport
+	 * 			(location) "Blacksburg, VA": weatherReport
+	 * 		redditCache
+	 * 			...
+	 */
+	
+}
+
+		
+CacheController.prototype.addWeatherReport = function(location, weatherReport) {
+	//Add in the new weatherReport. Key = location string. Value = weatherReport.
+	this.weatherCache[location] = weatherReport;
+};
+
+CacheController.prototype.hasCachedWeatherReport = function(location) {
+	if(location in this.weatherCache){
+		return true;
+	} 
+	return false;
+};
+
+CacheController.prototype.getCachedWeatherReport = function(location) {
+	return this.weatherCache[location];
+};
+
+
+var cacheController = new CacheController();
+
+
+

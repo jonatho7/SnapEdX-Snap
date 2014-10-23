@@ -844,6 +844,126 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
             );
             part.setContents(['date']);
             break;
+        case '%weatherFactor':
+            part = new InputSlotMorph(
+                null, // text
+                false, // non-numeric
+                {
+                    'temperature in F' : ['temperature in F'],
+                    'windchill in F' : ['windchill in F'],
+                    'humidity' : ['humidity'],
+                    'windspeed in mph' : ['windspeed in mph'],
+                    'wind direction in degrees' : ['wind direction in degrees'],
+                    'weather description' : ['weather description'],
+                    'weather image' : ['weather image'],
+                    'visibility in miles' : ['visibility in miles'],
+                    'dewpoint in F' : ['dewpoint in F'],
+                    'pressure in inches' : ['pressure in inches']
+                },
+                true // read-only
+            );
+            part.setContents(['temperature in F']);
+            break;
+        case '%temperatureFactor':
+            part = new InputSlotMorph(
+                null, // text
+                false, // non-numeric
+                {
+                    'low temperature in F' : ['low temperature in F'],
+                    'high temperature in F' : ['high temperature in F']
+                },
+                true // read-only
+            );
+            part.setContents(['low temperature in F']);
+            break;
+        case '%temperatureDays':
+            part = new InputSlotMorph(
+                null, // text
+                false, // non-numeric
+                {
+                    'Today' : ['Today'],
+                    'Day 1' : ['Day 1'],
+                    'Day 2' : ['Day 2'],
+                    'Day 3' : ['Day 3'],
+                    'Day 4' : ['Day 4'],
+                    'Day 5' : ['Day 5']
+                },
+                true // read-only
+            );
+            part.setContents(['Today']);
+            break;
+        case '%precipFactor':
+            part = new InputSlotMorph(
+                null, // text
+                false, // non-numeric
+                {
+                    'chance of precipitation' : ['chance of precipitation'],
+                    'weather description' : ['weather description'],
+                    'weather image url' : ['weather image url']
+                },
+                true // read-only
+            );
+            part.setContents(['chance of precipitation']);
+            break;
+        case '%precipDays':
+            part = new InputSlotMorph(
+                null, // text
+                false, // non-numeric
+                {
+                    'This Afternoon' : ['This Afternoon'],
+                    'Tonight' : ['Tonight'],
+                    'Day 1' : ['Day 1'],
+                    'Day 1 Night' : ['Day 1 Night'],
+                    'Day 2' : ['Day 2'],
+                    'Day 2 Night' : ['Day 2 Night'],
+                    'Day 3' : ['Day 3'],
+                    'Day 3 Night' : ['Day 3 Night'],
+                    'Day 4' : ['Day 4'],
+                    'Day 4 Night' : ['Day 4 Night'],
+                    'Day 5' : ['Day 5'],
+                    'Day 5 Night' : ['Day 5 Night']
+                },
+                true // read-only
+            );
+            part.setContents(['This Afternoon']);
+            break;
+        case '%redditPostFactor':
+            part = new InputSlotMorph(
+                null, // text
+                false, // non-numeric
+                {
+                    'title' : ['title'],
+                    'content' : ['content'],
+                    'subreddit' : ['subreddit'],
+                    'author' : ['author'],
+                    'date' : ['date'],
+                    'ups' : ['ups'],
+                    'downs' : ['downs'],
+                    'id' : ['id'],
+                    'is_url' : ['is_url']
+                },
+                true // read-only
+            );
+            part.setContents(['title']);
+            break;
+        case '%redditCommentFactor':
+            part = new InputSlotMorph(
+                null, // text
+                false, // non-numeric
+                {
+                    'body' : ['body'],
+                    'subreddit' : ['subreddit'],
+                    'author' : ['author'],
+                    'date' : ['date'],
+                    'ups' : ['ups'],
+                    'downs' : ['downs'],
+                    'id' : ['id'],
+                    'list of comments' : ['list of comments']
+                },
+                true // read-only
+            );
+            part.setContents(['body']);
+            break;
         case '%delim':
             part = new InputSlotMorph(
                 null, // text

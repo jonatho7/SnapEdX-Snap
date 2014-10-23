@@ -234,6 +234,9 @@ IDE_Morph.prototype.openIn = function (world) {
     var hash, usr, myself = this, urlLanguage = null;
 
     this.buildPanes();
+    
+    //Jon. Testing. Seeing how the menu is setup.
+    
     world.add(this);
     world.userMenu = this.userMenu;
 
@@ -247,6 +250,9 @@ IDE_Morph.prototype.openIn = function (world) {
                 SnapCloud.password = usr.password || null;
             }
         }
+        
+    
+    
     }
 
     // override SnapCloud's user message with Morphic

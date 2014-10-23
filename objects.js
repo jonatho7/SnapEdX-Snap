@@ -210,6 +210,13 @@ SpriteMorph.prototype.initBlocks = function () {
             spec: 'move %n steps',
             defaults: [10]
         },
+        backward: {
+        	only: SpriteMorph,
+        	type: 'command',
+        	category: 'motion',
+        	spec: 'move %n steps backward',
+        	defaults: [10]
+        },
         turn: {
             only: SpriteMorph,
             type: 'command',
@@ -877,6 +884,51 @@ SpriteMorph.prototype.initBlocks = function () {
             type: 'reporter',
             category: 'sensing',
             spec: 'current %dates'
+        },
+        retrieveWeatherData: {
+            type: 'command',
+            category: 'sensing',
+            spec: 'retrieve weather data at %s',
+            defaults: [localize('Blacksburg, VA')]
+        },
+        reportWeather: {
+            type: 'reporter',
+            category: 'sensing',
+            spec: 'current %weatherFactor at %s',
+            defaults: [localize('temperature in F'), localize('Blacksburg, VA')]
+        },
+        reportLowHighTemp: {
+            type: 'reporter',
+            category: 'sensing',
+            spec: 'get %temperatureFactor at %s for forecast %temperatureDays',
+            defaults: [localize('low temperature in F'), localize('Blacksburg, VA')]
+        },
+        reportPrecipitation: {
+            type: 'reporter',
+            category: 'sensing',
+            spec: 'get %precipFactor at %s for forecast %precipDays',
+            defaults: [localize('chance of precipitation'), localize('Blacksburg, VA')]
+        },
+        reportRedditPosts: {
+            type: 'reporter',
+            category: 'sensing',
+            spec: 'get list of posts from subreddit: %s',
+            defaults: [localize('news')]
+        },
+        reportRedditComments: {
+            type: 'reporter',
+            category: 'sensing',
+            spec: 'get list of comments from reddit post: %s'
+        },
+        reportRedditPostInfo: {
+            type: 'reporter',
+            category: 'sensing',
+            spec: 'get %redditPostFactor of reddit post: %s'
+        },
+        reportRedditCommentInfo: {
+            type: 'reporter',
+            category: 'sensing',
+            spec: 'get %redditCommentFactor of reddit comment: %s'
         },
 
         // Operators
@@ -1677,6 +1729,9 @@ SpriteMorph.prototype.blockTemplates = function (category) {
     if (cat === 'motion') {
 
         blocks.push(block('forward'));
+        blocks.push(block('backward'));
+        //Jon. Testing.
+        blocks.push('-');
         blocks.push(block('turn'));
         blocks.push(block('turnLeft'));
         blocks.push('-');
@@ -1884,6 +1939,16 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('doSetFastTracking'));
         blocks.push('-');
         blocks.push(block('reportDate'));
+        blocks.push('-');
+        blocks.push(block('retrieveWeatherData'));
+        blocks.push(block('reportWeather'));
+        blocks.push(block('reportLowHighTemp'));
+        blocks.push(block('reportPrecipitation'));
+        blocks.push('-');
+        blocks.push(block('reportRedditPosts'));
+        blocks.push(block('reportRedditComments'));
+        blocks.push(block('reportRedditPostInfo'));
+        blocks.push(block('reportRedditCommentInfo'));
 
     // for debugging: ///////////////
 
@@ -3254,6 +3319,23 @@ Morph.prototype.setPosition = function (aPoint, justMe) {
 };
 
 SpriteMorph.prototype.forward = function (steps) {
+	var dest,
+        dist = steps * this.parent.scale || 0;
+
+    if (dist >= 0) {
+        dest = this.position().distanceAngle(dist, this.heading);
+    } else {
+        dest = this.position().distanceAngle(
+            Math.abs(dist),
+            (this.heading - 180)
+        );
+    }
+    this.setPosition(dest);
+    this.positionTalkBubble();
+};
+
+SpriteMorph.prototype.backward = function (steps) {
+	steps = -steps;
     var dest,
         dist = steps * this.parent.scale || 0;
 
@@ -4991,6 +5073,16 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('doSetFastTracking'));
         blocks.push('-');
         blocks.push(block('reportDate'));
+        blocks.push('-');
+        blocks.push(block('retrieveWeatherData'));
+        blocks.push(block('reportWeather'));
+        blocks.push(block('reportLowHighTemp'));
+        blocks.push(block('reportPrecipitation'));
+        blocks.push('-');
+        blocks.push(block('reportRedditPosts'));
+        blocks.push(block('reportRedditComments'));
+        blocks.push(block('reportRedditPostInfo'));
+        blocks.push(block('reportRedditCommentInfo'));
 
     // for debugging: ///////////////
 
