@@ -930,6 +930,11 @@ SpriteMorph.prototype.initBlocks = function () {
             category: 'sensing',
             spec: 'get %redditCommentFactor of reddit comment: %s'
         },
+        reportTestBlock: {
+            type: 'reporter',
+            category: 'sensing',
+            spec: 'testing block. Click Me.'
+        },
 
         // Operators
         reifyScript: {
@@ -1949,6 +1954,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportRedditComments'));
         blocks.push(block('reportRedditPostInfo'));
         blocks.push(block('reportRedditCommentInfo'));
+        blocks.push(block('reportTestBlock'));
 
     // for debugging: ///////////////
 
@@ -5083,6 +5089,8 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportRedditComments'));
         blocks.push(block('reportRedditPostInfo'));
         blocks.push(block('reportRedditCommentInfo'));
+        blocks.push(block('reportTestBlock'));
+        
 
     // for debugging: ///////////////
 
