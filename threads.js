@@ -2667,12 +2667,11 @@ Process.prototype.weatherAjaxRequest = function (urlBase, location, isAsync) {
     
 };
 
-Process.prototype.redditAjaxRequest = function (urlBase, subreddit, isAsync) {
-	console.log(subreddit);
-	var data = { 'subreddit': subreddit };
-	var urlParams = Process.prototype.encodeQueryData(data);
+Process.prototype.redditAjaxRequest = function (urlBase, jsonArgs, isAsync) {
+	var urlParams = Process.prototype.encodeQueryData(jsonArgs);
 	console.log(urlParams);
 	var urlString = urlBase + "?" + urlParams;
+	console.log("urlString: " + urlString);
 	
 	var xmlhttp;
 	
@@ -2689,6 +2688,7 @@ Process.prototype.redditAjaxRequest = function (urlBase, subreddit, isAsync) {
            if(xmlhttp.status == 200){
         	   //Only place code here if async is true.
                //If async is false, put the code after xmlhttp.send().
+        	   //TODO. Change this code soon.
         	   if(isAsync){
         			var json = JSON.parse( xmlhttp.responseText );
         			console.log(json);
@@ -2830,9 +2830,10 @@ Process.prototype.reportPrecipitation = function (precipFactor, location, precip
 
 
 Process.prototype.reportRedditPosts = function (subreddit) {
-	var urlBase = "http://127.0.0.1:5000/reddit";
+	var urlBase = "http://127.0.0.1:5000/redditPosts";
 	var isAsync = false;
-	var ajaxResponse = Process.prototype.redditAjaxRequest(urlBase, subreddit, isAsync);
+	var jsonArgs = { "subreddit": subreddit};
+	var ajaxResponse = Process.prototype.redditAjaxRequest(urlBase, jsonArgs, isAsync);
 	
 	var json = JSON.parse( ajaxResponse );
 	console.log(json);
@@ -2842,11 +2843,22 @@ Process.prototype.reportRedditPosts = function (subreddit) {
 	var redditList = new List(redditPosts);
 	return redditList;
 	
-	
 };
 
-Process.prototype.reportRedditComments = function (post) {
-	return '70';
+Process.prototype.reportRedditComments = function (postObject) {
+	var urlBase = "http://127.0.0.1:5000/redditComments";
+	var isAsync = false;
+	var postID = postObject['id'];
+	var jsonArgs = { "postID": postID };
+	var ajaxResponse = Process.prototype.redditAjaxRequest(urlBase, jsonArgs, isAsync);
+	
+	var json = JSON.parse( ajaxResponse );
+	console.log(json);
+	
+	var redditReport = json['redditReport'];
+	var redditComments = redditReport['comments'];
+	var redditList = new List(redditComments);
+	return redditList;
 };
 
 Process.prototype.reportRedditPostInfo = function (redditPostFactor, post) {
@@ -2906,6 +2918,55 @@ Process.prototype.reportRedditPostInfo = function (redditPostFactor, post) {
 
 Process.prototype.reportRedditCommentInfo = function (redditCommentFactor, comment) {
 	return '70';
+	/*
+	var redditValue;
+	
+	//Make sure to use == instead of === because type coercion is needed.
+	if(redditCommentFactor == "body"){
+		redditValue = comment['body'];
+	}
+	else if(redditCommentFactor == "subreddit"){
+		redditValue = comment['subreddit'];
+	}
+	else if(redditCommentFactor == "author"){
+		redditValue = comment['author'];
+	}
+	else if(redditCommentFactor == "date"){
+		redditValue = comment['created'];
+		//TODO. Need to convert this date to a better form...
+		//Ex: returns 1414102416...
+	}
+	else if(redditCommentFactor == "ups"){
+		//TODO. ups is always returning 0, when it should be returning a number.
+		//From print statements in reddit.py, this is what the CORGIS library is returning.
+		redditValue = comment['ups'];
+		if (redditValue == 0){
+			redditValue = "0";
+		}
+	}
+	else if(redditCommentFactor == "downs"){
+		//TODO. Same issue as ups.
+		redditValue = comment['downs'];
+		if (redditValue == 0){
+			redditValue = "0";
+		}
+	}
+	else if(redditCommentFactor == "id"){
+		redditValue = comment['id'];
+	}
+	else if(redditCommentFactor == "list of comments"){
+		redditValue = comment['replies'];
+	}
+
+	//If redditValue is not equal to null or undefined. (if it is not falsy).
+	if (redditValue){
+		return redditValue;
+	} else {
+		return null;
+		//Do not return undefined. Returning either null or "" is better.
+		//"Say null" will Say 0. 'Say """ will not even display the bubble.
+	}
+	*/
 };
 
 
