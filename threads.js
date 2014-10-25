@@ -2917,8 +2917,6 @@ Process.prototype.reportRedditPostInfo = function (redditPostFactor, post) {
 };
 
 Process.prototype.reportRedditCommentInfo = function (redditCommentFactor, comment) {
-	return '70';
-	/*
 	var redditValue;
 	
 	//Make sure to use == instead of === because type coercion is needed.
@@ -2955,21 +2953,29 @@ Process.prototype.reportRedditCommentInfo = function (redditCommentFactor, comme
 		redditValue = comment['id'];
 	}
 	else if(redditCommentFactor == "list of comments"){
-		redditValue = comment['replies'];
+		var redditComments = comment['replies'];
+		var commentsList = new List(redditComments);
+		if (commentsList.contents.length == 0){
+			redditValue = "";
+		} else {
+			redditValue = commentsList;
+		}
 	}
 
 	//If redditValue is not equal to null or undefined. (if it is not falsy).
-	if (redditValue){
+	if ((redditValue) || (redditValue == "")){
 		return redditValue;
 	} else {
 		return null;
 		//Do not return undefined. Returning either null or "" is better.
-		//"Say null" will Say 0. 'Say """ will not even display the bubble.
+		//"Say null" will Say 0. 'Say """" will not even display the bubble.
 	}
-	*/
+	
 };
 
-
+Process.prototype.reportTestBlock = function () {
+	return "";
+};
 
 // Process code mapping
 
