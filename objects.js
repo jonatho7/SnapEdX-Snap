@@ -915,15 +915,15 @@ SpriteMorph.prototype.initBlocks = function () {
             spec: 'get list of posts from subreddit: %s',
             defaults: [localize('news')]
         },
-        reportRedditComments: {
-            type: 'reporter',
-            category: 'sensing',
-            spec: 'get list of comments from reddit post: %s'
-        },
         reportRedditPostInfo: {
             type: 'reporter',
             category: 'sensing',
             spec: 'get %redditPostFactor of reddit post: %s'
+        },
+        reportRedditComments: {
+            type: 'reporter',
+            category: 'sensing',
+            spec: 'get list of comments from reddit post: %s'
         },
         reportRedditCommentInfo: {
             type: 'reporter',
@@ -1951,9 +1951,10 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportPrecipitation'));
         blocks.push('-');
         blocks.push(block('reportRedditPosts'));
-        blocks.push(block('reportRedditComments'));
         blocks.push(block('reportRedditPostInfo'));
+        blocks.push(block('reportRedditComments'));
         blocks.push(block('reportRedditCommentInfo'));
+        blocks.push('-');
         blocks.push(block('reportTestBlock'));
 
     // for debugging: ///////////////
@@ -5086,9 +5087,10 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportPrecipitation'));
         blocks.push('-');
         blocks.push(block('reportRedditPosts'));
-        blocks.push(block('reportRedditComments'));
         blocks.push(block('reportRedditPostInfo'));
+        blocks.push(block('reportRedditComments'));
         blocks.push(block('reportRedditCommentInfo'));
+        blocks.push('-');
         blocks.push(block('reportTestBlock'));
         
 

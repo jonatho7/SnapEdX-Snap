@@ -2845,22 +2845,6 @@ Process.prototype.reportRedditPosts = function (subreddit) {
 	
 };
 
-Process.prototype.reportRedditComments = function (postObject) {
-	var urlBase = "http://127.0.0.1:5000/redditComments";
-	var isAsync = false;
-	var postID = postObject['id'];
-	var jsonArgs = { "postID": postID };
-	var ajaxResponse = Process.prototype.redditAjaxRequest(urlBase, jsonArgs, isAsync);
-	
-	var json = JSON.parse( ajaxResponse );
-	console.log(json);
-	
-	var redditReport = json['redditReport'];
-	var redditComments = redditReport['comments'];
-	var redditList = new List(redditComments);
-	return redditList;
-};
-
 Process.prototype.reportRedditPostInfo = function (redditPostFactor, post) {
 	var redditValue;
 	
@@ -2915,6 +2899,23 @@ Process.prototype.reportRedditPostInfo = function (redditPostFactor, post) {
 	
 	
 };
+
+Process.prototype.reportRedditComments = function (postObject) {
+	var urlBase = "http://127.0.0.1:5000/redditComments";
+	var isAsync = false;
+	var postID = postObject['id'];
+	var jsonArgs = { "postID": postID };
+	var ajaxResponse = Process.prototype.redditAjaxRequest(urlBase, jsonArgs, isAsync);
+	
+	var json = JSON.parse( ajaxResponse );
+	console.log(json);
+	
+	var redditReport = json['redditReport'];
+	var redditComments = redditReport['comments'];
+	var redditList = new List(redditComments);
+	return redditList;
+};
+
 
 Process.prototype.reportRedditCommentInfo = function (redditCommentFactor, comment) {
 	var redditValue;
