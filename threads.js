@@ -2605,7 +2605,7 @@ Process.prototype.retrieveWeatherData = function (location) {
 	//TODO. add in 15minute expiration, if wanted.
 	if ( ! cacheController.hasCachedWeatherReport(location) ){
 		//Use AJAX to retrieve data. ASYNCHRONOUS, so that program will not stop.
-		var urlBase = "http://127.0.0.1:5000/weather";
+		var urlBase = "weather";
 		var isAsync = true;
 		Process.prototype.weatherAjaxRequest(urlBase, location, isAsync);
 	}
@@ -2789,7 +2789,7 @@ Process.prototype.reportLowHighTemp = function (temperatureFactor, location, tem
 	var weatherReport = null;
 	if ( ! cacheController.hasCachedWeatherReport(location) ){
 		//Use AJAX to retrieve data.
-		var urlBase = "http://127.0.0.1:5000/weather";
+		var urlBase = "weather";
 		var isAsync = false;
 		var ajaxResponse = Process.prototype.weatherAjaxRequest(urlBase, location, isAsync);
 		
@@ -2830,7 +2830,7 @@ Process.prototype.reportPrecipitation = function (precipFactor, location, precip
 
 
 Process.prototype.reportRedditPosts = function (subreddit) {
-	var urlBase = "http://127.0.0.1:5000/redditPosts";
+	var urlBase = "redditPosts";
 	var isAsync = false;
 	var jsonArgs = { "subreddit": subreddit};
 	var ajaxResponse = Process.prototype.redditAjaxRequest(urlBase, jsonArgs, isAsync);
@@ -2901,7 +2901,7 @@ Process.prototype.reportRedditPostInfo = function (redditPostFactor, post) {
 };
 
 Process.prototype.reportRedditComments = function (postObject) {
-	var urlBase = "http://127.0.0.1:5000/redditComments";
+	var urlBase = "redditComments";
 	var isAsync = false;
 	var postID = postObject['id'];
 	var jsonArgs = { "postID": postID };
