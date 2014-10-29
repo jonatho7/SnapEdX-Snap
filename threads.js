@@ -2728,7 +2728,7 @@ Process.prototype.reportWeather = function (weatherFactor, location) {
 		 //the weather service (through a Python library maybe).		 
 		
 		//Use AJAX to retrieve data.
-		var urlBase = "http://127.0.0.1:5000/weather";
+		var urlBase = "weather";
 		var isAsync = false;
 		var ajaxResponse = Process.prototype.weatherAjaxRequest(urlBase, location, isAsync);
 		
