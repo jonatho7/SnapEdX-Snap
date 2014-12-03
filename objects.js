@@ -936,6 +936,12 @@ SpriteMorph.prototype.initBlocks = function () {
             spec: 'get %stockFactor for stock: %s',
             defaults: ['last trade price','GOOG']
         },
+        reportTwitterRetweets: {
+            type: 'reporter',
+            category: 'sensing',
+            spec: 'get num retweets for: %s',
+            defaults: ['hunger games']
+        },
         reportTestBlock: {
             type: 'reporter',
             category: 'sensing',
@@ -1962,6 +1968,8 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportRedditCommentInfo'));
         blocks.push('-');
         blocks.push(block('reportStocks'));
+        blocks.push('-');
+        blocks.push(block('reportTwitterRetweets'));
         blocks.push('-');
         blocks.push(block('reportTestBlock'));
 
@@ -5100,6 +5108,8 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportRedditCommentInfo'));
         blocks.push('-');
         blocks.push(block('reportStocks'));
+        blocks.push('-');
+        blocks.push(block('reportTwitterRetweets'));
         blocks.push('-');
         blocks.push(block('reportTestBlock'));
         

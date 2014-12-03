@@ -2765,6 +2765,55 @@ Process.prototype.stocksAjaxRequest = function (urlBase, jsonArgs, isAsync) {
 };
 
 
+Process.prototype.twitterAjaxRequest = function (urlBase, jsonArgs, isAsync) {
+	var urlParams = Process.prototype.encodeQueryData(jsonArgs);
+	console.log(urlParams);
+	var urlString = urlBase + "?" + urlParams;
+	console.log("urlString: " + urlString);
+	
+	var xmlhttp;
+	
+    if (window.XMLHttpRequest) {
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp = new XMLHttpRequest();
+    } else {
+        // code for IE6, IE5
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 ) {
+           if(xmlhttp.status == 200){
+        	   //Only place code here if async is true.
+               //If async is false, put the code after xmlhttp.send().
+        	   //TODO. Change this code soon.
+        	   //if(isAsync){
+        		//	var json = JSON.parse( xmlhttp.responseText );
+        		//	console.log(json);
+        		//	var stockReport = json['stockReport'];
+        		//	//cacheController.addWeatherReport(location, weatherReport);
+        	   //}
+           }
+           else if(xmlhttp.status == 400) {
+              alert('There was an error 400');
+           }
+           else {
+               alert('something else other than 200 was returned');
+           }
+        }
+    };
+	xmlhttp.open("GET", urlString, isAsync);
+    xmlhttp.send();
+    if (isAsync == false){
+    	return xmlhttp.responseText;
+    }
+    else {
+    	return;
+    }
+    
+};
+
+
 Process.prototype.reportWeather = function (weatherFactor, location) {
 
 	var weatherReport = null;
@@ -3165,6 +3214,34 @@ Process.prototype.reportStocks = function (stockFactor, stockQuery) {
 	}
 };
 
+
+Process.prototype.reportTwitterRetweets = function (twitterQuery) {
+	var twitterValue;
+	
+	var urlBase = "twitter";
+	var isAsync = false;
+	var jsonArgs = { "twitterQuery": twitterQuery};
+	var ajaxResponse = Process.prototype.twitterAjaxRequest(urlBase, jsonArgs, isAsync);
+	
+	var json = JSON.parse( ajaxResponse );
+	console.log(json);
+	
+	var twitterReport = json['twitterReport'];
+	//Check to see if there is a valid twitterReport object.
+	if (twitterReport == ""){
+		return null;
+	}
+	
+	twitterValue = twitterReport['twitterValue'];
+	
+	
+	if ((twitterValue) || (twitterValue == "")){
+		return twitterValue;
+	} else {
+		return null;
+	}
+	
+};
 
 
 Process.prototype.reportTestBlock = function () {
