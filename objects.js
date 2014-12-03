@@ -930,6 +930,12 @@ SpriteMorph.prototype.initBlocks = function () {
             category: 'sensing',
             spec: 'get %redditCommentFactor of reddit comment: %s'
         },
+        reportStocks: {
+            type: 'reporter',
+            category: 'sensing',
+            spec: 'get %stockFactor for stock: %s',
+            defaults: ['last trade price','GOOG']
+        },
         reportTestBlock: {
             type: 'reporter',
             category: 'sensing',
@@ -1954,6 +1960,8 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportRedditPostInfo'));
         blocks.push(block('reportRedditComments'));
         blocks.push(block('reportRedditCommentInfo'));
+        blocks.push('-');
+        blocks.push(block('reportStocks'));
         blocks.push('-');
         blocks.push(block('reportTestBlock'));
 
@@ -5090,6 +5098,8 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportRedditPostInfo'));
         blocks.push(block('reportRedditComments'));
         blocks.push(block('reportRedditCommentInfo'));
+        blocks.push('-');
+        blocks.push(block('reportStocks'));
         blocks.push('-');
         blocks.push(block('reportTestBlock'));
         

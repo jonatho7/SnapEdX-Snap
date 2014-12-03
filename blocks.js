@@ -964,6 +964,21 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
             );
             part.setContents(['body']);
             break;
+        case '%stockFactor':
+            part = new InputSlotMorph(
+                null, // text
+                false, // non-numeric
+                {
+                    'last trade price' : ['last trade price'],
+                    'last trade date and time' : ['last trade date and time'],
+                    'change percentage' : ['change percentage'],
+                    'change amount' : ['change amount'],
+                    'exchange name' : ['exchange name']
+                },
+                true // read-only
+            );
+            part.setContents(['last trade price']);
+            break;
         case '%delim':
             part = new InputSlotMorph(
                 null, // text

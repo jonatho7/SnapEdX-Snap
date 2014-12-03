@@ -2689,12 +2689,12 @@ Process.prototype.redditAjaxRequest = function (urlBase, jsonArgs, isAsync) {
         	   //Only place code here if async is true.
                //If async is false, put the code after xmlhttp.send().
         	   //TODO. Change this code soon.
-        	   if(isAsync){
-        			var json = JSON.parse( xmlhttp.responseText );
-        			console.log(json);
-        			var redditReport = json['redditReport'];
-        			//cacheController.addWeatherReport(location, weatherReport);
-        	   }
+        	   //if(isAsync){
+        		//	var json = JSON.parse( xmlhttp.responseText );
+        		//	console.log(json);
+        		//	var redditReport = json['redditReport'];
+        		//	//cacheController.addWeatherReport(location, weatherReport);
+        	   //}
            }
            else if(xmlhttp.status == 400) {
               alert('There was an error 400');
@@ -2715,6 +2715,54 @@ Process.prototype.redditAjaxRequest = function (urlBase, jsonArgs, isAsync) {
     
 };
 
+
+Process.prototype.stocksAjaxRequest = function (urlBase, jsonArgs, isAsync) {
+	var urlParams = Process.prototype.encodeQueryData(jsonArgs);
+	console.log(urlParams);
+	var urlString = urlBase + "?" + urlParams;
+	console.log("urlString: " + urlString);
+	
+	var xmlhttp;
+	
+    if (window.XMLHttpRequest) {
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp = new XMLHttpRequest();
+    } else {
+        // code for IE6, IE5
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 ) {
+           if(xmlhttp.status == 200){
+        	   //Only place code here if async is true.
+               //If async is false, put the code after xmlhttp.send().
+        	   //TODO. Change this code soon.
+        	   //if(isAsync){
+        		//	var json = JSON.parse( xmlhttp.responseText );
+        		//	console.log(json);
+        		//	var stockReport = json['stockReport'];
+        		//	//cacheController.addWeatherReport(location, weatherReport);
+        	   //}
+           }
+           else if(xmlhttp.status == 400) {
+              alert('There was an error 400');
+           }
+           else {
+               alert('something else other than 200 was returned');
+           }
+        }
+    };
+	xmlhttp.open("GET", urlString, isAsync);
+    xmlhttp.send();
+    if (isAsync == false){
+    	return xmlhttp.responseText;
+    }
+    else {
+    	return;
+    }
+    
+};
 
 
 Process.prototype.reportWeather = function (weatherFactor, location) {
@@ -2802,20 +2850,44 @@ Process.prototype.reportLowHighTemp = function (temperatureFactor, location, tem
 		weatherReport = cacheController.getCachedWeatherReport(location);
 	}
 	
-	var weatherValue = 20;
+	//Sentinel values.
+	var weatherValue = "";
+	var temp1 = null;
+	var temp2 = null;
 	if (weatherReport != null) {
-		if (this.inputOption(temperatureFactor) === 'low temperature in F'){
-			if (this.inputOption(temperatureDays) === 'Today'){
-				var temp1 = weatherReport.forecasts[0].temperature;
-				var temp2 = weatherReport.forecasts[1].temperature;
+		if (this.inputOption(temperatureDays) === 'Today'){
+			temp1 = weatherReport.forecasts[0].temperature;
+			temp2 = weatherReport.forecasts[1].temperature;
+		}
+		else if (this.inputOption(temperatureDays) === 'Day 1'){
+			temp1 = weatherReport.forecasts[2].temperature;
+			temp2 = weatherReport.forecasts[3].temperature;
+		}
+		else if (this.inputOption(temperatureDays) === 'Day 2'){
+			temp1 = weatherReport.forecasts[4].temperature;
+			temp2 = weatherReport.forecasts[5].temperature;
+		}
+		else if (this.inputOption(temperatureDays) === 'Day 3'){
+			temp1 = weatherReport.forecasts[6].temperature;
+			temp2 = weatherReport.forecasts[7].temperature;
+		}
+		else if (this.inputOption(temperatureDays) === 'Day 4'){
+			temp1 = weatherReport.forecasts[8].temperature;
+			temp2 = weatherReport.forecasts[9].temperature;
+		}
+		else if (this.inputOption(temperatureDays) === 'Day 5'){
+			temp1 = weatherReport.forecasts[10].temperature;
+			temp2 = weatherReport.forecasts[11].temperature;
+		}
+		
+		//Choose either temp1 or temp2 as the low or the high temp.
+		if (temp1 != null && temp2 != null){
+			if (this.inputOption(temperatureFactor) === 'low temperature in F'){
 				weatherValue = temp1 < temp2 ? temp1 : temp2;
 			}
-		}
-		else if ((this.inputOption(temperatureFactor) === 'high temperature in F')) {
-			;
-		}
-		else {
-			weatherValue = "";
+			else if (this.inputOption(temperatureFactor) === 'high temperature in F') {
+				weatherValue = temp1 > temp2 ? temp1 : temp2;
+			}
 		}
 	}
 	
@@ -2825,7 +2897,85 @@ Process.prototype.reportLowHighTemp = function (temperatureFactor, location, tem
 
 
 Process.prototype.reportPrecipitation = function (precipFactor, location, precipDays) {
-	return '70';
+	var weatherReport = null;
+	if ( ! cacheController.hasCachedWeatherReport(location) ){
+		//Use AJAX to retrieve data.
+		var urlBase = "weather";
+		var isAsync = false;
+		var ajaxResponse = Process.prototype.weatherAjaxRequest(urlBase, location, isAsync);
+		
+		var json = JSON.parse( ajaxResponse );
+		console.log(json);
+		weatherReport = json.weatherReport;
+		cacheController.addWeatherReport(location, weatherReport);
+		
+	} else {
+		weatherReport = cacheController.getCachedWeatherReport(location);
+	}
+	
+	var weatherValue = "";
+	var forecastIndex = null;
+	if (weatherReport != null) {
+		if (this.inputOption(precipDays) === 'This Afternoon'){
+			if (weatherReport.forecasts[0]['period_name'] == "Tonight"){
+				forecastIndex = null;
+			} else {
+				forecastIndex = 0;
+			}
+		}
+		else if (this.inputOption(precipDays) === 'Tonight'){
+			forecastIndex = 1;
+		}
+		else if (this.inputOption(precipDays) === 'Day 1'){
+			forecastIndex = 2;
+		}
+		else if (this.inputOption(precipDays) === 'Day 1 Night'){
+			forecastIndex = 3;
+		}
+		else if (this.inputOption(precipDays) === 'Day 2'){
+			forecastIndex = 4;
+		}
+		else if (this.inputOption(precipDays) === 'Day 2 Night'){
+			forecastIndex = 5;
+		}
+		else if (this.inputOption(precipDays) === 'Day 3'){
+			forecastIndex = 6;
+		}
+		else if (this.inputOption(precipDays) === 'Day 3 Night'){
+			forecastIndex = 7;
+		}
+		else if (this.inputOption(precipDays) === 'Day 4'){
+			forecastIndex = 8;
+		}
+		else if (this.inputOption(precipDays) === 'Day 4 Night'){
+			forecastIndex = 9;
+		}
+		else if (this.inputOption(precipDays) === 'Day 5'){
+			forecastIndex = 10;
+		}
+		else if (this.inputOption(precipDays) === 'Day 5 Night'){
+			forecastIndex = 11;
+		}
+		else {
+			forecastIndex = null;
+		}
+		
+		if (forecastIndex != null){
+			if (this.inputOption(precipFactor) === 'chance of precipitation'){
+				weatherValue = weatherReport.forecasts[forecastIndex]['probability_of_precipitation'];
+			}
+			else if (this.inputOption(precipFactor) === 'weather description'){
+				weatherValue = weatherReport.forecasts[forecastIndex]['long_description'];
+			}
+			else if (this.inputOption(precipFactor) === 'weather image url'){
+				weatherValue = weatherReport.forecasts[forecastIndex]['image_url'];
+			}
+		} else {
+			weatherValue = "";
+		}
+	}
+	
+	return weatherValue;
 };
 
 
@@ -2974,9 +3124,54 @@ Process.prototype.reportRedditCommentInfo = function (redditCommentFactor, comme
 	
 };
 
+Process.prototype.reportStocks = function (stockFactor, stockQuery) {
+	var stockValue;
+	
+	var urlBase = "stocks";
+	var isAsync = false;
+	var jsonArgs = { "stockQuery": stockQuery};
+	var ajaxResponse = Process.prototype.stocksAjaxRequest(urlBase, jsonArgs, isAsync);
+	
+	var json = JSON.parse( ajaxResponse );
+	console.log(json);
+	
+	var stockReport = json['stockReport'];
+	//Check to see if there is a valid stockReport object.
+	if (stockReport == ""){
+		return null;
+	}
+	
+	//Make sure to use == instead of === because type coercion is needed.
+	if(stockFactor == "last trade price"){
+		stockValue = stockReport['last_trade_price'];
+	}
+	else if(stockFactor == "last trade date and time"){
+		stockValue = stockReport['last_trade_date_and_time'];
+	}
+	else if(stockFactor == "change percentage"){
+		stockValue = stockReport['change_percentage'];
+	}
+	else if(stockFactor == "change amount"){
+		stockValue = stockReport['change_number'];
+	}
+	else if(stockFactor == "exchange name"){
+		stockValue = stockReport['exchange_name'];
+	}
+	
+	if ((stockValue) || (stockValue == "")){
+		return stockValue;
+	} else {
+		return null;
+	}
+};
+
+
+
 Process.prototype.reportTestBlock = function () {
 	return "";
 };
+
+
 
 // Process code mapping
 
