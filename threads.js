@@ -3288,6 +3288,26 @@ Process.prototype.reportTestBlock = function () {
 };
 
 
+//Start of API developer library blocks.
+Process.prototype.reportJSONData = function (jsonText, jsonParams) {
+	var json = JSON.parse( jsonText );
+	
+	var newJSONvalue = json;
+	for(var i = 1; i <= jsonParams.length(); i++){
+		console.log(jsonParams.at(i));
+		newJSONvalue = newJSONvalue[jsonParams.at(i)];
+	}
+	
+	var valueAsString = JSON.stringify(newJSONvalue, null, '\t');
+	
+	return valueAsString;
+	//return newJSONvalue;
+	//return json[jsonParams.at(1)];
+};
+
+
+//End of API developer library blocks.
+
 
 // Process code mapping
 

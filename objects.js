@@ -885,6 +885,7 @@ SpriteMorph.prototype.initBlocks = function () {
             category: 'sensing',
             spec: 'current %dates'
         },
+        //Start of Data Blocks.
         retrieveWeatherData: {
             type: 'command',
             category: 'sensing',
@@ -953,6 +954,16 @@ SpriteMorph.prototype.initBlocks = function () {
             category: 'sensing',
             spec: 'testing block. Click Me.'
         },
+        //End of Data Blocks.
+        
+        //Start of API developer library blocks.
+        reportJSONData: {
+            type: 'reporter',
+            category: 'variables',
+            spec: 'from JSON text %txt get %mult%txt'
+        },
+        
+        //End of API developer library blocks.
 
         // Operators
         reifyScript: {
@@ -1979,6 +1990,8 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportTwitterTweetsFromPerson'));
         blocks.push('-');
         blocks.push(block('reportTestBlock'));
+        blocks.push('-');
+        blocks.push(block('reportJSONData'));
 
     // for debugging: ///////////////
 
@@ -5120,6 +5133,8 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportTwitterTweetsFromPerson'));
         blocks.push('-');
         blocks.push(block('reportTestBlock'));
+        blocks.push('-');
+        blocks.push(block('reportJSONData'));
         
 
     // for debugging: ///////////////
