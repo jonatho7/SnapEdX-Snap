@@ -939,13 +939,13 @@ SpriteMorph.prototype.initBlocks = function () {
         reportTwitterRetweets: {
             type: 'reporter',
             category: 'sensing',
-            spec: 'get max number of %twitterFactor for tweets mentioning: %s this week',
+            spec: 'get max number of %twitterFactor for tweets mentioning: %s for last 7 days',
             defaults: ['retweets','hunger games']
         },
         reportTwitterTweetsFromPerson: {
             type: 'reporter',
             category: 'sensing',
-            spec: 'get number of tweets sent %twitterFromPerson %s this week',
+            spec: 'get number of tweets sent %twitterFromPerson %s for last 7 days',
             defaults: ['from person','HarryPotterFilm']
         },
         reportTestBlock: {
