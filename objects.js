@@ -939,8 +939,14 @@ SpriteMorph.prototype.initBlocks = function () {
         reportTwitterRetweets: {
             type: 'reporter',
             category: 'sensing',
-            spec: 'get num retweets for: %s',
-            defaults: ['hunger games']
+            spec: 'get max number of %twitterFactor for tweets mentioning: %s this week',
+            defaults: ['retweets','hunger games']
+        },
+        reportTwitterTweetsFromPerson: {
+            type: 'reporter',
+            category: 'sensing',
+            spec: 'get number of tweets sent %twitterFromPerson %s this week',
+            defaults: ['from person','HarryPotterFilm']
         },
         reportTestBlock: {
             type: 'reporter',
@@ -1970,6 +1976,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportStocks'));
         blocks.push('-');
         blocks.push(block('reportTwitterRetweets'));
+        blocks.push(block('reportTwitterTweetsFromPerson'));
         blocks.push('-');
         blocks.push(block('reportTestBlock'));
 
@@ -5110,6 +5117,7 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportStocks'));
         blocks.push('-');
         blocks.push(block('reportTwitterRetweets'));
+        blocks.push(block('reportTwitterTweetsFromPerson'));
         blocks.push('-');
         blocks.push(block('reportTestBlock'));
         

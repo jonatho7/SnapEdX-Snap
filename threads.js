@@ -3215,12 +3215,51 @@ Process.prototype.reportStocks = function (stockFactor, stockQuery) {
 };
 
 
-Process.prototype.reportTwitterRetweets = function (twitterQuery) {
+Process.prototype.reportTwitterRetweets = function (twitterFactor, twitterQuery) {
 	var twitterValue;
 	
 	var urlBase = "twitter";
 	var isAsync = false;
-	var jsonArgs = { "twitterQuery": twitterQuery};
+	var jsonArgs = { "twitterFactor": twitterFactor, "twitterQuery": twitterQuery};
+	var ajaxResponse = Process.prototype.twitterAjaxRequest(urlBase, jsonArgs, isAsync);
+	
+	var json = JSON.parse( ajaxResponse );
+	console.log(json);
+	
+	var twitterReport = json['twitterReport'];
+	//Check to see if there is a valid twitterReport object.
+	if (twitterReport == ""){
+		return null;
+	}
+	
+	twitterValue = twitterReport['twitterValue'];
+	
+	
+	if ((twitterValue) || (twitterValue == "")){
+		return twitterValue;
+	} else {
+		return null;
+	}
+	
+};
+
+Process.prototype.reportTwitterTweetsFromPerson = function (twitterFromPerson, twitterQuery) {
+	var twitterValue;
+	
+	var urlBase = "twitter";
+	var isAsync = false;
+	
+	//Add characters at the beginning of the query based on the desired result.
+	if (twitterFromPerson == "from person"){
+		twitterQuery = "from:" + twitterQuery;
+	} else if (twitterFromPerson == "to person"){
+		twitterQuery = "to:" + twitterQuery;
+	} else if (twitterFromPerson == "referencing person"){
+		twitterQuery = "@" + twitterQuery;
+	}
+	
+
+	var jsonArgs = { "twitterFactor": twitterFromPerson, "twitterQuery": twitterQuery};
 	var ajaxResponse = Process.prototype.twitterAjaxRequest(urlBase, jsonArgs, isAsync);
 	
 	var json = JSON.parse( ajaxResponse );

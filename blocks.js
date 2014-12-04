@@ -979,6 +979,31 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
             );
             part.setContents(['last trade price']);
             break;
+        case '%twitterFactor':
+            part = new InputSlotMorph(
+                null, // text
+                false, // non-numeric
+                {
+                    'retweets' : ['retweets'],
+                    'favorites' : ['favorites']
+                },
+                true // read-only
+            );
+            part.setContents(['retweets']);
+            break;
+        case '%twitterFromPerson':
+            part = new InputSlotMorph(
+                null, // text
+                false, // non-numeric
+                {
+                    'from person' : ['from person'],
+                    'to person' : ['to person'],
+                    'referencing person' : ['referencing person']
+                },
+                true // read-only
+            );
+            part.setContents(['from person']);
+            break;
         case '%delim':
             part = new InputSlotMorph(
                 null, // text
