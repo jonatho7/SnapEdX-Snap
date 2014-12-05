@@ -1820,6 +1820,37 @@ Process.prototype.reportURL = function (url) {
     this.pushContext();
 };
 
+Process.prototype.reportURLWithCaching = function (url, numSecondsToCache) {
+    var response;
+
+    //First check to see if there is a recent cache file.
+    var tempCache = cacheController.getCachedHttpRequest(url, numSecondsToCache );
+    if ( tempCache != -1){
+        //There is a recent cache file. Use it.
+        return tempCache;
+    } else {
+        //There is not a recent cache file.
+        if (!this.httpRequest) {
+            this.httpRequest = new XMLHttpRequest();
+            this.httpRequest.open("GET", 'http://' + url, true);
+            this.httpRequest.send(null);
+        } else if (this.httpRequest.readyState === 4) {
+            response = this.httpRequest.responseText;
+            this.httpRequest = null;
+
+            //Add the report to the cache.
+            cacheController.addHttpRequestToCache(url, numSecondsToCache, response)
+
+            return response;
+        }
+        this.pushContext('doYield');
+        this.pushContext();
+    }
+
+};
+
+
+
 // Process event messages primitives
 
 Process.prototype.doBroadcast = function (message) {
@@ -3942,13 +3973,22 @@ UpvarReference.prototype.allNamesDict = VariableFrame.prototype.allNamesDict;
 
 
 function CacheController() {
+    this.httpRequestCache = { };
 	this.weatherCache = { };
 	this.redditCache = { };
 	this.crimesCache = { };
 	
 	/* 
-	 * This is the dictionary structure of cacheController, for example:
+	 * This is the dictionary structure of cacheController, For Example:
 	 * cacheController
+	 *      httpRequestCache
+	 *          http://127.0.0.1:5000/weather?location=Blacksburg%2C%20VA
+	 *              0
+	 *                  "dateTimeStored": date and time the cache was stored
+	 *                  "report": the actual report / data.
+	 *              1
+	 *              ...
+	 *              n
 	 * 		weatherCache
 	 * 			(location) "Blacksburg, VA": weatherReport
 	 * 			(location) "Blacksburg, VA": weatherReport
@@ -3974,6 +4014,49 @@ CacheController.prototype.hasCachedWeatherReport = function(location) {
 CacheController.prototype.getCachedWeatherReport = function(location) {
 	return this.weatherCache[location];
 };
+
+
+/**
+ * Retrieves cached httpRequest data (usually JSON data) if the last
+ * request was made within the amount of time specified.
+ *
+ * If the cache is expired or does not exist, returns -1.
+ *
+ * @param urlString - the URL that was used to request the data / JSON.
+ * @param numSecondsToCache - time in seconds
+ */
+CacheController.prototype.getCachedHttpRequest = function(urlString, numSecondsToCache) {
+
+    if(urlString in this.httpRequestCache){
+        //Then this urlString has been used before.
+
+        //Now check to see if this cache is recent. Iterate through the array, checking the expiration times.
+        //TODO. Check if recent.
+        if (this.httpRequestCache[urlString].length != 0){
+            if ('report' in this.httpRequestCache[urlString][0]){
+                var tempCache = this.httpRequestCache[urlString][0]['report'];
+                return tempCache;
+            }
+        }
+    }
+
+    return -1;
+};
+
+
+CacheController.prototype.addHttpRequestToCache = function(urlString, numSecondsToCache, report) {
+    //Add in the new httpRequest report to the cache.
+    this.httpRequestCache[urlString] = [];
+    this.httpRequestCache[urlString][0] = {};
+    this.httpRequestCache[urlString][0]['report'] = report;
+
+    //Add the date and time the report was stored.
+    //TODO. Get a real dateTimeStored.
+    var dateTimeStored = 4;
+    this.httpRequestCache[urlString][0]['dateTimeStored'] = dateTimeStored;
+
+};
+
 
 
 var cacheController = new CacheController();
