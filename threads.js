@@ -3297,12 +3297,20 @@ Process.prototype.reportJSONData = function (jsonText, jsonParams) {
 		console.log(jsonParams.at(i));
 		newJSONvalue = newJSONvalue[jsonParams.at(i)];
 	}
-	
-	var valueAsString = JSON.stringify(newJSONvalue, null, '\t');
-	
-	return valueAsString;
-	//return newJSONvalue;
-	//return json[jsonParams.at(1)];
+
+    //Format the return value appropriately.
+    var jsonResult;
+    var valueAsString = JSON.stringify(newJSONvalue, null, '\t');
+    //If valueAsString does not contain a { or [.
+    if((valueAsString.indexOf('{') === -1) && (valueAsString.indexOf('[') === -1) )
+    {
+        //Then the value did need to be stringified. It is a primitive value
+        jsonResult = newJSONvalue;
+    } else {
+        jsonResult = valueAsString;
+    }
+
+	return jsonResult;
 };
 
 
