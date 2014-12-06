@@ -4031,29 +4031,54 @@ CacheController.prototype.getCachedHttpRequest = function(urlString, numSecondsT
         //Then this urlString has been used before.
 
         //Now check to see if this cache is recent. Iterate through the array, checking the expiration times.
-        //TODO. Check if recent.
-        if (this.httpRequestCache[urlString].length != 0){
-            if ('report' in this.httpRequestCache[urlString][0]){
-                var tempCache = this.httpRequestCache[urlString][0]['report'];
+        var cacheArrayLength = this.httpRequestCache[urlString].length;
+        if (cacheArrayLength > 0){
+            //Get the latest report, which will be the report at the last index.
+
+            var urlStringElement = this.httpRequestCache[urlString][cacheArrayLength - 1];
+            var currentDateTime = new Date();
+            var date = new Date( currentDateTime.getTime() - (numSecondsToCache * 1000) );
+
+            if (urlStringElement['dateTimeStored'] > date ){
+                //The cache is still current. Use it.
+                var tempCache = urlStringElement['report'];
+                console.log("Using the cache.");
                 return tempCache;
+            } else {
+                //The cache is out of date. Don't use it.
+                console.log("cache is out of date.");
+                return -1;
             }
+
         }
+    } else {
+        console.log("urlstring was not in httpRequestCache");
+        return -1;
     }
 
+    console.log("fallback return of -1");
     return -1;
 };
 
 
 CacheController.prototype.addHttpRequestToCache = function(urlString, numSecondsToCache, report) {
-    //Add in the new httpRequest report to the cache.
-    this.httpRequestCache[urlString] = [];
-    this.httpRequestCache[urlString][0] = {};
-    this.httpRequestCache[urlString][0]['report'] = report;
+    console.log("addHttpRequestToCache method. urlString " + urlString);
+    //Add in a new urlString to the httpRequestCache if one does not exist.
+    if (urlString in this.httpRequestCache ){
+        //Do nothing.
+    } else {
+        //Add in the new httpRequest report to the cache.
+        this.httpRequestCache[urlString] = [];
+    }
+
+    //Get the cache length.
+    var cacheArrayLength = this.httpRequestCache[urlString].length;
+    this.httpRequestCache[urlString][cacheArrayLength - 1] = {};
+    this.httpRequestCache[urlString][cacheArrayLength - 1]['report'] = report;
 
     //Add the date and time the report was stored.
-    //TODO. Get a real dateTimeStored.
-    var dateTimeStored = 4;
-    this.httpRequestCache[urlString][0]['dateTimeStored'] = dateTimeStored;
+    var dateTimeStored = new Date();
+    this.httpRequestCache[urlString][cacheArrayLength - 1]['dateTimeStored'] = dateTimeStored;
 
 };
 
