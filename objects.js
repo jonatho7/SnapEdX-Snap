@@ -868,7 +868,13 @@ SpriteMorph.prototype.initBlocks = function () {
             type: 'reporter',
             category: 'sensing',
             spec: 'http:// %s',
-            defaults: ['snap.berkeley.edu']
+            defaults: ['forecast.weather.gov/MapClick.php?lat=37.2295733&lon=-80.4139393&FcstType=json']
+        },
+        reportURLUsingServer: {
+            type: 'reporter',
+            category: 'sensing',
+            spec: 'http:// %s',
+            defaults: ['forecast.weather.gov/MapClick.php?lat=37.2295733&lon=-80.4139393&FcstType=json']
         },
         reportURLWithCaching: {
             type: 'reporter',
@@ -1973,7 +1979,8 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push('-');
         blocks.push(block('reportAttributeOf'));
         blocks.push('-');
-        blocks.push(block('reportURL'));
+        //blocks.push(block('reportURL'));
+        blocks.push(block('reportURLUsingServer'));
         blocks.push(block('reportURLWithCaching'));
         blocks.push('-');
         blocks.push(block('reportIsFastTracking'));
@@ -5117,7 +5124,8 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push('-');
         blocks.push(block('reportAttributeOf'));
         blocks.push('-');
-        blocks.push(block('reportURL'));
+        //blocks.push(block('reportURL'));
+        blocks.push(block('reportURLUsingServer'));
         blocks.push(block('reportURLWithCaching'));
         blocks.push('-');
         blocks.push(block('reportIsFastTracking'));
