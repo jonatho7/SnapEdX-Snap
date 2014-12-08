@@ -864,12 +864,12 @@ SpriteMorph.prototype.initBlocks = function () {
             spec: '%att of %spr',
             defaults: [['costume #']]
         },
-        reportURL: {
-            type: 'reporter',
-            category: 'sensing',
-            spec: 'http:// %s',
-            defaults: ['forecast.weather.gov/MapClick.php?lat=37.2295733&lon=-80.4139393&FcstType=json']
-        },
+        //reportURL: {
+        //    type: 'reporter',
+        //    category: 'sensing',
+        //    spec: 'http:// %s',
+        //    defaults: ['forecast.weather.gov/MapClick.php?lat=37.2295733&lon=-80.4139393&FcstType=json']
+        //},
         reportURLUsingServer: {
             type: 'reporter',
             category: 'sensing',
