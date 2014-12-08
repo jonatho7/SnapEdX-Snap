@@ -2004,8 +2004,6 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportTwitterTweetsFromPerson'));
         blocks.push('-');
         blocks.push(block('reportTestBlock'));
-        blocks.push('-');
-        blocks.push(block('reportJSONData'));
 
     // for debugging: ///////////////
 
@@ -2153,6 +2151,10 @@ SpriteMorph.prototype.blockTemplates = function (category) {
 
         blocks.push('=');
 
+        blocks.push(block('reportJSONData'));
+
+        blocks.push('=');
+
         blocks.push(block('reportNewList'));
         blocks.push('-');
         blocks.push(block('reportCONS'));
@@ -2165,6 +2167,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('doAddToList'));
         blocks.push(block('doDeleteFromList'));
         blocks.push(block('doInsertInList'));
+        blocks.push(block('doReplaceInList'));
         blocks.push(block('doReplaceInList'));
 
     // for debugging: ///////////////
@@ -5149,8 +5152,6 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportTwitterTweetsFromPerson'));
         blocks.push('-');
         blocks.push(block('reportTestBlock'));
-        blocks.push('-');
-        blocks.push(block('reportJSONData'));
         
 
     // for debugging: ///////////////
@@ -5295,6 +5296,10 @@ StageMorph.prototype.blockTemplates = function (category) {
 
         blocks.push('=');
 
+        blocks.push(block('reportJSONData'));
+
+        blocks.push('=');
+
         blocks.push(block('reportNewList'));
         blocks.push('-');
         blocks.push(block('reportCONS'));
@@ -5308,6 +5313,7 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('doDeleteFromList'));
         blocks.push(block('doInsertInList'));
         blocks.push(block('doReplaceInList'));
+
 
     // for debugging: ///////////////
 
