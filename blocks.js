@@ -1004,6 +1004,50 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
             );
             part.setContents(['from person']);
             break;
+        case '%businessFactor':
+            part = new InputSlotMorph(
+                null, // text
+                false, // non-numeric
+                {
+                    'name' : ['name'],
+                    'average rating' : ['average rating'],
+                    'street address' : ['street address'],
+                    'phone number' : ['phone number'],
+                    'list of reviews' : ['list of reviews']
+                },
+                true // read-only
+            );
+            part.setContents(['name']);
+            break;
+        case '%http1':
+            part = new MultiArgMorph('%s', null, 0);
+            part.addInput(); // allow for default value setting
+            part.isStatic = false;
+            break;
+        case '%http2':
+            part = new MultiArgMorph('%s', null, 0);
+            part.addInput(); // allow for default value setting
+            part.addInput(); // allow for default value setting
+            part.isStatic = false;
+            break;
+        case '%http3':
+            part = new MultiArgMorph('%s', null, 0);
+            part.addInput(); // allow for default value setting
+            part.addInput(); // allow for default value setting
+            part.addInput(); // allow for default value setting
+            part.isStatic = false;
+            break;
+        case '%http7':
+            part = new MultiArgMorph('%s', null, 0);
+            part.addInput(); // allow for default value setting
+            part.addInput(); // allow for default value setting
+            part.addInput(); // allow for default value setting
+            part.addInput(); // allow for default value setting
+            part.addInput(); // allow for default value setting
+            part.addInput(); // allow for default value setting
+            part.addInput(); // allow for default value setting
+            part.isStatic = false;
+            break;
         case '%delim':
             part = new InputSlotMorph(
                 null, // text

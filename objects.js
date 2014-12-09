@@ -885,81 +885,6 @@ SpriteMorph.prototype.initBlocks = function () {
             category: 'sensing',
             spec: 'set turbo mode to %b'
         },
-        reportDate: {
-            type: 'reporter',
-            category: 'data',
-            spec: 'current %dates'
-        },
-        //Start of Data Blocks.
-        retrieveWeatherData: {
-            type: 'command',
-            category: 'data',
-            spec: 'retrieve weather data at %s',
-            defaults: [localize('Blacksburg, VA')]
-        },
-        reportWeather: {
-            type: 'reporter',
-            category: 'data',
-            spec: 'current %weatherFactor at %s',
-            defaults: [localize('temperature in F'), localize('Blacksburg, VA')]
-        },
-        reportLowHighTemp: {
-            type: 'reporter',
-            category: 'data',
-            spec: 'get %temperatureFactor at %s for forecast %temperatureDays',
-            defaults: [localize('low temperature in F'), localize('Blacksburg, VA')]
-        },
-        reportPrecipitation: {
-            type: 'reporter',
-            category: 'data',
-            spec: 'get %precipFactor at %s for forecast %precipDays',
-            defaults: [localize('chance of precipitation'), localize('Blacksburg, VA')]
-        },
-        reportRedditPosts: {
-            type: 'reporter',
-            category: 'data',
-            spec: 'get list of posts from subreddit: %s',
-            defaults: [localize('news')]
-        },
-        reportRedditPostInfo: {
-            type: 'reporter',
-            category: 'data',
-            spec: 'get %redditPostFactor of reddit post: %s'
-        },
-        reportRedditComments: {
-            type: 'reporter',
-            category: 'data',
-            spec: 'get list of comments from reddit post: %s'
-        },
-        reportRedditCommentInfo: {
-            type: 'reporter',
-            category: 'data',
-            spec: 'get %redditCommentFactor of reddit comment: %s'
-        },
-        reportStocks: {
-            type: 'reporter',
-            category: 'data',
-            spec: 'get %stockFactor for stock: %s',
-            defaults: ['last trade price','GOOG']
-        },
-        reportTwitterRetweets: {
-            type: 'reporter',
-            category: 'data',
-            spec: 'get max number of %twitterFactor for tweets mentioning: %s for last 7 days',
-            defaults: ['retweets','hunger games']
-        },
-        reportTwitterTweetsFromPerson: {
-            type: 'reporter',
-            category: 'data',
-            spec: 'get number of tweets sent %twitterFromPerson %s for last 7 days',
-            defaults: ['from person','HarryPotterFilm']
-        },
-        reportTestBlock: {
-            type: 'reporter',
-            category: 'sensing',
-            spec: 'testing block. Click Me.'
-        },
-        //End of Data Blocks.
 
         // Operators
         reifyScript: {
@@ -1231,14 +1156,15 @@ SpriteMorph.prototype.initBlocks = function () {
         reportURLUsingServer: {
             type: 'reporter',
             category: 'API Tools',
-            spec: 'http:// %s',
-            defaults: ['forecast.weather.gov/MapClick.php?lat=37.2295733&lon=-80.4139393&FcstType=json']
+            spec: 'http:// %http7',
+            defaults: ['forecast.weather.gov/MapClick.php?', 'lat=', '37.2295733', '&lon=', '-80.4139393', '&FcstType=', 'json']
+            //defaults: ['forecast.weather.gov/MapClick.php?lat=37.2295733&lon=-80.4139393', '&FcstType=json',]
         },
         reportURLWithCaching: {
             type: 'reporter',
             category: 'API Tools',
-            spec: 'http:// %s and keep cached for %n seconds',
-            defaults: ['127.0.0.1:5000/weather?location=Blacksburg, VA', '60' ]
+            spec: 'http:// %http1 and keep result stored for %n seconds (Prototype)',
+            defaults: ['date.jsontest.com', '60']
         },
         reportJSONData: {
             type: 'reporter',
@@ -1247,6 +1173,99 @@ SpriteMorph.prototype.initBlocks = function () {
         },
 
         //Data Blocks.
+
+        reportDate: {
+            type: 'reporter',
+            category: 'data',
+            spec: 'current %dates'
+        },
+        reportLatitude: {
+            type: 'reporter',
+            category: 'data',
+            spec: 'get latitude at %txt',
+            defaults: [localize('Blacksburg, VA')]
+        },
+        reportLongitude: {
+            type: 'reporter',
+            category: 'data',
+            spec: 'get longitude at %txt',
+            defaults: [localize('Blacksburg, VA')]
+        },
+        retrieveWeatherData: {
+            type: 'command',
+            category: 'data',
+            spec: 'retrieve weather data at %s',
+            defaults: [localize('Blacksburg, VA')]
+        },
+        reportWeather: {
+            type: 'reporter',
+            category: 'data',
+            spec: 'current %weatherFactor at %s',
+            defaults: [localize('temperature in F'), localize('Blacksburg, VA')]
+        },
+        reportLowHighTemp: {
+            type: 'reporter',
+            category: 'data',
+            spec: 'get %temperatureFactor at %s for forecast %temperatureDays',
+            defaults: [localize('low temperature in F'), localize('Blacksburg, VA')]
+        },
+        reportPrecipitation: {
+            type: 'reporter',
+            category: 'data',
+            spec: 'get %precipFactor at %s for forecast %precipDays',
+            defaults: [localize('chance of precipitation'), localize('Blacksburg, VA')]
+        },
+        reportRedditPosts: {
+            type: 'reporter',
+            category: 'data',
+            spec: 'get list of posts from subreddit: %s',
+            defaults: [localize('news')]
+        },
+        reportRedditPostInfo: {
+            type: 'reporter',
+            category: 'data',
+            spec: 'get %redditPostFactor of reddit post: %s'
+        },
+        reportRedditComments: {
+            type: 'reporter',
+            category: 'data',
+            spec: 'get list of comments from reddit post: %s'
+        },
+        reportRedditCommentInfo: {
+            type: 'reporter',
+            category: 'data',
+            spec: 'get %redditCommentFactor of reddit comment: %s'
+        },
+        reportStocks: {
+            type: 'reporter',
+            category: 'data',
+            spec: 'get %stockFactor for stock: %s',
+            defaults: ['last trade price','GOOG']
+        },
+        reportTwitterRetweets: {
+            type: 'reporter',
+            category: 'data',
+            spec: 'get max number of %twitterFactor for tweets mentioning: %s for last 7 days',
+            defaults: ['retweets','hunger games']
+        },
+        reportTwitterTweetsFromPerson: {
+            type: 'reporter',
+            category: 'data',
+            spec: 'get number of tweets sent %twitterFromPerson %s for last 7 days',
+            defaults: ['from person','HarryPotterFilm']
+        },
+        reportTestBlock: {
+            type: 'reporter',
+            category: 'sensing',
+            spec: 'testing block. Click Me.'
+        },
+        reportBusinessData: {
+            type: 'reporter',
+            category: 'data',
+            spec: 'get %businessFactor from business number %n from location: %txt (Prototype)',
+            defaults: ['name', 1, 'Seattle, WA']
+        },
+        //End of Data Blocks.
 
 
         // MAP - experimental
@@ -1990,8 +2009,8 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push('-');
         blocks.push(block('reportIsFastTracking'));
         blocks.push(block('doSetFastTracking'));
-        blocks.push('-');
-        blocks.push(block('reportDate'));
+        //blocks.push('-');
+        //blocks.push(block('reportDate'));
         //blocks.push('-');
         //blocks.push(block('reportTestBlock'));
 
@@ -2226,7 +2245,10 @@ SpriteMorph.prototype.blockTemplates = function (category) {
 
         blocks.push(block('reportDate'));
         blocks.push('=');
+        blocks.push(block('reportLatitude'));
+        blocks.push(block('reportLongitude'));
         //blocks.push(block('retrieveWeatherData'));
+        blocks.push('=');
         blocks.push(block('reportWeather'));
         blocks.push(block('reportLowHighTemp'));
         blocks.push(block('reportPrecipitation'));
@@ -2240,6 +2262,8 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportRedditPostInfo'));
         blocks.push(block('reportRedditComments'));
         blocks.push(block('reportRedditCommentInfo'));
+        blocks.push('=');
+        blocks.push(block('reportBusinessData'));
 
     }
     return blocks;
@@ -5368,7 +5392,10 @@ StageMorph.prototype.blockTemplates = function (category) {
 
         blocks.push(block('reportDate'));
         blocks.push('=');
+        blocks.push(block('reportLatitude'));
+        blocks.push(block('reportLongitude'));
         //blocks.push(block('retrieveWeatherData'));
+        blocks.push('=');
         blocks.push(block('reportWeather'));
         blocks.push(block('reportLowHighTemp'));
         blocks.push(block('reportPrecipitation'));
@@ -5382,6 +5409,8 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportRedditPostInfo'));
         blocks.push(block('reportRedditComments'));
         blocks.push(block('reportRedditCommentInfo'));
+        blocks.push('=');
+        blocks.push(block('reportBusinessData'));
 
     }
     return blocks;

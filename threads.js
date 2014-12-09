@@ -2865,6 +2865,15 @@ Process.prototype.urlAjaxRequest = function (urlBase, jsonArgs, isAsync) {
 };
 
 
+Process.prototype.reportLatitude = function (location) {
+    return "testValue";
+};
+
+Process.prototype.reportLongitude = function (location) {
+    return "testValue";
+};
+
+
 Process.prototype.reportWeather = function (weatherFactor, location) {
 
 	var weatherReport = null;
@@ -3334,6 +3343,12 @@ Process.prototype.reportTwitterTweetsFromPerson = function (twitterFromPerson, t
 };
 
 
+Process.prototype.reportBusinessData = function (businessName, businessNumber, location) {
+	return "testResult";
+};
+
+
+
 Process.prototype.reportTestBlock = function () {
 	return "";
 };
@@ -3341,8 +3356,13 @@ Process.prototype.reportTestBlock = function () {
 
 //Start of API Tools blocks.
 
-Process.prototype.reportURLUsingServer = function (urlString) {
+Process.prototype.reportURLUsingServer = function (urlArray) {
     var responseValue;
+
+    var urlString = "";
+	for(var i = 1; i <= urlArray.length(); i++){
+        urlString += urlArray.at(i);
+	}
 
     var urlBase = "urlRequestForClient";
     var isAsync = false;
@@ -3368,8 +3388,13 @@ Process.prototype.reportURLUsingServer = function (urlString) {
 
 };
 
-Process.prototype.reportURLWithCaching = function (url, numSecondsToCache) {
+Process.prototype.reportURLWithCaching = function (urlArray, numSecondsToCache) {
     var response;
+
+    var urlString = "";
+	for(var i = 1; i <= urlArray.length(); i++){
+        urlString += urlArray.at(i);
+	}
 
     //First check to see if there is a recent cache file.
     var tempCache = cacheController.getCachedHttpRequest(url, numSecondsToCache );
