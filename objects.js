@@ -159,12 +159,15 @@ SpriteMorph.prototype.categories =
         'control',
         'looks',
         'sensing',
-        'sound',
+        //'sound',
         'operators',
-        'pen',
+       // 'pen',
         'variables',
         'lists',
-        'other'
+        'other',
+        'data',
+        'API Tools'
+
     ];
 
 SpriteMorph.prototype.blockColor = {
@@ -177,7 +180,9 @@ SpriteMorph.prototype.blockColor = {
     operators : new Color(98, 194, 19),
     variables : new Color(243, 118, 29),
     lists : new Color(217, 77, 17),
-    other: new Color(150, 150, 150)
+    other: new Color(150, 150, 150),
+    'API Tools': new Color(209, 111, 163),
+    data: new Color(77, 189, 85)
 };
 
 SpriteMorph.prototype.paletteColor = new Color(55, 55, 55);
@@ -870,18 +875,6 @@ SpriteMorph.prototype.initBlocks = function () {
         //    spec: 'http:// %s',
         //    defaults: ['forecast.weather.gov/MapClick.php?lat=37.2295733&lon=-80.4139393&FcstType=json']
         //},
-        reportURLUsingServer: {
-            type: 'reporter',
-            category: 'sensing',
-            spec: 'http:// %s',
-            defaults: ['forecast.weather.gov/MapClick.php?lat=37.2295733&lon=-80.4139393&FcstType=json']
-        },
-        reportURLWithCaching: {
-            type: 'reporter',
-            category: 'sensing',
-            spec: 'http:// %s and keep cached for %n seconds',
-            defaults: ['127.0.0.1:5000/weather?location=Blacksburg, VA', '60' ]
-        },
         reportIsFastTracking: {
             type: 'predicate',
             category: 'sensing',
@@ -894,70 +887,70 @@ SpriteMorph.prototype.initBlocks = function () {
         },
         reportDate: {
             type: 'reporter',
-            category: 'sensing',
+            category: 'data',
             spec: 'current %dates'
         },
         //Start of Data Blocks.
         retrieveWeatherData: {
             type: 'command',
-            category: 'sensing',
+            category: 'data',
             spec: 'retrieve weather data at %s',
             defaults: [localize('Blacksburg, VA')]
         },
         reportWeather: {
             type: 'reporter',
-            category: 'sensing',
+            category: 'data',
             spec: 'current %weatherFactor at %s',
             defaults: [localize('temperature in F'), localize('Blacksburg, VA')]
         },
         reportLowHighTemp: {
             type: 'reporter',
-            category: 'sensing',
+            category: 'data',
             spec: 'get %temperatureFactor at %s for forecast %temperatureDays',
             defaults: [localize('low temperature in F'), localize('Blacksburg, VA')]
         },
         reportPrecipitation: {
             type: 'reporter',
-            category: 'sensing',
+            category: 'data',
             spec: 'get %precipFactor at %s for forecast %precipDays',
             defaults: [localize('chance of precipitation'), localize('Blacksburg, VA')]
         },
         reportRedditPosts: {
             type: 'reporter',
-            category: 'sensing',
+            category: 'data',
             spec: 'get list of posts from subreddit: %s',
             defaults: [localize('news')]
         },
         reportRedditPostInfo: {
             type: 'reporter',
-            category: 'sensing',
+            category: 'data',
             spec: 'get %redditPostFactor of reddit post: %s'
         },
         reportRedditComments: {
             type: 'reporter',
-            category: 'sensing',
+            category: 'data',
             spec: 'get list of comments from reddit post: %s'
         },
         reportRedditCommentInfo: {
             type: 'reporter',
-            category: 'sensing',
+            category: 'data',
             spec: 'get %redditCommentFactor of reddit comment: %s'
         },
         reportStocks: {
             type: 'reporter',
-            category: 'sensing',
+            category: 'data',
             spec: 'get %stockFactor for stock: %s',
             defaults: ['last trade price','GOOG']
         },
         reportTwitterRetweets: {
             type: 'reporter',
-            category: 'sensing',
+            category: 'data',
             spec: 'get max number of %twitterFactor for tweets mentioning: %s for last 7 days',
             defaults: ['retweets','hunger games']
         },
         reportTwitterTweetsFromPerson: {
             type: 'reporter',
-            category: 'sensing',
+            category: 'data',
             spec: 'get number of tweets sent %twitterFromPerson %s for last 7 days',
             defaults: ['from person','HarryPotterFilm']
         },
@@ -967,15 +960,6 @@ SpriteMorph.prototype.initBlocks = function () {
             spec: 'testing block. Click Me.'
         },
         //End of Data Blocks.
-        
-        //Start of API developer library blocks.
-        reportJSONData: {
-            type: 'reporter',
-            category: 'variables',
-            spec: 'from JSON text %txt get %mult%txt'
-        },
-        
-        //End of API developer library blocks.
 
         // Operators
         reifyScript: {
@@ -1241,6 +1225,29 @@ SpriteMorph.prototype.initBlocks = function () {
             spec: 'replace item %idx of %l with %s',
             defaults: [1, null, localize('thing')]
         },
+
+
+        //API Tools Blocks.
+        reportURLUsingServer: {
+            type: 'reporter',
+            category: 'API Tools',
+            spec: 'http:// %s',
+            defaults: ['forecast.weather.gov/MapClick.php?lat=37.2295733&lon=-80.4139393&FcstType=json']
+        },
+        reportURLWithCaching: {
+            type: 'reporter',
+            category: 'API Tools',
+            spec: 'http:// %s and keep cached for %n seconds',
+            defaults: ['127.0.0.1:5000/weather?location=Blacksburg, VA', '60' ]
+        },
+        reportJSONData: {
+            type: 'reporter',
+            category: 'API Tools',
+            spec: 'from JSON text %txt get %mult%txt'
+        },
+
+        //Data Blocks.
+
 
         // MAP - experimental
         reportMap: {
@@ -1980,30 +1987,13 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportAttributeOf'));
         blocks.push('-');
         //blocks.push(block('reportURL'));
-        blocks.push(block('reportURLUsingServer'));
-        blocks.push(block('reportURLWithCaching'));
         blocks.push('-');
         blocks.push(block('reportIsFastTracking'));
         blocks.push(block('doSetFastTracking'));
         blocks.push('-');
         blocks.push(block('reportDate'));
-        blocks.push('-');
-        blocks.push(block('retrieveWeatherData'));
-        blocks.push(block('reportWeather'));
-        blocks.push(block('reportLowHighTemp'));
-        blocks.push(block('reportPrecipitation'));
-        blocks.push('-');
-        blocks.push(block('reportRedditPosts'));
-        blocks.push(block('reportRedditPostInfo'));
-        blocks.push(block('reportRedditComments'));
-        blocks.push(block('reportRedditCommentInfo'));
-        blocks.push('-');
-        blocks.push(block('reportStocks'));
-        blocks.push('-');
-        blocks.push(block('reportTwitterRetweets'));
-        blocks.push(block('reportTwitterTweetsFromPerson'));
-        blocks.push('-');
-        blocks.push(block('reportTestBlock'));
+        //blocks.push('-');
+        //blocks.push(block('reportTestBlock'));
 
     // for debugging: ///////////////
 
@@ -2151,10 +2141,6 @@ SpriteMorph.prototype.blockTemplates = function (category) {
 
         blocks.push('=');
 
-        blocks.push(block('reportJSONData'));
-
-        blocks.push('=');
-
         blocks.push(block('reportNewList'));
         blocks.push('-');
         blocks.push(block('reportCONS'));
@@ -2229,6 +2215,32 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         button.selector = 'addCustomBlock';
         button.showHelp = BlockMorph.prototype.showHelp;
         blocks.push(button);
+    }  else if (cat === 'API Tools') {
+
+        blocks.push(block('reportURLUsingServer'));
+        blocks.push(block('reportURLWithCaching'));
+        blocks.push('=');
+        blocks.push(block('reportJSONData'));
+
+    } else if (cat === 'data') {
+
+        blocks.push(block('reportDate'));
+        blocks.push('=');
+        //blocks.push(block('retrieveWeatherData'));
+        blocks.push(block('reportWeather'));
+        blocks.push(block('reportLowHighTemp'));
+        blocks.push(block('reportPrecipitation'));
+        blocks.push('=');
+        blocks.push(block('reportStocks'));
+        blocks.push('=');
+        blocks.push(block('reportTwitterRetweets'));
+        blocks.push(block('reportTwitterTweetsFromPerson'));
+        blocks.push('=');
+        blocks.push(block('reportRedditPosts'));
+        blocks.push(block('reportRedditPostInfo'));
+        blocks.push(block('reportRedditComments'));
+        blocks.push(block('reportRedditCommentInfo'));
+
     }
     return blocks;
 };
@@ -5127,31 +5139,10 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push('-');
         blocks.push(block('reportAttributeOf'));
         blocks.push('-');
-        //blocks.push(block('reportURL'));
-        blocks.push(block('reportURLUsingServer'));
-        blocks.push(block('reportURLWithCaching'));
-        blocks.push('-');
         blocks.push(block('reportIsFastTracking'));
         blocks.push(block('doSetFastTracking'));
-        blocks.push('-');
-        blocks.push(block('reportDate'));
-        blocks.push('-');
-        blocks.push(block('retrieveWeatherData'));
-        blocks.push(block('reportWeather'));
-        blocks.push(block('reportLowHighTemp'));
-        blocks.push(block('reportPrecipitation'));
-        blocks.push('-');
-        blocks.push(block('reportRedditPosts'));
-        blocks.push(block('reportRedditPostInfo'));
-        blocks.push(block('reportRedditComments'));
-        blocks.push(block('reportRedditCommentInfo'));
-        blocks.push('-');
-        blocks.push(block('reportStocks'));
-        blocks.push('-');
-        blocks.push(block('reportTwitterRetweets'));
-        blocks.push(block('reportTwitterTweetsFromPerson'));
-        blocks.push('-');
-        blocks.push(block('reportTestBlock'));
+        //blocks.push('-');
+        //blocks.push(block('reportTestBlock'));
         
 
     // for debugging: ///////////////
@@ -5296,10 +5287,6 @@ StageMorph.prototype.blockTemplates = function (category) {
 
         blocks.push('=');
 
-        blocks.push(block('reportJSONData'));
-
-        blocks.push('=');
-
         blocks.push(block('reportNewList'));
         blocks.push('-');
         blocks.push(block('reportCONS'));
@@ -5370,6 +5357,32 @@ StageMorph.prototype.blockTemplates = function (category) {
             'Make a block'
         );
         blocks.push(button);
+    } else if (cat === 'API Tools') {
+
+        blocks.push(block('reportURLUsingServer'));
+        blocks.push(block('reportURLWithCaching'));
+        blocks.push('=');
+        blocks.push(block('reportJSONData'));
+
+    } else if (cat === 'data') {
+
+        blocks.push(block('reportDate'));
+        blocks.push('=');
+        //blocks.push(block('retrieveWeatherData'));
+        blocks.push(block('reportWeather'));
+        blocks.push(block('reportLowHighTemp'));
+        blocks.push(block('reportPrecipitation'));
+        blocks.push('=');
+        blocks.push(block('reportStocks'));
+        blocks.push('=');
+        blocks.push(block('reportTwitterRetweets'));
+        blocks.push(block('reportTwitterTweetsFromPerson'));
+        blocks.push('=');
+        blocks.push(block('reportRedditPosts'));
+        blocks.push(block('reportRedditPostInfo'));
+        blocks.push(block('reportRedditComments'));
+        blocks.push(block('reportRedditCommentInfo'));
+
     }
     return blocks;
 };

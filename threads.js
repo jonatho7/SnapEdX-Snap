@@ -1821,64 +1821,6 @@ Process.prototype.reportURL = function (url) {
 };
 
 
-Process.prototype.reportURLUsingServer = function (urlString) {
-    var responseValue;
-
-    var urlBase = "urlRequestForClient";
-    var isAsync = false;
-    var jsonArgs = { "urlString": urlString };
-    var ajaxResponse = Process.prototype.urlAjaxRequest(urlBase, jsonArgs, isAsync);
-
-    var json = JSON.parse( ajaxResponse );
-    console.log(json);
-
-    var urlReport = json['urlReport'];
-    //Check to see if there is a valid urlReport object.
-    if (urlReport == ""){
-        return null;
-    }
-
-    responseValue = urlReport['responseValue'];
-
-    if ((responseValue) || (responseValue == "")){
-        return responseValue;
-    } else {
-        return null;
-    }
-
-};
-
-
-Process.prototype.reportURLWithCaching = function (url, numSecondsToCache) {
-    var response;
-
-    //First check to see if there is a recent cache file.
-    var tempCache = cacheController.getCachedHttpRequest(url, numSecondsToCache );
-    if ( tempCache != -1){
-        //There is a recent cache file. Use it.
-        return tempCache;
-    } else {
-        //There is not a recent cache file.
-        if (!this.httpRequest) {
-            this.httpRequest = new XMLHttpRequest();
-            this.httpRequest.open("GET", 'http://' + url, true);
-            this.httpRequest.send(null);
-        } else if (this.httpRequest.readyState === 4) {
-            response = this.httpRequest.responseText;
-            this.httpRequest = null;
-
-            //Add the report to the cache.
-            cacheController.addHttpRequestToCache(url, numSecondsToCache, response)
-
-            return response;
-        }
-        this.pushContext('doYield');
-        this.pushContext();
-    }
-
-};
-
-
 
 // Process event messages primitives
 
@@ -3397,7 +3339,64 @@ Process.prototype.reportTestBlock = function () {
 };
 
 
-//Start of API developer library blocks.
+//Start of API Tools blocks.
+
+Process.prototype.reportURLUsingServer = function (urlString) {
+    var responseValue;
+
+    var urlBase = "urlRequestForClient";
+    var isAsync = false;
+    var jsonArgs = { "urlString": urlString };
+    var ajaxResponse = Process.prototype.urlAjaxRequest(urlBase, jsonArgs, isAsync);
+
+    var json = JSON.parse( ajaxResponse );
+    console.log(json);
+
+    var urlReport = json['urlReport'];
+    //Check to see if there is a valid urlReport object.
+    if (urlReport == ""){
+        return null;
+    }
+
+    responseValue = urlReport['responseValue'];
+
+    if ((responseValue) || (responseValue == "")){
+        return responseValue;
+    } else {
+        return null;
+    }
+
+};
+
+Process.prototype.reportURLWithCaching = function (url, numSecondsToCache) {
+    var response;
+
+    //First check to see if there is a recent cache file.
+    var tempCache = cacheController.getCachedHttpRequest(url, numSecondsToCache );
+    if ( tempCache != -1){
+        //There is a recent cache file. Use it.
+        return tempCache;
+    } else {
+        //There is not a recent cache file.
+        if (!this.httpRequest) {
+            this.httpRequest = new XMLHttpRequest();
+            this.httpRequest.open("GET", 'http://' + url, true);
+            this.httpRequest.send(null);
+        } else if (this.httpRequest.readyState === 4) {
+            response = this.httpRequest.responseText;
+            this.httpRequest = null;
+
+            //Add the report to the cache.
+            cacheController.addHttpRequestToCache(url, numSecondsToCache, response)
+
+            return response;
+        }
+        this.pushContext('doYield');
+        this.pushContext();
+    }
+
+};
+
 Process.prototype.reportJSONData = function (jsonText, jsonParams) {
 	var json = JSON.parse( jsonText );
 	
@@ -3422,8 +3421,18 @@ Process.prototype.reportJSONData = function (jsonText, jsonParams) {
 	return jsonResult;
 };
 
+//End of API Tools blocks.
 
-//End of API developer library blocks.
+
+
+
+//Start of Data blocks.
+
+
+//End of Data blocks.
+
+
+
 
 
 // Process code mapping
