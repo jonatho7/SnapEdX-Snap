@@ -2866,11 +2866,13 @@ Process.prototype.urlAjaxRequest = function (urlBase, jsonArgs, isAsync) {
 
 
 Process.prototype.reportLatitude = function (location) {
-    return "testValue";
+    //return "testValue";
+    return 37.2295733;
 };
 
 Process.prototype.reportLongitude = function (location) {
-    return "testValue";
+    //return "testValue";
+    return -80.4139393
 };
 
 
