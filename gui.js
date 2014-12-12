@@ -235,9 +235,6 @@ IDE_Morph.prototype.openIn = function (world) {
     var hash, usr, myself = this, urlLanguage = null;
 
     this.buildPanes();
-    
-    //Jon. Testing. Seeing how the menu is setup.
-    
     world.add(this);
     world.userMenu = this.userMenu;
 

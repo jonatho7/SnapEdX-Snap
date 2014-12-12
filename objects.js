@@ -159,9 +159,9 @@ SpriteMorph.prototype.categories =
         'control',
         'looks',
         'sensing',
-        //'sound',
+        'sound',
         'operators',
-       // 'pen',
+        'pen',
         'variables',
         'lists',
         'other',
@@ -214,13 +214,6 @@ SpriteMorph.prototype.initBlocks = function () {
             category: 'motion',
             spec: 'move %n steps',
             defaults: [10]
-        },
-        backward: {
-        	only: SpriteMorph,
-        	type: 'command',
-        	category: 'motion',
-        	spec: 'move %n steps backward',
-        	defaults: [10]
         },
         turn: {
             only: SpriteMorph,
@@ -1182,13 +1175,13 @@ SpriteMorph.prototype.initBlocks = function () {
         reportLatitude: {
             type: 'reporter',
             category: 'data',
-            spec: 'get latitude at %txt',
+            spec: 'get latitude at %txt (Prototype)',
             defaults: [localize('Blacksburg, VA')]
         },
         reportLongitude: {
             type: 'reporter',
             category: 'data',
-            spec: 'get longitude at %txt',
+            spec: 'get longitude at %txt (Prototype)',
             defaults: [localize('Blacksburg, VA')]
         },
         retrieveWeatherData: {
@@ -1200,58 +1193,58 @@ SpriteMorph.prototype.initBlocks = function () {
         reportWeather: {
             type: 'reporter',
             category: 'data',
-            spec: 'current %weatherFactor at %s',
+            spec: '%cloudOutline get %weatherFactor at %s',
             defaults: [localize('temperature in F'), localize('Blacksburg, VA')]
         },
         reportLowHighTemp: {
             type: 'reporter',
             category: 'data',
-            spec: 'get %temperatureFactor at %s for forecast %temperatureDays',
+            spec: '%cloudOutline get %temperatureFactor at %s for forecast %temperatureDays',
             defaults: [localize('low temperature in F'), localize('Blacksburg, VA')]
         },
         reportPrecipitation: {
             type: 'reporter',
             category: 'data',
-            spec: 'get %precipFactor at %s for forecast %precipDays',
+            spec: '%cloudOutline get %precipFactor at %s for forecast %precipDays',
             defaults: [localize('chance of precipitation'), localize('Blacksburg, VA')]
         },
         reportRedditPosts: {
             type: 'reporter',
             category: 'data',
-            spec: 'get list of posts from subreddit: %s',
+            spec: '%cloudOutline get list of posts from subreddit: %s',
             defaults: [localize('news')]
         },
         reportRedditPostInfo: {
             type: 'reporter',
             category: 'data',
-            spec: 'get %redditPostFactor of reddit post: %s'
+            spec: '%cloudOutline get %redditPostFactor of reddit post: %s'
         },
         reportRedditComments: {
             type: 'reporter',
             category: 'data',
-            spec: 'get list of comments from reddit post: %s'
+            spec: '%cloudOutline get list of comments from reddit post: %s'
         },
         reportRedditCommentInfo: {
             type: 'reporter',
             category: 'data',
-            spec: 'get %redditCommentFactor of reddit comment: %s'
+            spec: '%cloudOutline get %redditCommentFactor of reddit comment: %s'
         },
         reportStocks: {
             type: 'reporter',
             category: 'data',
-            spec: 'get %stockFactor for stock: %s',
+            spec: '%cloudOutline get %stockFactor for stock: %s',
             defaults: ['last trade price','GOOG']
         },
         reportTwitterRetweets: {
             type: 'reporter',
             category: 'data',
-            spec: 'get max number of %twitterFactor for tweets mentioning: %s for last 7 days',
+            spec: '%cloudOutline get highest number of %twitterFactor for tweets mentioning: %s for last 7 days',
             defaults: ['retweets','hunger games']
         },
         reportTwitterTweetsFromPerson: {
             type: 'reporter',
             category: 'data',
-            spec: 'get number of tweets sent %twitterFromPerson %s for last 7 days',
+            spec: '%cloudOutline get number of tweets sent %twitterFromPerson %s for last 7 days',
             defaults: ['from person','HarryPotterFilm']
         },
         reportTestBlock: {
@@ -1262,7 +1255,7 @@ SpriteMorph.prototype.initBlocks = function () {
         reportBusinessData: {
             type: 'reporter',
             category: 'data',
-            spec: 'get %businessFactor from business number %n from location: %txt (Prototype)',
+            spec: '%cloudOutline get %businessFactor from business number %n from location: %txt (Prototype)',
             defaults: ['name', 1, 'Seattle, WA']
         },
         //End of Data Blocks.
@@ -1801,9 +1794,6 @@ SpriteMorph.prototype.blockTemplates = function (category) {
     if (cat === 'motion') {
 
         blocks.push(block('forward'));
-        blocks.push(block('backward'));
-        //Jon. Testing.
-        blocks.push('-');
         blocks.push(block('turn'));
         blocks.push(block('turnLeft'));
         blocks.push('-');
@@ -2244,9 +2234,6 @@ SpriteMorph.prototype.blockTemplates = function (category) {
     } else if (cat === 'data') {
 
         blocks.push(block('reportDate'));
-        blocks.push('=');
-        blocks.push(block('reportLatitude'));
-        blocks.push(block('reportLongitude'));
         //blocks.push(block('retrieveWeatherData'));
         blocks.push('=');
         blocks.push(block('reportWeather'));
@@ -2262,6 +2249,9 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportRedditPostInfo'));
         blocks.push(block('reportRedditComments'));
         blocks.push(block('reportRedditCommentInfo'));
+        blocks.push('=');
+        blocks.push(block('reportLatitude'));
+        blocks.push(block('reportLongitude'));
         blocks.push('=');
         blocks.push(block('reportBusinessData'));
 
@@ -3416,23 +3406,6 @@ Morph.prototype.setPosition = function (aPoint, justMe) {
 
 SpriteMorph.prototype.forward = function (steps) {
 	var dest,
-        dist = steps * this.parent.scale || 0;
-
-    if (dist >= 0) {
-        dest = this.position().distanceAngle(dist, this.heading);
-    } else {
-        dest = this.position().distanceAngle(
-            Math.abs(dist),
-            (this.heading - 180)
-        );
-    }
-    this.setPosition(dest);
-    this.positionTalkBubble();
-};
-
-SpriteMorph.prototype.backward = function (steps) {
-	steps = -steps;
-    var dest,
         dist = steps * this.parent.scale || 0;
 
     if (dist >= 0) {
@@ -5391,9 +5364,6 @@ StageMorph.prototype.blockTemplates = function (category) {
     } else if (cat === 'data') {
 
         blocks.push(block('reportDate'));
-        blocks.push('=');
-        blocks.push(block('reportLatitude'));
-        blocks.push(block('reportLongitude'));
         //blocks.push(block('retrieveWeatherData'));
         blocks.push('=');
         blocks.push(block('reportWeather'));
@@ -5409,6 +5379,9 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportRedditPostInfo'));
         blocks.push(block('reportRedditComments'));
         blocks.push(block('reportRedditCommentInfo'));
+        blocks.push('=');
+        blocks.push(block('reportLatitude'));
+        blocks.push(block('reportLongitude'));
         blocks.push('=');
         blocks.push(block('reportBusinessData'));
 
