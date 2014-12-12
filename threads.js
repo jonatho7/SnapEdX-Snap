@@ -3022,20 +3022,24 @@ Process.prototype.reportPrecipitation = function (precipFactor, location, precip
 		
 	} else {
 		weatherReport = cacheController.getCachedWeatherReport(location);
+        console.log("weatherReport found in cache:");
+        console.log(weatherReport);
 	}
+
 	
 	var weatherValue = "";
 	var forecastIndex = null;
 	if (weatherReport != null) {
 		if (this.inputOption(precipDays) === 'This Afternoon'){
-			if (weatherReport.forecasts[0]['period_name'] == "Tonight"){
-				forecastIndex = null;
-			} else {
-				forecastIndex = 0;
-			}
+			//if (weatherReport.forecasts[0]['period_name'] == "Tonight"){
+			//	forecastIndex = null;
+			//} else {
+			//	forecastIndex = 0;
+			//}
+            forecastIndex = 0;
 		}
 		else if (this.inputOption(precipDays) === 'Tonight'){
-			forecastIndex = 1;
+			forecastIndex = 0;
 		}
 		else if (this.inputOption(precipDays) === 'Day 1'){
 			forecastIndex = 2;
