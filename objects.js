@@ -1175,13 +1175,13 @@ SpriteMorph.prototype.initBlocks = function () {
         reportLatitude: {
             type: 'reporter',
             category: 'data',
-            spec: 'get latitude at %txt (Prototype)',
+            spec: 'get latitude at %txt',
             defaults: [localize('Blacksburg, VA')]
         },
         reportLongitude: {
             type: 'reporter',
             category: 'data',
-            spec: 'get longitude at %txt (Prototype)',
+            spec: 'get longitude at %txt',
             defaults: [localize('Blacksburg, VA')]
         },
         retrieveWeatherData: {

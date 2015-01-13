@@ -2816,6 +2816,56 @@ Process.prototype.twitterAjaxRequest = function (urlBase, jsonArgs, isAsync) {
 };
 
 
+Process.prototype.ajaxRequest = function (urlBase, jsonArgs, isAsync) {
+	var urlParams = Process.prototype.encodeQueryData(jsonArgs);
+	console.log(urlParams);
+	var urlString = urlBase + "?" + urlParams;
+	console.log("urlString: " + urlString);
+
+	var xmlhttp;
+
+    if (window.XMLHttpRequest) {
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp = new XMLHttpRequest();
+    } else {
+        // code for IE6, IE5
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 ) {
+           if(xmlhttp.status == 200){
+        	   //Only place code here if async is true.
+               //If async is false, put the code after xmlhttp.send().
+        	   //TODO. Change this code soon.
+        	   //if(isAsync){
+        		//	var json = JSON.parse( xmlhttp.responseText );
+        		//	console.log(json);
+        		//	var stockReport = json['stockReport'];
+        		//	//cacheController.addWeatherReport(location, weatherReport);
+        	   //}
+           }
+           else if(xmlhttp.status == 400) {
+              alert('There was an error 400');
+           }
+           else {
+               alert('something else other than 200 was returned');
+           }
+        }
+    };
+	xmlhttp.open("GET", urlString, isAsync);
+    xmlhttp.send();
+    if (isAsync == false){
+    	return xmlhttp.responseText;
+    }
+    else {
+    	return;
+    }
+
+};
+
+
+
 Process.prototype.urlAjaxRequest = function (urlBase, jsonArgs, isAsync) {
     var urlParams = Process.prototype.encodeQueryData(jsonArgs);
     console.log(urlParams);
@@ -2865,14 +2915,61 @@ Process.prototype.urlAjaxRequest = function (urlBase, jsonArgs, isAsync) {
 };
 
 
-Process.prototype.reportLatitude = function (location) {
-    //return "testValue";
-    return 37.2295733;
+Process.prototype.reportLatitude = function (address) {
+
+    var latitudeValue;
+
+	var urlBase = "location";
+	var isAsync = false;
+	var jsonArgs = { "address": address };
+	var ajaxResponse = Process.prototype.ajaxRequest(urlBase, jsonArgs, isAsync);
+
+	var json = JSON.parse( ajaxResponse );
+	console.log(json);
+
+	var locationReport = json['locationReport'];
+	//Check to see if there is a valid locationReport object.
+	if (locationReport == ""){
+		return null;
+	}
+
+	latitudeValue = locationReport['latitude'];
+
+
+	if ((latitudeValue) || (latitudeValue == "")){
+		return latitudeValue;
+	} else {
+		return null;
+	}
+
 };
 
-Process.prototype.reportLongitude = function (location) {
-    //return "testValue";
-    return -80.4139393
+Process.prototype.reportLongitude = function (address) {
+
+    var longitudeValue;
+
+	var urlBase = "location";
+	var isAsync = false;
+	var jsonArgs = { "address": address };
+	var ajaxResponse = Process.prototype.ajaxRequest(urlBase, jsonArgs, isAsync);
+
+	var json = JSON.parse( ajaxResponse );
+	console.log(json);
+
+	var locationReport = json['locationReport'];
+	//Check to see if there is a valid locationReport object.
+	if (locationReport == ""){
+		return null;
+	}
+
+	longitudeValue = locationReport['longitude'];
+
+
+	if ((longitudeValue) || (longitudeValue == "")){
+		return longitudeValue;
+	} else {
+		return null;
+	}
 };
 
 
