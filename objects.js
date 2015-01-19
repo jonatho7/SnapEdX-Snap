@@ -1162,8 +1162,12 @@ SpriteMorph.prototype.initBlocks = function () {
         reportJSONData: {
             type: 'reporter',
             category: 'API Tools',
-            spec: 'from JSON text %txt get %mult%txt'
+            spec: 'from JSON text %txt get %mult%txt',
+            defaults: ['','']
         },
+
+
+
 
         //Data Blocks.
 
@@ -1259,6 +1263,14 @@ SpriteMorph.prototype.initBlocks = function () {
             defaults: ['name', 1, 'Seattle, WA']
         },
         //End of Data Blocks.
+
+        //Google Maps Blocks.
+        reportPlaceMarker: {
+            type: 'reporter',
+            category: 'data',
+            spec: 'place marker at latitude: %txt longitude: %txt',
+            defaults: ['-25','130']
+        },
 
 
         // MAP - experimental
@@ -2163,7 +2175,6 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('doDeleteFromList'));
         blocks.push(block('doInsertInList'));
         blocks.push(block('doReplaceInList'));
-        blocks.push(block('doReplaceInList'));
 
     // for debugging: ///////////////
 
@@ -2231,6 +2242,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push('=');
         blocks.push(block('reportJSONData'));
 
+
     } else if (cat === 'data') {
 
         blocks.push(block('reportDate'));
@@ -2254,6 +2266,8 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportLongitude'));
         blocks.push('=');
         blocks.push(block('reportBusinessData'));
+        blocks.push('=');
+        blocks.push(block('reportPlaceMarker'));
 
     }
     return blocks;
@@ -5384,6 +5398,8 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportLongitude'));
         blocks.push('=');
         blocks.push(block('reportBusinessData'));
+        blocks.push('=');
+        blocks.push(block('reportPlaceMarker'));
 
     }
     return blocks;

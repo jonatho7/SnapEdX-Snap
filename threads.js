@@ -3457,6 +3457,27 @@ Process.prototype.reportTestBlock = function () {
 };
 
 
+//Start of Google Maps Blocks.
+Process.prototype.reportPlaceMarker = function (latitude, longitude) {
+    //Add a marker.
+
+    //latitude = -25;
+    //longitude = 130;
+
+    //var myLatlng = new google.maps.LatLng(-25.363882,131.044922);
+    var myLatlng = new google.maps.LatLng(latitude,longitude);
+
+    var marker = new google.maps.Marker({
+        position: myLatlng,
+        map: googleMap,
+        title:"Hello World!"
+    });
+
+    return 50;
+
+};
+
+
 //Start of API Tools blocks.
 
 Process.prototype.reportURLUsingServer = function (urlArray) {
