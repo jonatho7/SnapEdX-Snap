@@ -3458,7 +3458,7 @@ Process.prototype.reportTestBlock = function () {
 
 
 //Start of Google Maps Blocks.
-Process.prototype.reportPlaceMarker = function (latitude, longitude) {
+Process.prototype.doPlaceMarker = function (latitude, longitude) {
     //Add a marker.
 
     //latitude = -25;

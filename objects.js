@@ -1265,10 +1265,10 @@ SpriteMorph.prototype.initBlocks = function () {
         //End of Data Blocks.
 
         //Google Maps Blocks.
-        reportPlaceMarker: {
-            type: 'reporter',
-            category: 'data',
-            spec: 'place marker at latitude: %txt longitude: %txt',
+        doPlaceMarker: {
+            type: 'command',
+            category: 'API Tools',
+            spec: '%crosshairs place marker at latitude: %txt longitude: %txt',
             defaults: ['-25','130']
         },
 
@@ -2241,6 +2241,8 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportURLWithCaching'));
         blocks.push('=');
         blocks.push(block('reportJSONData'));
+        blocks.push('=');
+        blocks.push(block('doPlaceMarker'));
 
 
     } else if (cat === 'data') {
@@ -2266,8 +2268,6 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportLongitude'));
         blocks.push('=');
         blocks.push(block('reportBusinessData'));
-        blocks.push('=');
-        blocks.push(block('reportPlaceMarker'));
 
     }
     return blocks;
@@ -5374,6 +5374,8 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportURLWithCaching'));
         blocks.push('=');
         blocks.push(block('reportJSONData'));
+        blocks.push('=');
+        blocks.push(block('doPlaceMarker'));
 
     } else if (cat === 'data') {
 
@@ -5398,8 +5400,6 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportLongitude'));
         blocks.push('=');
         blocks.push(block('reportBusinessData'));
-        blocks.push('=');
-        blocks.push(block('reportPlaceMarker'));
 
     }
     return blocks;
