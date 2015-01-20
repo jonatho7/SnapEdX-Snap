@@ -28,6 +28,11 @@ var main = function() {
         document.getElementById("map-canvas").style.height = "576px";
     });
 
+    $(".changeMapSize4").click(function () {
+        document.getElementById("map-canvas").style.width = "1280px";
+        document.getElementById("map-canvas").style.height = "720px";
+    });
+
 
 
 };
