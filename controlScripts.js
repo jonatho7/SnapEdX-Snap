@@ -1,7 +1,7 @@
 
 window.onresize = function(event) {
     //$('#helloa').prepend('<p>Bla bla bla</p>');
-    console.log("hello");
+    //console.log("hello");
 };
 
 var main = function() {
