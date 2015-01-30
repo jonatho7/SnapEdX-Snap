@@ -1283,13 +1283,13 @@ SpriteMorph.prototype.initBlocks = function () {
             type: 'command',
             category: 'API Tools',
             spec: '%crosshairs place marker at latitude: %txt longitude: %txt',
-            defaults: ['-25','130']
+            defaults: ['38.8951','-77.0367']
         },
         doPlaceCircle: {
             type: 'command',
             category: 'API Tools',
             spec: '%crosshairs place circle at latitude: %txt longitude: %txt with radius: %n',
-            defaults: ['-25','130', 50.0]
+            defaults: ['38.8951','-77.0367', 200.0]
         },
 
 
