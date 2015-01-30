@@ -1019,6 +1019,36 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
             );
             part.setContents(['name']);
             break;
+        case '%earthquakePeriod':
+            part = new InputSlotMorph(
+                null, // text
+                false, // non-numeric
+                {
+                    'hour' : ['hour'],
+                    'day' : ['day'],
+                    'week' : ['week'],
+                    'month' : ['month']
+                },
+                true // read-only
+            );
+            part.setContents(['day']);
+            break;
+        case '%earthquakeQuery':
+            part = new InputSlotMorph(
+                null, // text
+                false, // non-numeric
+                {
+                    'magnitude' : ['magnitude'],
+                    'latitude' : ['latitude'],
+                    'longitude' : ['longitude'],
+                    'location description' : ['location description'],
+                    'url' : ['url'],
+                    'all info' : ['all info']
+                },
+                true // read-only
+            );
+            part.setContents(['day']);
+            break;
         case '%http1':
             part = new MultiArgMorph('%s', null, 0);
             part.addInput(); // allow for default value setting

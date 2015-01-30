@@ -2641,14 +2641,7 @@ Process.prototype.weatherAjaxRequest = function (urlBase, location, isAsync) {
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState == 4 ) {
            if(xmlhttp.status == 200){
-        	   //Only place code here if async is true.
-               //If async is false, put the code after xmlhttp.send().
-        	   if(isAsync){
-        			var json = JSON.parse( xmlhttp.responseText );
-        			console.log(json);
-        			var weatherReport = json.weatherReport;
-        			cacheController.addWeatherReport(location, weatherReport);
-        	   }
+               ;
            }
            else if(xmlhttp.status == 400) {
               alert('There was an error 400');
@@ -2813,6 +2806,47 @@ Process.prototype.twitterAjaxRequest = function (urlBase, jsonArgs, isAsync) {
     	return;
     }
     
+};
+
+Process.prototype.earthquakeAjaxRequest = function (urlBase, jsonArgs, isAsync) {
+    var urlParams = Process.prototype.encodeQueryData(jsonArgs);
+	console.log(urlParams);
+	var urlString = urlBase + "?" + urlParams;
+	console.log("urlString: " + urlString);
+
+	var xmlhttp;
+
+
+    if (window.XMLHttpRequest) {
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp = new XMLHttpRequest();
+    } else {
+        // code for IE6, IE5
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 ) {
+           if(xmlhttp.status == 200){
+               ;
+           }
+           else if(xmlhttp.status == 400) {
+              alert('There was an error 400');
+           }
+           else {
+               alert('something else other than 200 was returned');
+           }
+        }
+    };
+	xmlhttp.open("GET", urlString, isAsync);
+    xmlhttp.send();
+    if (isAsync == false){
+    	return xmlhttp.responseText;
+    }
+    else {
+    	return;
+    }
+
 };
 
 
@@ -2995,6 +3029,7 @@ Process.prototype.reportWeather = function (weatherFactor, location) {
 		
 	} else {
 		weatherReport = cacheController.getCachedWeatherReport(location);
+        console.log("weatherReport found in cache:");
 	}
 	
 	
@@ -3056,6 +3091,7 @@ Process.prototype.reportLowHighTemp = function (temperatureFactor, location, tem
 		
 	} else {
 		weatherReport = cacheController.getCachedWeatherReport(location);
+        console.log("weatherReport found in cache:");
 	}
 	
 	//Sentinel values.
@@ -3120,7 +3156,6 @@ Process.prototype.reportPrecipitation = function (precipFactor, location, precip
 	} else {
 		weatherReport = cacheController.getCachedWeatherReport(location);
         console.log("weatherReport found in cache:");
-        console.log(weatherReport);
 	}
 
 	
@@ -3448,6 +3483,90 @@ Process.prototype.reportTwitterTweetsFromPerson = function (twitterFromPerson, t
 
 Process.prototype.reportBusinessData = function (businessName, businessNumber, location) {
 	return "testResult";
+};
+
+Process.prototype.reportNumEarthquakes = function (earthquakePeriod) {
+
+	var earthquakeReport = null;
+
+	if ( ! cacheController.hasCachedEarthquakeReport(earthquakePeriod) ){
+
+		//Use AJAX to retrieve data.
+		var urlBase = "earthquakes";
+		var isAsync = false;
+        var jsonArgs = { "earthquakePeriod": earthquakePeriod };
+		var ajaxResponse = Process.prototype.earthquakeAjaxRequest(urlBase, jsonArgs, isAsync);
+
+		var json = JSON.parse( ajaxResponse );
+		console.log(json);
+		earthquakeReport = json.earthquakeReport;
+        cacheController.addEarthquakeReport(earthquakePeriod, earthquakeReport);
+	} else {
+		earthquakeReport = cacheController.getCachedEarthquakeReport(earthquakePeriod);
+        console.log("earthquakeReport found in cache:");
+	}
+
+
+	var earthquakeValue = "";
+	if (earthquakeReport != null) {
+        earthquakeValue = earthquakeReport['earthquakes'].length;
+	}
+
+	return earthquakeValue;
+};
+
+Process.prototype.reportEarthquakeData = function (earthquakeQuery, earthquakeIndex, earthquakePeriod) {
+
+	var earthquakeReport = null;
+
+	if ( ! cacheController.hasCachedEarthquakeReport(earthquakePeriod) ){
+
+		//Use AJAX to retrieve data.
+		var urlBase = "earthquakes";
+		var isAsync = false;
+        var jsonArgs = { "earthquakePeriod": earthquakePeriod };
+		var ajaxResponse = Process.prototype.earthquakeAjaxRequest(urlBase, jsonArgs, isAsync);
+
+		var json = JSON.parse( ajaxResponse );
+		console.log(json);
+		earthquakeReport = json.earthquakeReport;
+        cacheController.addEarthquakeReport(earthquakePeriod, earthquakeReport);
+	} else {
+		earthquakeReport = cacheController.getCachedEarthquakeReport(earthquakePeriod);
+        console.log("earthquakeReport found in cache:");
+	}
+
+
+	var earthquakeValue = "";
+	if (earthquakeReport != null) {
+        if (this.inputOption(earthquakeQuery) === 'magnitude'){
+			earthquakeValue = earthquakeReport['earthquakes'][earthquakeIndex - 1]['magnitude'];
+		}
+        else if (this.inputOption(earthquakeQuery) === 'latitude'){
+			earthquakeValue = earthquakeReport['earthquakes'][earthquakeIndex - 1]['location']['latitude'];
+		}
+        else if (this.inputOption(earthquakeQuery) === 'longitude'){
+			earthquakeValue = earthquakeReport['earthquakes'][earthquakeIndex - 1]['location']['longitude'];
+		}
+        else if (this.inputOption(earthquakeQuery) === 'location description'){
+			earthquakeValue = earthquakeReport['earthquakes'][earthquakeIndex - 1]['location_description'];
+		}
+        else if (this.inputOption(earthquakeQuery) === 'url'){
+			earthquakeValue = earthquakeReport['earthquakes'][earthquakeIndex - 1]['url'];
+		}
+        else if (this.inputOption(earthquakeQuery) === 'all info'){
+            //Get the object.
+            var tempValue = earthquakeReport['earthquakes'][earthquakeIndex - 1];
+            //Convert to JSON string.
+            var earthquakeValue = JSON.stringify(tempValue, null, '\t');
+		}
+		else {
+			earthquakeValue = 65;
+		}
+
+	}
+
+	return earthquakeValue;
 };
 
 
@@ -4211,6 +4330,7 @@ UpvarReference.prototype.allNamesDict = VariableFrame.prototype.allNamesDict;
 function CacheController() {
     this.httpRequestCache = { };
 	this.weatherCache = { };
+    this.earthquakeCache = { };
 	this.redditCache = { };
 	this.crimesCache = { };
 	
@@ -4249,6 +4369,24 @@ CacheController.prototype.hasCachedWeatherReport = function(location) {
 
 CacheController.prototype.getCachedWeatherReport = function(location) {
 	return this.weatherCache[location];
+};
+
+
+
+CacheController.prototype.addEarthquakeReport = function(earthquakePeriod, earthquakeReport) {
+	//Add in the new earthquakeReport. Key = earthquakePeriod. Value = earthquakeReport.
+	this.earthquakeCache[earthquakePeriod] = earthquakeReport;
+};
+
+CacheController.prototype.hasCachedEarthquakeReport = function(earthquakePeriod) {
+	if(earthquakePeriod in this.earthquakeCache){
+		return true;
+	}
+	return false;
+};
+
+CacheController.prototype.getCachedEarthquakeReport = function(earthquakePeriod) {
+	return this.earthquakeCache[earthquakePeriod];
 };
 
 

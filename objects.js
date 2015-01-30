@@ -1262,6 +1262,22 @@ SpriteMorph.prototype.initBlocks = function () {
             spec: '%cloudOutline get %businessFactor from business number %n from location: %txt (Prototype)',
             defaults: ['name', 1, 'Seattle, WA']
         },
+        reportNumEarthquakes: {
+            type: 'reporter',
+            category: 'data',
+            spec: '%cloudOutline get # of earthquakes for past %earthquakePeriod',
+            defaults: ['day']
+        },
+        reportEarthquakeData: {
+            type: 'reporter',
+            category: 'data',
+            spec: '%cloudOutline get %earthquakeQuery of earthquake # %n for past %earthquakePeriod',
+            defaults: ['magnitude', 1, 'day']
+        },
+
+
+
+
         //End of Data Blocks.
 
         //Google Maps Blocks.
@@ -2266,6 +2282,9 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push('=');
         blocks.push(block('reportLatitude'));
         blocks.push(block('reportLongitude'));
+        blocks.push('=');
+        blocks.push(block('reportNumEarthquakes'));
+        blocks.push(block('reportEarthquakeData'));
         blocks.push('=');
         blocks.push(block('reportBusinessData'));
 
@@ -5398,6 +5417,9 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push('=');
         blocks.push(block('reportLatitude'));
         blocks.push(block('reportLongitude'));
+        blocks.push('=');
+        blocks.push(block('reportNumEarthquakes'));
+        blocks.push(block('reportEarthquakeData'));
         blocks.push('=');
         blocks.push(block('reportBusinessData'));
 
