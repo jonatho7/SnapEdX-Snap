@@ -1291,6 +1291,16 @@ SpriteMorph.prototype.initBlocks = function () {
             spec: '%crosshairs place circle at latitude: %txt longitude: %txt with radius: %n',
             defaults: ['38.8951','-77.0367', 200.0]
         },
+        doRemoveMarkers: {
+            type: 'command',
+            category: 'API Tools',
+            spec: '%crosshairs remove all markers from map'
+        },
+        doRemoveCircles: {
+            type: 'command',
+            category: 'API Tools',
+            spec: '%crosshairs remove all circles from map'
+        },
 
 
 
@@ -2265,6 +2275,8 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push('=');
         blocks.push(block('doPlaceMarker'));
         blocks.push(block('doPlaceCircle'));
+        blocks.push(block('doRemoveMarkers'));
+        blocks.push(block('doRemoveCircles'));
 
 
     } else if (cat === 'data') {
@@ -5402,6 +5414,8 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push('=');
         blocks.push(block('doPlaceMarker'));
         blocks.push(block('doPlaceCircle'));
+        blocks.push(block('doRemoveMarkers'));
+        blocks.push(block('doRemoveCircles'));
 
     } else if (cat === 'data') {
 

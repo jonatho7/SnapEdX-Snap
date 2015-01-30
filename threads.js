@@ -3588,7 +3588,7 @@ Process.prototype.doPlaceMarker = function (latitude, longitude) {
         map: googleMap,
         title:"Hello World!"
     });
-
+    googleMarkerList.push(marker);
 };
 
 
@@ -3611,9 +3611,31 @@ Process.prototype.doPlaceCircle = function (latitude, longitude, radius) {
 
     // Add the circle for this city to the map.
     var circle = new google.maps.Circle(circleOptions);
+    googleCircleList.push(circle);
 
 };
 
+
+Process.prototype.doRemoveMarkers = function () {
+
+    //Removes all the markers from the Google Map.
+    for(var i = 0; i < googleMarkerList.length; i++){
+        googleMarkerList[i].setMap(null);
+    }
+    googleMarkerList = [];
+
+};
+
+
+Process.prototype.doRemoveCircles = function () {
+
+    //Removes all the circles from the Google Map.
+    for(var i = 0; i < googleCircleList.length; i++){
+        googleCircleList[i].setMap(null);
+    }
+    googleCircleList = [];
+
+};
 //End of Google Maps Blocks
 
 
@@ -4477,8 +4499,8 @@ CacheController.prototype.addHttpRequestToCache = function(urlString, numSeconds
 };
 
 
-
 var cacheController = new CacheController();
 
-
+var googleMarkerList = [];
+var googleCircleList = [];
 
