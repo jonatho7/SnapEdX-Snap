@@ -1276,8 +1276,6 @@ SpriteMorph.prototype.initBlocks = function () {
         },
 
 
-
-
         //End of Data Blocks.
 
         //Google Maps Blocks.
@@ -1287,6 +1285,13 @@ SpriteMorph.prototype.initBlocks = function () {
             spec: '%crosshairs place marker at latitude: %txt longitude: %txt',
             defaults: ['-25','130']
         },
+        doPlaceCircle: {
+            type: 'command',
+            category: 'API Tools',
+            spec: '%crosshairs place circle at latitude: %txt longitude: %txt with radius: %n',
+            defaults: ['-25','130', 50.0]
+        },
+
 
 
         // MAP - experimental
@@ -2259,6 +2264,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportJSONData'));
         blocks.push('=');
         blocks.push(block('doPlaceMarker'));
+        blocks.push(block('doPlaceCircle'));
 
 
     } else if (cat === 'data') {
@@ -5395,6 +5401,7 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportJSONData'));
         blocks.push('=');
         blocks.push(block('doPlaceMarker'));
+        blocks.push(block('doPlaceCircle'));
 
     } else if (cat === 'data') {
 

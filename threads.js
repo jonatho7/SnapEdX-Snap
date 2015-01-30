@@ -3578,23 +3578,43 @@ Process.prototype.reportTestBlock = function () {
 
 //Start of Google Maps Blocks.
 Process.prototype.doPlaceMarker = function (latitude, longitude) {
-    //Add a marker.
 
-    //latitude = -25;
-    //longitude = 130;
-
-    //var myLatlng = new google.maps.LatLng(-25.363882,131.044922);
+    //Create a LatLng object.
     var myLatlng = new google.maps.LatLng(latitude,longitude);
 
+    //Add a marker.
     var marker = new google.maps.Marker({
         position: myLatlng,
         map: googleMap,
         title:"Hello World!"
     });
 
-    return 50;
+};
+
+
+Process.prototype.doPlaceCircle = function (latitude, longitude, radius) {
+
+    //Create a LatLng object.
+    var circleCenter = new google.maps.LatLng(latitude,longitude);
+    var newRadius = radius * 1000 * (71.0/90.0);
+
+    var circleOptions = {
+        strokeColor: '#FF0000',
+        strokeOpacity: 0.8,
+        strokeWeight: 1,
+        fillColor: '#FF0000',
+        fillOpacity: 0.3,
+        map: googleMap,
+        center: circleCenter,
+        radius: newRadius
+    };
+
+    // Add the circle for this city to the map.
+    var circle = new google.maps.Circle(circleOptions);
 
 };
+
+//End of Google Maps Blocks
 
 
 //Start of API Tools blocks.
