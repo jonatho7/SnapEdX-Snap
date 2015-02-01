@@ -1144,32 +1144,7 @@ SpriteMorph.prototype.initBlocks = function () {
             defaults: [1, null, localize('thing')]
         },
 
-
-        //API Tools Blocks.
-        reportURLUsingServer: {
-            type: 'reporter',
-            category: 'API Tools',
-            spec: 'http:// %http7',
-            defaults: ['forecast.weather.gov/MapClick.php?', 'lat=', '37.2295733', '&lon=', '-80.4139393', '&FcstType=', 'json']
-            //defaults: ['forecast.weather.gov/MapClick.php?lat=37.2295733&lon=-80.4139393', '&FcstType=json',]
-        },
-        reportURLWithCaching: {
-            type: 'reporter',
-            category: 'API Tools',
-            spec: 'http:// %http1 and keep result stored for %n seconds (Prototype)',
-            defaults: ['date.jsontest.com', '60']
-        },
-        reportJSONData: {
-            type: 'reporter',
-            category: 'API Tools',
-            spec: 'from JSON text %txt get %mult%txt',
-            defaults: ['','']
-        },
-
-
-
-
-        //Data Blocks.
+        //Start of Data Blocks.
 
         reportDate: {
             type: 'reporter',
@@ -1274,11 +1249,32 @@ SpriteMorph.prototype.initBlocks = function () {
             spec: '%cloudOutline get %earthquakeQuery of earthquake # %n for past %earthquakePeriod',
             defaults: ['magnitude', 1, 'day']
         },
-
-
         //End of Data Blocks.
 
-        //Google Maps Blocks.
+
+        //API Tools Blocks.
+        reportURLUsingServer: {
+            type: 'reporter',
+            category: 'API Tools',
+            spec: 'http:// %http7',
+            defaults: ['forecast.weather.gov/MapClick.php?', 'lat=', '37.2295733', '&lon=', '-80.4139393', '&FcstType=', 'json']
+            //defaults: ['forecast.weather.gov/MapClick.php?lat=37.2295733&lon=-80.4139393', '&FcstType=json',]
+        },
+        reportURLWithCaching: {
+            type: 'reporter',
+            category: 'API Tools',
+            spec: 'http:// %http1 and keep result stored for %n seconds (Prototype)',
+            defaults: ['date.jsontest.com', '60']
+        },
+        reportJSONData: {
+            type: 'reporter',
+            category: 'API Tools',
+            spec: 'from JSON text %txt get %mult%txt',
+            defaults: ['','']
+        },
+
+
+        //Start of Google Maps Blocks.
         doPlaceMarker: {
             type: 'command',
             category: 'API Tools',
@@ -1301,6 +1297,37 @@ SpriteMorph.prototype.initBlocks = function () {
             category: 'API Tools',
             spec: '%crosshairs remove all circles from map'
         },
+        //End of Google Maps Blocks.
+
+        // Start of MapReduce Blocks.
+        reportMapReduceMaximum: {
+            type: 'reporter',
+            category: 'API Tools',
+            spec: '%gears MapReduce - get maximum %mapReduceFactor of column # %n row # %n to # %n of sheet # %n at URL: %txt',
+            defaults: ['value', 1, 1, 50, 1, 'Google Sheets URL']
+        },
+        reportMapReduceMinimum: {
+            type: 'reporter',
+            category: 'API Tools',
+            spec: '%gears MapReduce - get minimum %mapReduceFactor of column # %n row # %n to # %n of sheet # %n at URL: %txt',
+            defaults: ['value', 1, 1, 50, 1, 'Google Sheets URL']
+        },
+        reportMapReduceAverage: {
+            type: 'reporter',
+            category: 'API Tools',
+            spec: '%gears MapReduce - get average %mapReduceFactor of column # %n row # %n to # %n of sheet # %n at URL: %txt',
+            defaults: ['value', 1, 1, 50, 1, 'Google Sheets URL']
+        },
+        reportMapReduceWordFrequency: {
+            type: 'reporter',
+            category: 'API Tools',
+            spec: '%gears MapReduce - get word frequency of words %l from file at URL: %txt',
+            defaults: [null, 'Google Sheets URL']
+        },
+        //End of MapReduce Blocks.
+
+
+
 
 
 
@@ -2270,13 +2297,17 @@ SpriteMorph.prototype.blockTemplates = function (category) {
 
         blocks.push(block('reportURLUsingServer'));
         blocks.push(block('reportURLWithCaching'));
-        blocks.push('=');
         blocks.push(block('reportJSONData'));
         blocks.push('=');
         blocks.push(block('doPlaceMarker'));
         blocks.push(block('doPlaceCircle'));
         blocks.push(block('doRemoveMarkers'));
         blocks.push(block('doRemoveCircles'));
+        blocks.push('=');
+        blocks.push(block('reportMapReduceMaximum'));
+        blocks.push(block('reportMapReduceMinimum'));
+        blocks.push(block('reportMapReduceAverage'));
+        blocks.push(block('reportMapReduceWordFrequency'));
 
 
     } else if (cat === 'data') {
@@ -5409,13 +5440,17 @@ StageMorph.prototype.blockTemplates = function (category) {
 
         blocks.push(block('reportURLUsingServer'));
         blocks.push(block('reportURLWithCaching'));
-        blocks.push('=');
         blocks.push(block('reportJSONData'));
         blocks.push('=');
         blocks.push(block('doPlaceMarker'));
         blocks.push(block('doPlaceCircle'));
         blocks.push(block('doRemoveMarkers'));
         blocks.push(block('doRemoveCircles'));
+        blocks.push('=');
+        blocks.push(block('reportMapReduceMaximum'));
+        blocks.push(block('reportMapReduceMinimum'));
+        blocks.push(block('reportMapReduceAverage'));
+        blocks.push(block('reportMapReduceWordFrequency'));
 
     } else if (cat === 'data') {
 

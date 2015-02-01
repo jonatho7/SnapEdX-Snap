@@ -3731,6 +3731,29 @@ Process.prototype.reportJSONData = function (jsonText, jsonParams) {
 	return jsonResult;
 };
 
+
+Process.prototype.reportMapReduceMaximum = function (columnNumber, rowStart, rowEnd, sheetNumber, sheetsURL) {
+
+    return 500;
+};
+
+Process.prototype.reportMapReduceMinimum = function (columnNumber, rowStart, rowEnd, sheetNumber, sheetsURL) {
+
+    return 600;
+};
+
+Process.prototype.reportMapReduceAverage = function (columnNumber, rowStart, rowEnd, sheetNumber, sheetsURL) {
+
+    return 700;
+};
+
+Process.prototype.reportMapReduceWordFrequency = function (columnNumber, rowStart, rowEnd, sheetNumber, sheetsURL) {
+
+    return 800;
+};
+
+
+
 //End of API Tools blocks.
 
 
