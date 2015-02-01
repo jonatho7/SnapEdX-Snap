@@ -35,6 +35,29 @@ var main = function() {
 
 
 
+
+    $("#goButton").click(function () {
+        console.log("Clicked on goButton.");
+    });
+
+    $("#getValueButton").click(function () {
+        console.log("Clicked on getValueButton.");
+
+        //var check=document.getElementById("myFrame").contentDocument;
+
+        var check = window.frames[0].window.googleMarkerList;
+
+        console.log(check);
+        alert(check)
+
+        //Here is code for how to access a parent ID element from inside of the iframe.
+        //window.parent.document.getElementById('target');
+        //from http://stackoverflow.com/questions/7027799/access-elements-of-parent-window-from-iframe
+
+;
+    });
+
+
 };
 
 $(document).ready(main);
