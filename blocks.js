@@ -1047,7 +1047,20 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
                 },
                 true // read-only
             );
-            part.setContents(['day']);
+            part.setContents(['magnitude']);
+            break;
+        case '%mapReduceFactor':
+            part = new InputSlotMorph(
+                null, // text
+                false, // non-numeric
+                {
+                    'value' : ['value'],
+                    'row' : ['row'],
+                    'all details' : ['all details']
+                },
+                true // read-only
+            );
+            part.setContents(['value']);
             break;
         case '%http1':
             part = new MultiArgMorph('%s', null, 0);
@@ -1518,6 +1531,16 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
             break;
         case '%crosshairs':
             part = new SymbolMorph('crosshairs');
+            part.size = this.fontSize * 1.2;
+            part.color = new Color(255, 255, 255);
+            part.isProtectedLabel = true; // doesn't participate in zebraing
+            part.shadowColor = this.color.darker(this.labelContrast);
+            part.shadowOffset = MorphicPreferences.isFlat ?
+                new Point() : this.embossing;
+            part.drawNew();
+            break;
+        case '%gears':
+            part = new SymbolMorph('gears');
             part.size = this.fontSize * 1.2;
             part.color = new Color(255, 255, 255);
             part.isProtectedLabel = true; // doesn't participate in zebraing
