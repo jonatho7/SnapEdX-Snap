@@ -1278,14 +1278,20 @@ SpriteMorph.prototype.initBlocks = function () {
         doPlaceMarker: {
             type: 'command',
             category: 'API Tools',
-            spec: '%crosshairs place marker at latitude: %txt longitude: %txt',
+            spec: '%crosshairs place marker at latitude: %n longitude: %n',
             defaults: ['38.8951','-77.0367']
         },
         doPlaceCircle: {
             type: 'command',
             category: 'API Tools',
-            spec: '%crosshairs place circle at latitude: %txt longitude: %txt with radius: %n',
+            spec: '%crosshairs place circle at latitude: %n longitude: %n radius: %n',
             defaults: ['38.8951','-77.0367', 200.0]
+        },
+        doPlacePoint: {
+            type: 'command',
+            category: 'API Tools',
+            spec: '%crosshairs place point at latitude: %n longitude: %n size: %n',
+            defaults: ['38.8951','-77.0367', 30]
         },
         doRemoveMarkers: {
             type: 'command',
@@ -1296,6 +1302,11 @@ SpriteMorph.prototype.initBlocks = function () {
             type: 'command',
             category: 'API Tools',
             spec: '%crosshairs remove all circles from map'
+        },
+        doRemovePoints: {
+            type: 'command',
+            category: 'API Tools',
+            spec: '%crosshairs remove all points from map'
         },
         //End of Google Maps Blocks.
 
@@ -2301,8 +2312,11 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push('=');
         blocks.push(block('doPlaceMarker'));
         blocks.push(block('doPlaceCircle'));
+        blocks.push(block('doPlacePoint'));
+        blocks.push('=');
         blocks.push(block('doRemoveMarkers'));
         blocks.push(block('doRemoveCircles'));
+        blocks.push(block('doRemovePoints'));
         blocks.push('=');
         blocks.push(block('reportMapReduceMaximum'));
         blocks.push(block('reportMapReduceMinimum'));
@@ -5444,8 +5458,11 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push('=');
         blocks.push(block('doPlaceMarker'));
         blocks.push(block('doPlaceCircle'));
+        blocks.push(block('doPlacePoint'));
+        blocks.push('=');
         blocks.push(block('doRemoveMarkers'));
         blocks.push(block('doRemoveCircles'));
+        blocks.push(block('doRemovePoints'));
         blocks.push('=');
         blocks.push(block('reportMapReduceMaximum'));
         blocks.push(block('reportMapReduceMinimum'));

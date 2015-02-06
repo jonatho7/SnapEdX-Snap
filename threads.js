@@ -3615,6 +3615,60 @@ Process.prototype.doPlaceCircle = function (latitude, longitude, radius) {
 
 };
 
+Process.prototype.doPlacePoint = function (latitude, longitude, size) {
+
+    var newSize = Math.sqrt(size);
+
+    var pointOneJSON =
+    {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "type": "Feature",
+                "properties": {
+                    "size": newSize
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        longitude,
+                        latitude
+                    ]
+                }
+            }
+        ]
+    };
+
+    //Add the json data to the map.
+    var addedFeature = googleMap.data.addGeoJson(pointOneJSON);
+    console.log(addedFeature);
+
+    //Save a reference to the addedFeature, so I can remove it later.
+    googlePointList.push(addedFeature);
+
+    googleMap.data.setStyle(function(feature) {
+        var magnitude = feature.getProperty('size');
+        return {
+            icon: getCircle(magnitude)
+        };
+    });
+
+    function getCircle(magnitude) {
+        var circle = {
+            path: google.maps.SymbolPath.CIRCLE,
+            fillColor: 'red',
+            fillOpacity: .2,
+            scale: Math.pow(2, magnitude) / 2,
+            strokeColor: 'white',
+            strokeWeight: .5
+        };
+        return circle;
+    }
+
+
+
+};
+
 
 Process.prototype.doRemoveMarkers = function () {
 
@@ -3634,6 +3688,19 @@ Process.prototype.doRemoveCircles = function () {
         googleCircleList[i].setMap(null);
     }
     googleCircleList = [];
+
+};
+
+Process.prototype.doRemovePoints = function () {
+
+    //Removes all the points from the Google Map.
+    for(var i = 0; i < googlePointList.length; i++){
+        for(var j = 0; j < googlePointList[i].length; j++){
+            googleMap.data.remove(googlePointList[i][j]);
+        }
+
+    }
+    googlePointList = [];
 
 };
 //End of Google Maps Blocks
@@ -4526,4 +4593,5 @@ var cacheController = new CacheController();
 
 var googleMarkerList = [];
 var googleCircleList = [];
+var googlePointList = [];
 
