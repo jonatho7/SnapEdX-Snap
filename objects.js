@@ -2080,10 +2080,8 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push('-');
         blocks.push(block('reportIsFastTracking'));
         blocks.push(block('doSetFastTracking'));
-        //blocks.push('-');
-        //blocks.push(block('reportDate'));
-        //blocks.push('-');
-        //blocks.push(block('reportTestBlock'));
+        blocks.push('-');
+        blocks.push(block('reportTestBlock'));
 
     // for debugging: ///////////////
 
@@ -5234,8 +5232,8 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push('-');
         blocks.push(block('reportIsFastTracking'));
         blocks.push(block('doSetFastTracking'));
-        //blocks.push('-');
-        //blocks.push(block('reportTestBlock'));
+        blocks.push('-');
+        blocks.push(block('reportTestBlock'));
         
 
     // for debugging: ///////////////
