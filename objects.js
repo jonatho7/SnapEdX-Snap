@@ -1254,7 +1254,7 @@ SpriteMorph.prototype.initBlocks = function () {
         //End of Data Blocks.
 
 
-        //Data Tools Blocks.
+        //Start of Data Tools Blocks.
         reportURLUsingServer: {
             type: 'reporter',
             category: 'Data Tools',
@@ -1274,6 +1274,74 @@ SpriteMorph.prototype.initBlocks = function () {
             spec: 'from JSON text %txt get %mult%txt',
             defaults: ['','']
         },
+
+
+        reportDataMaximum: {
+            type: 'reporter',
+            category: 'Data Tools',
+            spec: '%gears get maximum %dataFactor of column # %n row # %n to # %n of sheet # %n at URL: %txt',
+            defaults: ['value', 1, 1, 50, 1, 'Google Sheets URL']
+        },
+        reportDataMinimum: {
+            type: 'reporter',
+            category: 'Data Tools',
+            spec: '%gears get minimum %dataFactor of column # %n row # %n to # %n of sheet # %n at URL: %txt',
+            defaults: ['value', 1, 1, 50, 1, 'Google Sheets URL']
+        },
+        reportDataAverage: {
+            type: 'reporter',
+            category: 'Data Tools',
+            spec: '%gears get average %dataFactorWithoutRow of column # %n row # %n to # %n of sheet # %n at URL: %txt',
+            defaults: ['value', 1, 1, 50, 1, 'Google Sheets URL']
+        },
+        reportDataSum: {
+            type: 'reporter',
+            category: 'Data Tools',
+            spec: '%gears get sum %dataFactorWithoutRow of column # %n row # %n to # %n of sheet # %n at URL: %txt',
+            defaults: ['value', 1, 1, 50, 1, 'Google Sheets URL']
+        },
+        reportDataWordFrequency: {
+            type: 'reporter',
+            category: 'Data Tools',
+            spec: '%gears get word frequency of words %l from file at URL: %txt',
+            defaults: [null, 'Google Sheets URL']
+        },
+
+
+
+        reportDataSelector: {
+            type: 'reporter',
+            category: 'Data Tools',
+            spec: '%gears SELECT: %dataSelector FROM URL: %txt WHERE condition: %txt with filter: %txt',
+            defaults: [null, 'Google Sheets URL', null, null ]
+        },
+
+
+
+        reportDataCondition: {
+            type: 'reporter',
+            category: 'Data Tools',
+            spec: '%gears condition: %txt %dataOperator %txt',
+            defaults: ['WEEK', null, '26']
+        },
+
+
+
+        reportDataFilterOrderBy: {
+            type: 'reporter',
+            category: 'Data Tools',
+            spec: '%gears filter: ORDER BY: %txt %dataOrderBy',
+            defaults: ['WEEK', null]
+        },
+        reportDataFilterLimit: {
+            type: 'reporter',
+            category: 'Data Tools',
+            spec: '%gears filter: start at index: %n and get: %n records',
+            defaults: [1, 50]
+        },
+
+
+        //End of Data Tools Blocks.
 
 
         //Start of Google Maps Blocks.
@@ -1312,32 +1380,7 @@ SpriteMorph.prototype.initBlocks = function () {
         },
         //End of Google Maps Blocks.
 
-        // Start of MapReduce Blocks.
-        reportMapReduceMaximum: {
-            type: 'reporter',
-            category: 'Data Tools',
-            spec: '%gears MapReduce - get maximum %mapReduceFactor of column # %n row # %n to # %n of sheet # %n at URL: %txt',
-            defaults: ['value', 1, 1, 50, 1, 'Google Sheets URL']
-        },
-        reportMapReduceMinimum: {
-            type: 'reporter',
-            category: 'Data Tools',
-            spec: '%gears MapReduce - get minimum %mapReduceFactor of column # %n row # %n to # %n of sheet # %n at URL: %txt',
-            defaults: ['value', 1, 1, 50, 1, 'Google Sheets URL']
-        },
-        reportMapReduceAverage: {
-            type: 'reporter',
-            category: 'Data Tools',
-            spec: '%gears MapReduce - get average %mapReduceFactor of column # %n row # %n to # %n of sheet # %n at URL: %txt',
-            defaults: ['value', 1, 1, 50, 1, 'Google Sheets URL']
-        },
-        reportMapReduceWordFrequency: {
-            type: 'reporter',
-            category: 'Data Tools',
-            spec: '%gears MapReduce - get word frequency of words %l from file at URL: %txt',
-            defaults: [null, 'Google Sheets URL']
-        },
-        //End of MapReduce Blocks.
+
 
 
 
@@ -2320,10 +2363,16 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         //blocks.push(block('reportURLWithCaching')); Discontinued.
         blocks.push(block('reportJSONData'));
         blocks.push('=');
-        blocks.push(block('reportMapReduceMaximum'));
-        blocks.push(block('reportMapReduceMinimum'));
-        blocks.push(block('reportMapReduceAverage'));
-        blocks.push(block('reportMapReduceWordFrequency'));
+        blocks.push(block('reportDataMaximum'));
+        blocks.push(block('reportDataMinimum'));
+        blocks.push(block('reportDataAverage'));
+        blocks.push(block('reportDataSum'));
+        blocks.push(block('reportDataWordFrequency'));
+        blocks.push('=');
+        blocks.push(block('reportDataSelector'));
+        blocks.push(block('reportDataCondition'));
+        blocks.push(block('reportDataFilterOrderBy'));
+        blocks.push(block('reportDataFilterLimit'));
 
 
     } else if (cat === 'data') {
@@ -5468,10 +5517,16 @@ StageMorph.prototype.blockTemplates = function (category) {
         //blocks.push(block('reportURLWithCaching'));
         blocks.push(block('reportJSONData'));
         blocks.push('=');
-        blocks.push(block('reportMapReduceMaximum'));
-        blocks.push(block('reportMapReduceMinimum'));
-        blocks.push(block('reportMapReduceAverage'));
-        blocks.push(block('reportMapReduceWordFrequency'));
+        blocks.push(block('reportDataMaximum'));
+        blocks.push(block('reportDataMinimum'));
+        blocks.push(block('reportDataAverage'));
+        blocks.push(block('reportDataSum'));
+        blocks.push(block('reportDataWordFrequency'));
+        blocks.push('=');
+        blocks.push(block('reportDataSelector'));
+        blocks.push(block('reportDataCondition'));
+        blocks.push(block('reportDataFilterOrderBy'));
+        blocks.push(block('reportDataFilterLimit'));
 
     } else if (cat === 'data') {
 

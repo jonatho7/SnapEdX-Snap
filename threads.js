@@ -3799,26 +3799,56 @@ Process.prototype.reportJSONData = function (jsonText, jsonParams) {
 };
 
 
-Process.prototype.reportMapReduceMaximum = function (columnNumber, rowStart, rowEnd, sheetNumber, sheetsURL) {
+Process.prototype.reportDataMaximum = function (columnNumber, rowStart, rowEnd, sheetNumber, sheetsURL) {
 
     return 500;
 };
 
-Process.prototype.reportMapReduceMinimum = function (columnNumber, rowStart, rowEnd, sheetNumber, sheetsURL) {
+Process.prototype.reportDataMinimum = function (columnNumber, rowStart, rowEnd, sheetNumber, sheetsURL) {
 
     return 600;
 };
 
-Process.prototype.reportMapReduceAverage = function (columnNumber, rowStart, rowEnd, sheetNumber, sheetsURL) {
+Process.prototype.reportDataAverage = function (columnNumber, rowStart, rowEnd, sheetNumber, sheetsURL) {
 
     return 700;
 };
 
-Process.prototype.reportMapReduceWordFrequency = function (columnNumber, rowStart, rowEnd, sheetNumber, sheetsURL) {
+Process.prototype.reportDataSum = function (columnNumber, rowStart, rowEnd, sheetNumber, sheetsURL) {
+
+    return 750;
+};
+
+Process.prototype.reportDataWordFrequency = function (columnNumber, rowStart, rowEnd, sheetNumber, sheetsURL) {
 
     return 800;
 };
 
+
+
+Process.prototype.reportDataSelector = function (selectedFields, sheetsURL, conditionsText, filtersText) {
+
+    return 850;
+};
+
+
+
+Process.prototype.reportDataCondition = function (field, dataOperator, value) {
+
+    return 875;
+};
+
+
+
+Process.prototype.reportDataFilterOrderBy = function (field, orderByType) {
+
+    return 875;
+};
+
+Process.prototype.reportDataFilterLimit = function (startIndex, numRecords) {
+
+    return 900;
+};
 
 
 //End of Data Tools blocks.

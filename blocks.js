@@ -1049,7 +1049,7 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
             );
             part.setContents(['magnitude']);
             break;
-        case '%mapReduceFactor':
+        case '%dataFactor':
             part = new InputSlotMorph(
                 null, // text
                 false, // non-numeric
@@ -1061,6 +1061,55 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
                 true // read-only
             );
             part.setContents(['value']);
+            break;
+        case '%dataFactorWithoutRow':
+            part = new InputSlotMorph(
+                null, // text
+                false, // non-numeric
+                {
+                    'value' : ['value'],
+                    'all details' : ['all details']
+                },
+                true // read-only
+            );
+            part.setContents(['value']);
+            break;
+        case '%dataSelector':
+            part = new InputSlotMorph(
+                null,
+                false,
+                {
+                    'all fields' : ['all fields']
+                }
+            );
+            part.setContents(['all fields']);
+            break;
+        case '%dataOperator':
+            part = new InputSlotMorph(
+                null,
+                false,
+                {
+                    '>' : ['>'],
+                    '<' : ['<'],
+                    '=' : ['='],
+                    '>=' : ['>='],
+                    '<=' : ['<=']
+                },
+                true
+            );
+            part.setContents(['>']);
+            break;
+        case '%dataOrderBy':
+            part = new InputSlotMorph(
+                null,
+                false,
+                {
+                    'Ascending' : ['Ascending'],
+                    'Descending' : ['Descending']
+                },
+                true
+            );
+            part.setContents(['Ascending']);
             break;
         case '%http1':
             part = new MultiArgMorph('%s', null, 0);
