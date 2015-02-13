@@ -1258,9 +1258,8 @@ SpriteMorph.prototype.initBlocks = function () {
         reportURLUsingServer: {
             type: 'reporter',
             category: 'Data Tools',
-            spec: 'return JSON from URL: http:// %http7',
-            defaults: ['forecast.weather.gov/MapClick.php?', 'lat=', '37.2295733', '&lon=', '-80.4139393', '&FcstType=', 'json']
-            //defaults: ['forecast.weather.gov/MapClick.php?lat=37.2295733&lon=-80.4139393', '&FcstType=json',]
+            spec: 'return JSON from URL: http:// %http1',
+            defaults: ['forecast.weather.gov/MapClick.php?lat=37.2295733&lon=-80.4139393&FcstType=json']
         },
         reportURLWithCaching: {
             type: 'reporter',
@@ -1346,7 +1345,7 @@ SpriteMorph.prototype.initBlocks = function () {
             type: 'reporter',
             category: 'Data Tools',
             spec: '%gears retrieve data as list from column # %n row # %n to # %n of sheet # %n at URL: %txt',
-            defaults: [1, 1, 50, 1, 'Google Sheets URL']
+            defaults: [4, 3, 50, 1, 'spreadsheets.google.com/feeds/cells/1MV9UdRDTUPvgk9K4bxCavQjRrNcNnVFLNK79URV6n0Y/1/public/values?alt=json']
         },
         reportDataFromRow: {
             type: 'reporter',

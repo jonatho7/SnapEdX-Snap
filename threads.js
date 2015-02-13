@@ -3722,7 +3722,6 @@ Process.prototype.reportURLUsingServer = function (urlArray) {
     var ajaxResponse = Process.prototype.urlAjaxRequest(urlBase, jsonArgs, isAsync);
 
     var json = JSON.parse( ajaxResponse );
-    console.log(json);
 
     var urlReport = json['urlReport'];
     //Check to see if there is a valid urlReport object.
