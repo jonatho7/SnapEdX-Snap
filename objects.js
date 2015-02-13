@@ -1229,7 +1229,7 @@ SpriteMorph.prototype.initBlocks = function () {
         reportTestBlock: {
             type: 'reporter',
             category: 'sensing',
-            spec: 'testing block. Click Me.'
+            spec: 'testing block'
         },
         reportBusinessData: {
             type: 'reporter',

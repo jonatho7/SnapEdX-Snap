@@ -3572,11 +3572,6 @@ Process.prototype.reportEarthquakeData = function (earthquakeQuery, earthquakeIn
 
 
 Process.prototype.reportTestBlock = function () {
-
-
-
-
-
     return "5";
 };
 
