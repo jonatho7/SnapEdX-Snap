@@ -3842,12 +3842,24 @@ Process.prototype.reportDataCondition = function (field, dataOperator, value) {
 
 Process.prototype.reportDataFilterOrderBy = function (field, orderByType) {
 
-    return 875;
+    return 900;
 };
 
 Process.prototype.reportDataFilterLimit = function (startIndex, numRecords) {
 
-    return 900;
+    return 925;
+};
+
+
+
+Process.prototype.reportDataFromColumn = function (columnNumber, rowStart, rowEnd, sheetNumber, sheetsURL) {
+
+    return 950;
+};
+
+Process.prototype.reportDataFromRow = function (rowNumber, columnStart, columnEnd, sheetNumber, sheetsURL) {
+
+    return 975;
 };
 
 

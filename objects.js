@@ -1341,7 +1341,26 @@ SpriteMorph.prototype.initBlocks = function () {
         },
 
 
+
+        reportDataFromColumn: {
+            type: 'reporter',
+            category: 'Data Tools',
+            spec: '%gears retrieve data as list from column # %n row # %n to # %n of sheet # %n at URL: %txt',
+            defaults: [1, 1, 50, 1, 'Google Sheets URL']
+        },
+        reportDataFromRow: {
+            type: 'reporter',
+            category: 'Data Tools',
+            spec: '%gears retrieve data as list from row # %n column # %n to # %n of sheet # %n at URL: %txt',
+            defaults: [1, 1, 50, 1, 'Google Sheets URL']
+        },
+
+
+
         //End of Data Tools Blocks.
+
+
+
 
 
         //Start of Google Maps Blocks.
@@ -2373,6 +2392,9 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportDataCondition'));
         blocks.push(block('reportDataFilterOrderBy'));
         blocks.push(block('reportDataFilterLimit'));
+        blocks.push('=');
+        blocks.push(block('reportDataFromColumn'));
+        blocks.push(block('reportDataFromRow'));
 
 
     } else if (cat === 'data') {
@@ -5527,6 +5549,9 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportDataCondition'));
         blocks.push(block('reportDataFilterOrderBy'));
         blocks.push(block('reportDataFilterLimit'));
+        blocks.push('=');
+        blocks.push(block('reportDataFromColumn'));
+        blocks.push(block('reportDataFromRow'));
 
     } else if (cat === 'data') {
 
