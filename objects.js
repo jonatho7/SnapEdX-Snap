@@ -1258,7 +1258,7 @@ SpriteMorph.prototype.initBlocks = function () {
         reportURLUsingServer: {
             type: 'reporter',
             category: 'Data Tools',
-            spec: 'http:// %http7',
+            spec: 'return JSON from URL: http:// %http7',
             defaults: ['forecast.weather.gov/MapClick.php?', 'lat=', '37.2295733', '&lon=', '-80.4139393', '&FcstType=', 'json']
             //defaults: ['forecast.weather.gov/MapClick.php?lat=37.2295733&lon=-80.4139393', '&FcstType=json',]
         },
@@ -2317,7 +2317,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
     }  else if (cat === 'Data Tools') {
 
         blocks.push(block('reportURLUsingServer'));
-        blocks.push(block('reportURLWithCaching'));
+        //blocks.push(block('reportURLWithCaching')); Discontinued.
         blocks.push(block('reportJSONData'));
         blocks.push('=');
         blocks.push(block('reportMapReduceMaximum'));
@@ -5465,7 +5465,7 @@ StageMorph.prototype.blockTemplates = function (category) {
     } else if (cat === 'Data Tools') {
 
         blocks.push(block('reportURLUsingServer'));
-        blocks.push(block('reportURLWithCaching'));
+        //blocks.push(block('reportURLWithCaching'));
         blocks.push(block('reportJSONData'));
         blocks.push('=');
         blocks.push(block('reportMapReduceMaximum'));
