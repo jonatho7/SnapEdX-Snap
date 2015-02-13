@@ -165,8 +165,9 @@ SpriteMorph.prototype.categories =
         'variables',
         'lists',
         'other',
+        'mapping',
         'data',
-        'API Tools'
+        'Data Tools'
 
     ];
 
@@ -181,7 +182,8 @@ SpriteMorph.prototype.blockColor = {
     variables : new Color(243, 118, 29),
     lists : new Color(217, 77, 17),
     other: new Color(150, 150, 150),
-    'API Tools': new Color(209, 111, 163),
+    mapping: new Color(255, 102, 102),
+    'Data Tools': new Color(209, 111, 163),
     data: new Color(77, 189, 85)
 };
 
@@ -1252,23 +1254,23 @@ SpriteMorph.prototype.initBlocks = function () {
         //End of Data Blocks.
 
 
-        //API Tools Blocks.
+        //Data Tools Blocks.
         reportURLUsingServer: {
             type: 'reporter',
-            category: 'API Tools',
+            category: 'Data Tools',
             spec: 'http:// %http7',
             defaults: ['forecast.weather.gov/MapClick.php?', 'lat=', '37.2295733', '&lon=', '-80.4139393', '&FcstType=', 'json']
             //defaults: ['forecast.weather.gov/MapClick.php?lat=37.2295733&lon=-80.4139393', '&FcstType=json',]
         },
         reportURLWithCaching: {
             type: 'reporter',
-            category: 'API Tools',
+            category: 'Data Tools',
             spec: 'http:// %http1 and keep result stored for %n seconds (Prototype)',
             defaults: ['date.jsontest.com', '60']
         },
         reportJSONData: {
             type: 'reporter',
-            category: 'API Tools',
+            category: 'Data Tools',
             spec: 'from JSON text %txt get %mult%txt',
             defaults: ['','']
         },
@@ -1277,35 +1279,35 @@ SpriteMorph.prototype.initBlocks = function () {
         //Start of Google Maps Blocks.
         doPlaceMarker: {
             type: 'command',
-            category: 'API Tools',
+            category: 'mapping',
             spec: '%crosshairs place marker at latitude: %n longitude: %n',
             defaults: ['38.8951','-77.0367']
         },
         doPlaceCircle: {
             type: 'command',
-            category: 'API Tools',
+            category: 'mapping',
             spec: '%crosshairs place circle at latitude: %n longitude: %n radius: %n',
             defaults: ['38.8951','-77.0367', 200.0]
         },
         doPlacePoint: {
             type: 'command',
-            category: 'API Tools',
+            category: 'mapping',
             spec: '%crosshairs place point at latitude: %n longitude: %n size: %n',
             defaults: ['38.8951','-77.0367', 30]
         },
         doRemoveMarkers: {
             type: 'command',
-            category: 'API Tools',
+            category: 'mapping',
             spec: '%crosshairs remove all markers from map'
         },
         doRemoveCircles: {
             type: 'command',
-            category: 'API Tools',
+            category: 'mapping',
             spec: '%crosshairs remove all circles from map'
         },
         doRemovePoints: {
             type: 'command',
-            category: 'API Tools',
+            category: 'mapping',
             spec: '%crosshairs remove all points from map'
         },
         //End of Google Maps Blocks.
@@ -1313,25 +1315,25 @@ SpriteMorph.prototype.initBlocks = function () {
         // Start of MapReduce Blocks.
         reportMapReduceMaximum: {
             type: 'reporter',
-            category: 'API Tools',
+            category: 'Data Tools',
             spec: '%gears MapReduce - get maximum %mapReduceFactor of column # %n row # %n to # %n of sheet # %n at URL: %txt',
             defaults: ['value', 1, 1, 50, 1, 'Google Sheets URL']
         },
         reportMapReduceMinimum: {
             type: 'reporter',
-            category: 'API Tools',
+            category: 'Data Tools',
             spec: '%gears MapReduce - get minimum %mapReduceFactor of column # %n row # %n to # %n of sheet # %n at URL: %txt',
             defaults: ['value', 1, 1, 50, 1, 'Google Sheets URL']
         },
         reportMapReduceAverage: {
             type: 'reporter',
-            category: 'API Tools',
+            category: 'Data Tools',
             spec: '%gears MapReduce - get average %mapReduceFactor of column # %n row # %n to # %n of sheet # %n at URL: %txt',
             defaults: ['value', 1, 1, 50, 1, 'Google Sheets URL']
         },
         reportMapReduceWordFrequency: {
             type: 'reporter',
-            category: 'API Tools',
+            category: 'Data Tools',
             spec: '%gears MapReduce - get word frequency of words %l from file at URL: %txt',
             defaults: [null, 'Google Sheets URL']
         },
@@ -2302,12 +2304,8 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         button.selector = 'addCustomBlock';
         button.showHelp = BlockMorph.prototype.showHelp;
         blocks.push(button);
-    }  else if (cat === 'API Tools') {
+    }  else if (cat === 'mapping') {
 
-        blocks.push(block('reportURLUsingServer'));
-        blocks.push(block('reportURLWithCaching'));
-        blocks.push(block('reportJSONData'));
-        blocks.push('=');
         blocks.push(block('doPlaceMarker'));
         blocks.push(block('doPlaceCircle'));
         blocks.push(block('doPlacePoint'));
@@ -2315,6 +2313,12 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('doRemoveMarkers'));
         blocks.push(block('doRemoveCircles'));
         blocks.push(block('doRemovePoints'));
+
+    }  else if (cat === 'Data Tools') {
+
+        blocks.push(block('reportURLUsingServer'));
+        blocks.push(block('reportURLWithCaching'));
+        blocks.push(block('reportJSONData'));
         blocks.push('=');
         blocks.push(block('reportMapReduceMaximum'));
         blocks.push(block('reportMapReduceMinimum'));
@@ -5448,12 +5452,8 @@ StageMorph.prototype.blockTemplates = function (category) {
             'Make a block'
         );
         blocks.push(button);
-    } else if (cat === 'API Tools') {
+    }  else if (cat === 'mapping') {
 
-        blocks.push(block('reportURLUsingServer'));
-        blocks.push(block('reportURLWithCaching'));
-        blocks.push(block('reportJSONData'));
-        blocks.push('=');
         blocks.push(block('doPlaceMarker'));
         blocks.push(block('doPlaceCircle'));
         blocks.push(block('doPlacePoint'));
@@ -5461,6 +5461,12 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('doRemoveMarkers'));
         blocks.push(block('doRemoveCircles'));
         blocks.push(block('doRemovePoints'));
+
+    } else if (cat === 'Data Tools') {
+
+        blocks.push(block('reportURLUsingServer'));
+        blocks.push(block('reportURLWithCaching'));
+        blocks.push(block('reportJSONData'));
         blocks.push('=');
         blocks.push(block('reportMapReduceMaximum'));
         blocks.push(block('reportMapReduceMinimum'));

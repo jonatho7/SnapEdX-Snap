@@ -3706,7 +3706,7 @@ Process.prototype.doRemovePoints = function () {
 //End of Google Maps Blocks
 
 
-//Start of API Tools blocks.
+//Start of Data Tools blocks.
 
 Process.prototype.reportURLUsingServer = function (urlArray) {
     var responseValue;
@@ -3821,7 +3821,7 @@ Process.prototype.reportMapReduceWordFrequency = function (columnNumber, rowStar
 
 
 
-//End of API Tools blocks.
+//End of Data Tools blocks.
 
 
 
