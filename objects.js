@@ -1314,32 +1314,38 @@ SpriteMorph.prototype.initBlocks = function () {
         reportDataMaximum: {
             type: 'reporter',
             category: 'Data Tools',
-            spec: '%gears get maximum %dataFactor of column # %n row # %n to # %n of sheet # %n at URL: %txt',
-            defaults: ['value', 1, 1, 50, 1, 'Google Sheets URL']
-        },
-        reportDataMinimum: {
-            type: 'reporter',
-            category: 'Data Tools',
-            spec: '%gears get minimum %dataFactor of column # %n row # %n to # %n of sheet # %n at URL: %txt',
-            defaults: ['value', 1, 1, 50, 1, 'Google Sheets URL']
+            spec: '%gears get %dataMaximumFactor from field %txt from data source %txt and return %dataFactor',
+            defaults: [null, null, null, null]
         },
         reportDataAverage: {
             type: 'reporter',
             category: 'Data Tools',
-            spec: '%gears get average %dataFactorWithoutRow of column # %n row # %n to # %n of sheet # %n at URL: %txt',
-            defaults: ['value', 1, 1, 50, 1, 'Google Sheets URL']
-        },
-        reportDataSum: {
-            type: 'reporter',
-            category: 'Data Tools',
-            spec: '%gears get sum %dataFactorWithoutRow of column # %n row # %n to # %n of sheet # %n at URL: %txt',
-            defaults: ['value', 1, 1, 50, 1, 'Google Sheets URL']
+            spec: '%gears get %dataAverageFactor from field %txt from data source %txt',
+            defaults: [null, null, null]
         },
         reportDataWordFrequency: {
             type: 'reporter',
             category: 'Data Tools',
-            spec: '%gears get word frequency of words %l from file at URL: %txt',
-            defaults: [null, 'Google Sheets URL']
+            spec: '%gears get word frequency of words %l from field %txt from data source %txt',
+            defaults: [null, null, null]
+        },
+        reportDataSelectUnique: {
+            type: 'reporter',
+            category: 'Data Tools',
+            spec: '%gears get %dataSelectUniqueFactor from field %txt from data source %txt',
+            defaults: [null, null, null]
+        },
+        reportDataMaximumForEach: {
+            type: 'reporter',
+            category: 'Data Tools',
+            spec: '%gears get %dataMaximumFactor of field %txt for each in field %txt from data source %txt and return %dataFactor',
+            defaults: [null, null, null, null]
+        },
+        reportDataAverageForEach: {
+            type: 'reporter',
+            category: 'Data Tools',
+            spec: '%gears get %dataAverageFactor of field %txt for each in field %txt from data source %txt',
+            defaults: [null, null, null, null]
         },
 
 
@@ -1348,7 +1354,7 @@ SpriteMorph.prototype.initBlocks = function () {
             type: 'reporter',
             category: 'Data Tools',
             spec: '%gears SELECT: %dataSelector WHERE condition: %txt with FILTER: %txt FROM data source: %txt',
-            defaults: [null, null, null, 'CSV File URL' ]
+            defaults: [null, null, null, null ]
         },
 
 
@@ -1376,7 +1382,7 @@ SpriteMorph.prototype.initBlocks = function () {
         },
 
 
-        
+        /*
         reportDataFromColumn: {
             type: 'reporter',
             category: 'Data Tools',
@@ -1389,7 +1395,7 @@ SpriteMorph.prototype.initBlocks = function () {
             spec: '%gears retrieve data as list from row # %n column # %n to # %n of sheet # %n at URL: %txt',
             defaults: [1, 1, 50, 1, 'Google Sheets URL']
         },
-
+        */
 
 
         //End of Data Tools Blocks.
@@ -2425,18 +2431,19 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('doGetMethodParameter'));
         blocks.push('=');
         blocks.push(block('reportDataMaximum'));
-        blocks.push(block('reportDataMinimum'));
         blocks.push(block('reportDataAverage'));
-        blocks.push(block('reportDataSum'));
         blocks.push(block('reportDataWordFrequency'));
+        blocks.push(block('reportDataSelectUnique'));
+        blocks.push(block('reportDataMaximumForEach'));
+        blocks.push(block('reportDataAverageForEach'));
         blocks.push('=');
         blocks.push(block('reportDataSelector'));
         blocks.push(block('reportDataCondition'));
         blocks.push(block('reportDataFilterOrderBy'));
         blocks.push(block('reportDataFilterLimit'));
         blocks.push('=');
-        blocks.push(block('reportDataFromColumn'));
-        blocks.push(block('reportDataFromRow'));
+        //blocks.push(block('reportDataFromColumn'));
+        //blocks.push(block('reportDataFromRow'));
 
 
     } else if (cat === 'data') {
@@ -5589,18 +5596,19 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('doGetMethodParameter'));
         blocks.push('=');
         blocks.push(block('reportDataMaximum'));
-        blocks.push(block('reportDataMinimum'));
         blocks.push(block('reportDataAverage'));
-        blocks.push(block('reportDataSum'));
         blocks.push(block('reportDataWordFrequency'));
+        blocks.push(block('reportDataSelectUnique'));
+        blocks.push(block('reportDataMaximumForEach'));
+        blocks.push(block('reportDataAverageForEach'));
         blocks.push('=');
         blocks.push(block('reportDataSelector'));
         blocks.push(block('reportDataCondition'));
         blocks.push(block('reportDataFilterOrderBy'));
         blocks.push(block('reportDataFilterLimit'));
         blocks.push('=');
-        blocks.push(block('reportDataFromColumn'));
-        blocks.push(block('reportDataFromRow'));
+        //blocks.push(block('reportDataFromColumn'));
+        //blocks.push(block('reportDataFromRow'));
 
     } else if (cat === 'data') {
 

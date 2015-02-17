@@ -3830,22 +3830,28 @@ Process.prototype.reportDataMaximum = function (columnNumber, rowStart, rowEnd, 
     return 500;
 };
 
-Process.prototype.reportDataMinimum = function (columnNumber, rowStart, rowEnd, sheetNumber, sheetsURL) {
-
-    return 600;
-};
 
 Process.prototype.reportDataAverage = function (columnNumber, rowStart, rowEnd, sheetNumber, sheetsURL) {
 
     return 700;
 };
 
-Process.prototype.reportDataSum = function (columnNumber, rowStart, rowEnd, sheetNumber, sheetsURL) {
+Process.prototype.reportDataWordFrequency = function (columnNumber, rowStart, rowEnd, sheetNumber, sheetsURL) {
 
-    return 750;
+    return 800;
 };
 
-Process.prototype.reportDataWordFrequency = function (columnNumber, rowStart, rowEnd, sheetNumber, sheetsURL) {
+Process.prototype.reportDataSelectUnique = function (columnNumber, rowStart, rowEnd, sheetNumber, sheetsURL) {
+
+    return 800;
+};
+
+Process.prototype.reportDataMaximumForEach = function (columnNumber, rowStart, rowEnd, sheetNumber, sheetsURL) {
+
+    return 800;
+};
+
+Process.prototype.reportDataAverageForEach = function (columnNumber, rowStart, rowEnd, sheetNumber, sheetsURL) {
 
     return 800;
 };
@@ -3877,7 +3883,8 @@ Process.prototype.reportDataFilterLimit = function (startIndex, numRecords) {
 };
 
 
-
+/*
+//These methods have been postponed. CSV files will take priority.
 Process.prototype.reportDataFromColumn = function (columnNumber, rowStart, rowEnd, sheetNumber, sheetsURL) {
 
     var data;
@@ -3914,6 +3921,8 @@ Process.prototype.reportDataFromRow = function (rowNumber, columnStart, columnEn
 
     return 975;
 };
+*/
+
 
 
 //End of Data Tools blocks.

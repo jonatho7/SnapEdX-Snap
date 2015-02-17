@@ -1049,30 +1049,56 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
             );
             part.setContents(['magnitude']);
             break;
+        case '%dataMaximumFactor':
+            part = new InputSlotMorph(
+                null, // text
+                false, // non-numeric
+                {
+                    'maximum' : ['maximum'],
+                    'minimum' : ['minimum'],
+                    'median' : ['median'],
+                    'mode' : ['mode']
+                },
+                true // read-only
+            );
+            part.setContents(['maximum']);
+            break;
+        case '%dataAverageFactor':
+            part = new InputSlotMorph(
+                null, // text
+                false, // non-numeric
+                {
+                    'average' : ['average'],
+                    'sum' : ['sum'],
+                    'multiply' : ['multiply']
+                },
+                true // read-only
+            );
+            part.setContents(['average']);
+            break;
+        case '%dataSelectUniqueFactor':
+            part = new InputSlotMorph(
+                null, // text
+                false, // non-numeric
+                {
+                    'select unique' : ['select unique'],
+                    'count of (select unique)' : ['count of (select unique)']
+                },
+                true // read-only
+            );
+            part.setContents(['select unique']);
+            break;
         case '%dataFactor':
             part = new InputSlotMorph(
                 null, // text
                 false, // non-numeric
                 {
-                    'value' : ['value'],
-                    'row' : ['row'],
-                    'all details' : ['all details']
+                    'value only' : ['value only'],
+                    'entire row' : ['entire row']
                 },
                 true // read-only
             );
-            part.setContents(['value']);
-            break;
-        case '%dataFactorWithoutRow':
-            part = new InputSlotMorph(
-                null, // text
-                false, // non-numeric
-                {
-                    'value' : ['value'],
-                    'all details' : ['all details']
-                },
-                true // read-only
-            );
-            part.setContents(['value']);
+            part.setContents(['value only']);
             break;
         case '%dataSelector':
             part = new InputSlotMorph(
