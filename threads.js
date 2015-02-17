@@ -3798,6 +3798,33 @@ Process.prototype.reportJSONData = function (jsonText, jsonParams) {
 };
 
 
+
+Process.prototype.doDefineCloudMethod = function (methodName, parameterList) {
+
+    return;
+};
+
+Process.prototype.doRunCloudMethod = function (methodName, parameterList) {
+
+    return 450;
+};
+
+
+
+Process.prototype.doSetCloudVariable = function (varName, varValue) {
+    return;
+};
+
+Process.prototype.doGetCloudVariable = function (varName) {
+    return varName;
+};
+
+Process.prototype.doGetMethodParameter = function (varName) {
+    return varName;
+};
+
+
+
 Process.prototype.reportDataMaximum = function (columnNumber, rowStart, rowEnd, sheetNumber, sheetsURL) {
 
     return 500;
@@ -3853,8 +3880,35 @@ Process.prototype.reportDataFilterLimit = function (startIndex, numRecords) {
 
 Process.prototype.reportDataFromColumn = function (columnNumber, rowStart, rowEnd, sheetNumber, sheetsURL) {
 
-    return 950;
+    var data;
+
+	var urlBase = "reportDataFromColumn";
+	var isAsync = false;
+	var jsonArgs = { "columnNumber": columnNumber, "rowStart": rowStart, "rowEnd": rowEnd, "sheetNumber": sheetNumber, "sheetsURL": sheetsURL };
+	var ajaxResponse = Process.prototype.ajaxRequest(urlBase, jsonArgs, isAsync);
+
+	var json = JSON.parse( ajaxResponse );
+	console.log(json);
+
+	var report = json['report'];
+	//Check to see if there is a valid report object.
+	if (report == ""){
+		return null;
+	}
+
+	data = report['data'];
+
+
+	if ((data) || (data == "")){
+		return data;
+	} else {
+		return null;
+	}
+
+
 };
+
+
 
 Process.prototype.reportDataFromRow = function (rowNumber, columnStart, columnEnd, sheetNumber, sheetsURL) {
 

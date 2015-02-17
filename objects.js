@@ -1275,6 +1275,42 @@ SpriteMorph.prototype.initBlocks = function () {
         },
 
 
+
+        doDefineCloudMethod: {
+            type: 'command',
+            category: 'Data Tools',
+            spec: '%gears Define cloud method with name %txt %parms %c',
+            defaults: ['myMethodName']
+        },
+        doRunCloudMethod: {
+            type: 'reporter',
+            category: 'Data Tools',
+            spec: '%gears run cloud method with name %txt %inputs',
+            defaults: ['myMethodName']
+        },
+
+
+
+        doSetCloudVariable: {
+            type: 'command',
+            category: 'Data Tools',
+            spec: '%gears set cloud variable %txt to %n'
+        },
+        doGetCloudVariable: {
+            type: 'reporter',
+            category: 'Data Tools',
+            spec: '%gears get cloud variable %txt'
+        },
+        doGetMethodParameter: {
+            type: 'reporter',
+            category: 'Data Tools',
+            spec: '%gears get method parameter %txt'
+        },
+
+
+
+
+
         reportDataMaximum: {
             type: 'reporter',
             category: 'Data Tools',
@@ -1311,8 +1347,8 @@ SpriteMorph.prototype.initBlocks = function () {
         reportDataSelector: {
             type: 'reporter',
             category: 'Data Tools',
-            spec: '%gears SELECT: %dataSelector FROM URL: %txt WHERE condition: %txt with filter: %txt',
-            defaults: [null, 'Google Sheets URL', null, null ]
+            spec: '%gears SELECT: %dataSelector WHERE condition: %txt with FILTER: %txt FROM data source: %txt',
+            defaults: [null, null, null, 'CSV File URL' ]
         },
 
 
@@ -1340,12 +1376,12 @@ SpriteMorph.prototype.initBlocks = function () {
         },
 
 
-
+        
         reportDataFromColumn: {
             type: 'reporter',
             category: 'Data Tools',
             spec: '%gears retrieve data as list from column # %n row # %n to # %n of sheet # %n at URL: %txt',
-            defaults: [4, 3, 50, 1, 'spreadsheets.google.com/feeds/cells/1MV9UdRDTUPvgk9K4bxCavQjRrNcNnVFLNK79URV6n0Y/1/public/values?alt=json']
+            defaults: [5, 3, 36, 1, 'spreadsheets.google.com/feeds/cells/1MV9UdRDTUPvgk9K4bxCavQjRrNcNnVFLNK79URV6n0Y/1/public/values?alt=json']
         },
         reportDataFromRow: {
             type: 'reporter',
@@ -2380,6 +2416,13 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportURLUsingServer'));
         //blocks.push(block('reportURLWithCaching')); Discontinued.
         blocks.push(block('reportJSONData'));
+        blocks.push('=');
+        blocks.push(block('doDefineCloudMethod'));
+        blocks.push(block('doRunCloudMethod'));
+        blocks.push('=');
+        blocks.push(block('doSetCloudVariable'));
+        blocks.push(block('doGetCloudVariable'));
+        blocks.push(block('doGetMethodParameter'));
         blocks.push('=');
         blocks.push(block('reportDataMaximum'));
         blocks.push(block('reportDataMinimum'));
@@ -5537,6 +5580,13 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportURLUsingServer'));
         //blocks.push(block('reportURLWithCaching'));
         blocks.push(block('reportJSONData'));
+        blocks.push('=');
+        blocks.push(block('doDefineCloudMethod'));
+        blocks.push(block('doRunCloudMethod'));
+        blocks.push('=');
+        blocks.push(block('doSetCloudVariable'));
+        blocks.push(block('doGetCloudVariable'));
+        blocks.push(block('doGetMethodParameter'));
         blocks.push('=');
         blocks.push(block('reportDataMaximum'));
         blocks.push(block('reportDataMinimum'));
