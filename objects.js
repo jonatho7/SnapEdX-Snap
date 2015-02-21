@@ -1279,7 +1279,7 @@ SpriteMorph.prototype.initBlocks = function () {
         doDefineCloudMethod: {
             type: 'command',
             category: 'Data Tools',
-            spec: '%gears Define cloud method with name %txt %parms %c',
+            spec: '%gears Define cloud method with name %txt with parameter names %mult%s %c',
             defaults: ['myMethodName']
         },
         doRunCloudMethod: {
@@ -1305,6 +1305,11 @@ SpriteMorph.prototype.initBlocks = function () {
             type: 'reporter',
             category: 'Data Tools',
             spec: '%gears get method parameter %txt'
+        },
+        doCloudReport: {
+            type: 'command',
+            category: 'Data Tools',
+            spec: '%gears report %s'
         },
 
 
@@ -2429,6 +2434,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('doSetCloudVariable'));
         blocks.push(block('doGetCloudVariable'));
         blocks.push(block('doGetMethodParameter'));
+        blocks.push(block('doCloudReport'));
         blocks.push('=');
         blocks.push(block('reportDataMaximum'));
         blocks.push(block('reportDataAverage'));
@@ -5594,6 +5600,7 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('doSetCloudVariable'));
         blocks.push(block('doGetCloudVariable'));
         blocks.push(block('doGetMethodParameter'));
+        blocks.push(block('doCloudReport'));
         blocks.push('=');
         blocks.push(block('reportDataMaximum'));
         blocks.push(block('reportDataAverage'));

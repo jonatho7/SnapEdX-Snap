@@ -3823,6 +3823,9 @@ Process.prototype.doGetMethodParameter = function (varName) {
     return varName;
 };
 
+Process.prototype.doCloudReport = function (returnValue) {
+    return returnValue;
+};
 
 
 Process.prototype.reportDataMaximum = function (columnNumber, rowStart, rowEnd, sheetNumber, sheetsURL) {

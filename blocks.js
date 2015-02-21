@@ -1115,15 +1115,16 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
                 null,
                 false,
                 {
+                    '==' : ['=='],
+                    '!=' : ['!='],
                     '>' : ['>'],
-                    '<' : ['<'],
-                    '=' : ['='],
                     '>=' : ['>='],
+                    '<' : ['<'],
                     '<=' : ['<=']
                 },
                 true
             );
-            part.setContents(['>']);
+            part.setContents(['==']);
             break;
         case '%dataOrderBy':
             part = new InputSlotMorph(
