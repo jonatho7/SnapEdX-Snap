@@ -2841,6 +2841,46 @@ IDE_Morph.prototype.exportProject = function (name, plain) {
     }
 };
 
+
+IDE_Morph.prototype.exportProjectWithoutMessages = function (name, plain) {
+    var menu, str;
+    if (name) {
+        //this.setProjectName(name);
+        if (Process.prototype.isCatchingErrors) {
+            try {
+                //menu = this.showMessage('Exporting');
+                str = encodeURIComponent(
+                    this.serializer.serialize(this.stage)
+                );
+                location.hash = '#open:' + str;
+                window.open('data:text/'
+                    + (plain ? 'plain,' + str : 'xml,' + str));
+                menu.destroy();
+                //this.showMessage('Exported!', 1);
+            } catch (err) {
+                //this.showMessage('Export failed: ' + err);
+            }
+        } else {
+            //menu = this.showMessage('Exporting');
+            str = encodeURIComponent(
+                this.serializer.serialize(this.stage)
+            );
+            location.hash = '#open:' + str;
+            window.open('data:text/'
+                + (plain ? 'plain,' + str : 'xml,' + str));
+            menu.destroy();
+            //this.showMessage('Exported!', 1);
+        }
+        decoded_str = decodeURIComponent(str);
+        console.log("decoded_str:");
+        console.log(decoded_str);
+
+
+    }
+};
+
+
+
 IDE_Morph.prototype.exportGlobalBlocks = function () {
     if (this.stage.globalBlocks.length > 0) {
         new BlockExportDialogMorph(

@@ -3572,6 +3572,12 @@ Process.prototype.reportEarthquakeData = function (earthquakeQuery, earthquakeIn
 
 
 Process.prototype.reportTestBlock = function () {
+    var name = "someProject";
+    global_ide.exportProject(name);
+
+    //var serializer = new SnapSerializer();
+    //var xml = serializer.serialize(this.stage)
+
     return "5";
 };
 
