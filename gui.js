@@ -2842,41 +2842,18 @@ IDE_Morph.prototype.exportProject = function (name, plain) {
 };
 
 
-IDE_Morph.prototype.exportProjectWithoutMessages = function (name, plain) {
-    var menu, str;
-    if (name) {
-        //this.setProjectName(name);
-        if (Process.prototype.isCatchingErrors) {
-            try {
-                //menu = this.showMessage('Exporting');
-                str = encodeURIComponent(
-                    this.serializer.serialize(this.stage)
-                );
-                location.hash = '#open:' + str;
-                window.open('data:text/'
-                    + (plain ? 'plain,' + str : 'xml,' + str));
-                menu.destroy();
-                //this.showMessage('Exported!', 1);
-            } catch (err) {
-                //this.showMessage('Export failed: ' + err);
-            }
-        } else {
-            //menu = this.showMessage('Exporting');
-            str = encodeURIComponent(
-                this.serializer.serialize(this.stage)
-            );
-            location.hash = '#open:' + str;
-            window.open('data:text/'
-                + (plain ? 'plain,' + str : 'xml,' + str));
-            menu.destroy();
-            //this.showMessage('Exported!', 1);
+IDE_Morph.prototype.exportProjectWithoutMessages = function () {
+    var xml_string;
+        try {
+            xml_string = this.serializer.serialize(this.stage)
+            console.log("xml_str")
+            console.log(xml_string);
+        } catch (err) {
+            console.log("Could not create the XML description.")
         }
-        decoded_str = decodeURIComponent(str);
-        console.log("decoded_str:");
-        console.log(decoded_str);
 
+    return xml_string;
 
-    }
 };
 
 
