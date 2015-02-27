@@ -3583,7 +3583,7 @@ Process.prototype.reportTestBlock2 = function () {
 
     var data;
 
-	var urlBase = "computeservice/runTestCloudMethod1";
+	var urlBase = "runTestCloudMethod1";
 	var isAsync = false;
     var noArgs = 4;
 	var jsonArgs = { "noArgs": noArgs};
@@ -3601,8 +3601,12 @@ Process.prototype.reportTestBlock2 = function () {
 	data = report['data'];
 
 
-	if ((data) || (data == "")){
-		return data;
+    var realAJAXReturn = JSON.parse(data);
+    var realData = realAJAXReturn['report']['data'];
+
+
+	if ((realData) || (realData == "")){
+		return realData;
 	} else {
 		return null;
 	}
