@@ -3579,6 +3579,37 @@ Process.prototype.reportTestBlock = function () {
 };
 
 
+Process.prototype.reportTestBlock2 = function () {
+
+    var data;
+
+	var urlBase = "computeservice/runTestCloudMethod1";
+	var isAsync = false;
+    var noArgs = 4;
+	var jsonArgs = { "noArgs": noArgs};
+	var ajaxResponse = Process.prototype.ajaxRequest(urlBase, jsonArgs, isAsync);
+
+	var json = JSON.parse( ajaxResponse );
+	console.log(json);
+
+	var report = json['report'];
+	//Check to see if there is a valid report object.
+	if (report == ""){
+		return null;
+	}
+
+	data = report['data'];
+
+
+	if ((data) || (data == "")){
+		return data;
+	} else {
+		return null;
+	}
+
+};
+
+
 //Start of Google Maps Blocks.
 Process.prototype.doPlaceMarker = function (latitude, longitude) {
 

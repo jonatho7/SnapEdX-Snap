@@ -1233,6 +1233,11 @@ SpriteMorph.prototype.initBlocks = function () {
             category: 'sensing',
             spec: 'testing block'
         },
+        reportTestBlock2: {
+            type: 'reporter',
+            category: 'sensing',
+            spec: 'testing block 2 - computeservice - runTestCloudMethod1'
+        },
         reportBusinessData: {
             type: 'reporter',
             category: 'data',
@@ -2192,6 +2197,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('doSetFastTracking'));
         blocks.push('-');
         blocks.push(block('reportTestBlock'));
+        blocks.push(block('reportTestBlock2'));
 
     // for debugging: ///////////////
 
@@ -5364,6 +5370,7 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('doSetFastTracking'));
         blocks.push('-');
         blocks.push(block('reportTestBlock'));
+        blocks.push(block('reportTestBlock2'));
         
 
     // for debugging: ///////////////
