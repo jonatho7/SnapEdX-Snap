@@ -3601,9 +3601,9 @@ Process.prototype.reportTestBlock2 = function () {
 	data = report['data'];
 
 
-    //var realAJAXReturn = JSON.parse(data);
-    //var realData = realAJAXReturn['report']['data'];
-    //data = realData
+    var realAJAXReturn = JSON.parse(data);
+    var realData = realAJAXReturn['report']['data'];
+    data = realData
 
 	if ((data) || (data == "")){
 		return data;
