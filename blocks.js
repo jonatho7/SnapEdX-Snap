@@ -1625,6 +1625,16 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
                 new Point() : this.embossing;
             part.drawNew();
             break;
+        case '%storage':
+            part = new SymbolMorph('storage');
+            part.size = this.fontSize * 1.2;
+            part.color = new Color(255, 255, 255);
+            part.isProtectedLabel = true; // doesn't participate in zebraing
+            part.shadowColor = this.color.darker(this.labelContrast);
+            part.shadowOffset = MorphicPreferences.isFlat ?
+                new Point() : this.embossing;
+            part.drawNew();
+            break;
         case '%stop':
             part = new SymbolMorph('octagon');
             part.size = this.fontSize * 1.5;

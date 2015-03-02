@@ -1174,58 +1174,58 @@ SpriteMorph.prototype.initBlocks = function () {
         reportWeather: {
             type: 'reporter',
             category: 'data',
-            spec: '%cloudOutline get %weatherFactor at %s',
+            spec: '%storage get %weatherFactor at %s',
             defaults: [localize('temperature in F'), localize('Blacksburg, VA')]
         },
         reportLowHighTemp: {
             type: 'reporter',
             category: 'data',
-            spec: '%cloudOutline get %temperatureFactor at %s for forecast %temperatureDays',
+            spec: '%storage get %temperatureFactor at %s for forecast %temperatureDays',
             defaults: [localize('low temperature in F'), localize('Blacksburg, VA')]
         },
         reportPrecipitation: {
             type: 'reporter',
             category: 'data',
-            spec: '%cloudOutline get %precipFactor at %s for forecast %precipDays',
+            spec: '%storage get %precipFactor at %s for forecast %precipDays',
             defaults: [localize('chance of precipitation'), localize('Blacksburg, VA')]
         },
         reportRedditPosts: {
             type: 'reporter',
             category: 'data',
-            spec: '%cloudOutline get list of posts from subreddit: %s',
+            spec: '%storage get list of posts from subreddit: %s',
             defaults: [localize('news')]
         },
         reportRedditPostInfo: {
             type: 'reporter',
             category: 'data',
-            spec: '%cloudOutline get %redditPostFactor of reddit post: %s'
+            spec: '%storage get %redditPostFactor of reddit post: %s'
         },
         reportRedditComments: {
             type: 'reporter',
             category: 'data',
-            spec: '%cloudOutline get list of comments from reddit post: %s'
+            spec: '%storage get list of comments from reddit post: %s'
         },
         reportRedditCommentInfo: {
             type: 'reporter',
             category: 'data',
-            spec: '%cloudOutline get %redditCommentFactor of reddit comment: %s'
+            spec: '%storage get %redditCommentFactor of reddit comment: %s'
         },
         reportStocks: {
             type: 'reporter',
             category: 'data',
-            spec: '%cloudOutline get %stockFactor for stock: %s',
+            spec: '%storage get %stockFactor for stock: %s',
             defaults: ['last trade price','GOOG']
         },
         reportTwitterRetweets: {
             type: 'reporter',
             category: 'data',
-            spec: '%cloudOutline get highest number of %twitterFactor for tweets mentioning: %s for last 7 days',
+            spec: '%storage get highest number of %twitterFactor for tweets mentioning: %s for last 7 days',
             defaults: ['retweets','hunger games']
         },
         reportTwitterTweetsFromPerson: {
             type: 'reporter',
             category: 'data',
-            spec: '%cloudOutline get number of tweets sent %twitterFromPerson %s for last 7 days',
+            spec: '%storage get number of tweets sent %twitterFromPerson %s for last 7 days',
             defaults: ['from person','HarryPotterFilm']
         },
         reportTestBlock: {
@@ -1241,19 +1241,19 @@ SpriteMorph.prototype.initBlocks = function () {
         reportBusinessData: {
             type: 'reporter',
             category: 'data',
-            spec: '%cloudOutline get %businessFactor from business number %n from location: %txt (Prototype)',
+            spec: '%storage get %businessFactor from business number %n from location: %txt (Prototype)',
             defaults: ['name', 1, 'Seattle, WA']
         },
         reportNumEarthquakes: {
             type: 'reporter',
             category: 'data',
-            spec: '%cloudOutline get # of earthquakes for past %earthquakePeriod',
+            spec: '%storage get # of earthquakes for past %earthquakePeriod',
             defaults: ['day']
         },
         reportEarthquakeData: {
             type: 'reporter',
             category: 'data',
-            spec: '%cloudOutline get %earthquakeQuery of earthquake # %n for past %earthquakePeriod',
+            spec: '%storage get %earthquakeQuery of earthquake # %n for past %earthquakePeriod',
             defaults: ['magnitude', 1, 'day']
         },
         //End of Data Blocks.
@@ -1284,13 +1284,13 @@ SpriteMorph.prototype.initBlocks = function () {
         doDefineCloudMethod: {
             type: 'command',
             category: 'Data Tools',
-            spec: '%gears Define cloud method with name %txt with parameter names %mult%s %c',
-            defaults: ['myMethodName']
+            spec: '%cloudOutline Define cloud method with name %txt with parameter names %mult%s server: %txt %c',
+            defaults: ['myMethodName', null, 'think.cs.vt.edu']
         },
         doRunCloudMethod: {
             type: 'reporter',
             category: 'Data Tools',
-            spec: '%gears run cloud method with name %txt %inputs',
+            spec: '%cloudOutline run cloud method with name %txt %inputs',
             defaults: ['myMethodName']
         },
 
@@ -1299,22 +1299,22 @@ SpriteMorph.prototype.initBlocks = function () {
         doSetCloudVariable: {
             type: 'command',
             category: 'Data Tools',
-            spec: '%gears set cloud variable %txt to %n'
+            spec: '%cloudOutline set cloud variable %txt to %n'
         },
         doGetCloudVariable: {
             type: 'reporter',
             category: 'Data Tools',
-            spec: '%gears get cloud variable %txt'
+            spec: '%cloudOutline get cloud variable %txt'
         },
         doGetMethodParameter: {
             type: 'reporter',
             category: 'Data Tools',
-            spec: '%gears get method parameter %txt'
+            spec: '%cloudOutline get method parameter %txt'
         },
         doCloudReport: {
             type: 'command',
             category: 'Data Tools',
-            spec: '%gears report %s'
+            spec: '%cloudOutline report %s'
         },
 
 
@@ -1324,37 +1324,37 @@ SpriteMorph.prototype.initBlocks = function () {
         reportDataMaximum: {
             type: 'reporter',
             category: 'Data Tools',
-            spec: '%gears get %dataMaximumFactor from field %txt from data source %txt and return %dataFactor',
+            spec: '%cloudOutline get %dataMaximumFactor from field %txt from data source %txt and return %dataFactor',
             defaults: [null, null, null, null]
         },
         reportDataAverage: {
             type: 'reporter',
             category: 'Data Tools',
-            spec: '%gears get %dataAverageFactor from field %txt from data source %txt',
+            spec: '%cloudOutline get %dataAverageFactor from field %txt from data source %txt',
             defaults: [null, null, null]
         },
         reportDataWordFrequency: {
             type: 'reporter',
             category: 'Data Tools',
-            spec: '%gears get word frequency of words %l from field %txt from data source %txt',
+            spec: '%cloudOutline get word frequency of words %l from field %txt from data source %txt',
             defaults: [null, null, null]
         },
         reportDataSelectUnique: {
             type: 'reporter',
             category: 'Data Tools',
-            spec: '%gears get %dataSelectUniqueFactor from field %txt from data source %txt',
+            spec: '%cloudOutline get %dataSelectUniqueFactor from field %txt from data source %txt',
             defaults: [null, null, null]
         },
         reportDataMaximumForEach: {
             type: 'reporter',
             category: 'Data Tools',
-            spec: '%gears get %dataMaximumFactor of field %txt for each in field %txt from data source %txt and return %dataFactor',
+            spec: '%cloudOutline get %dataMaximumFactor of field %txt for each in field %txt from data source %txt and return %dataFactor',
             defaults: [null, null, null, null]
         },
         reportDataAverageForEach: {
             type: 'reporter',
             category: 'Data Tools',
-            spec: '%gears get %dataAverageFactor of field %txt for each in field %txt from data source %txt',
+            spec: '%cloudOutline get %dataAverageFactor of field %txt for each in field %txt from data source %txt',
             defaults: [null, null, null, null]
         },
 
@@ -1363,7 +1363,7 @@ SpriteMorph.prototype.initBlocks = function () {
         reportDataSelector: {
             type: 'reporter',
             category: 'Data Tools',
-            spec: '%gears SELECT: %dataSelector WHERE condition: %txt with FILTER: %txt FROM data source: %txt',
+            spec: '%cloudOutline SELECT: %dataSelector WHERE condition: %txt with FILTER: %txt FROM data source: %txt',
             defaults: [null, null, null, null ]
         },
 
@@ -1372,7 +1372,7 @@ SpriteMorph.prototype.initBlocks = function () {
         reportDataCondition: {
             type: 'reporter',
             category: 'Data Tools',
-            spec: '%gears condition: %txt %dataOperator %txt',
+            spec: '%cloudOutline condition: %txt %dataOperator %txt',
             defaults: ['WEEK', null, '26']
         },
 
@@ -1381,13 +1381,13 @@ SpriteMorph.prototype.initBlocks = function () {
         reportDataFilterOrderBy: {
             type: 'reporter',
             category: 'Data Tools',
-            spec: '%gears filter: ORDER BY: %txt %dataOrderBy',
+            spec: '%cloudOutline filter: ORDER BY: %txt %dataOrderBy',
             defaults: ['WEEK', null]
         },
         reportDataFilterLimit: {
             type: 'reporter',
             category: 'Data Tools',
-            spec: '%gears filter: start at index: %n and get: %n records',
+            spec: '%cloudOutline filter: start at index: %n and get: %n records',
             defaults: [1, 50]
         },
 
@@ -1396,13 +1396,13 @@ SpriteMorph.prototype.initBlocks = function () {
         reportDataFromColumn: {
             type: 'reporter',
             category: 'Data Tools',
-            spec: '%gears retrieve data as list from column # %n row # %n to # %n of sheet # %n at URL: %txt',
+            spec: '%cloudOutline retrieve data as list from column # %n row # %n to # %n of sheet # %n at URL: %txt',
             defaults: [5, 3, 36, 1, 'spreadsheets.google.com/feeds/cells/1MV9UdRDTUPvgk9K4bxCavQjRrNcNnVFLNK79URV6n0Y/1/public/values?alt=json']
         },
         reportDataFromRow: {
             type: 'reporter',
             category: 'Data Tools',
-            spec: '%gears retrieve data as list from row # %n column # %n to # %n of sheet # %n at URL: %txt',
+            spec: '%cloudOutline retrieve data as list from row # %n column # %n to # %n of sheet # %n at URL: %txt',
             defaults: [1, 1, 50, 1, 'Google Sheets URL']
         },
         */
