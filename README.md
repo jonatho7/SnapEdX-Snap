@@ -1,3 +1,6 @@
+# SnapEdX-Snap
+The repository for the original/modified Snap code
+
 
 Snap! Build Your Own Blocks
 
