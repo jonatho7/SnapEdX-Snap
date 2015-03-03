@@ -2434,6 +2434,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         //blocks.push(block('reportURLWithCaching')); Discontinued.
         blocks.push(block('reportJSONData'));
         blocks.push('=');
+        /*
         blocks.push(block('doDefineCloudMethod'));
         blocks.push(block('doRunCloudMethod'));
         blocks.push('=');
@@ -2456,6 +2457,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push('=');
         //blocks.push(block('reportDataFromColumn'));
         //blocks.push(block('reportDataFromRow'));
+        */
 
 
     } else if (cat === 'data') {
@@ -5601,6 +5603,7 @@ StageMorph.prototype.blockTemplates = function (category) {
         //blocks.push(block('reportURLWithCaching'));
         blocks.push(block('reportJSONData'));
         blocks.push('=');
+        /*
         blocks.push(block('doDefineCloudMethod'));
         blocks.push(block('doRunCloudMethod'));
         blocks.push('=');
@@ -5623,6 +5626,7 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push('=');
         //blocks.push(block('reportDataFromColumn'));
         //blocks.push(block('reportDataFromRow'));
+        */
 
     } else if (cat === 'data') {
 
