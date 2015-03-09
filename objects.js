@@ -1301,10 +1301,15 @@ SpriteMorph.prototype.initBlocks = function () {
             category: 'Data Tools',
             spec: '%cloudOutline set cloud variable %txt to %n'
         },
-        doGetCloudVariable: {
+        doRetrieveDataFromCloudVariable: {
             type: 'reporter',
             category: 'Data Tools',
-            spec: '%cloudOutline get cloud variable %txt'
+            spec: '%cloudOutline retrieve data from cloud variable %txt'
+        },
+        doReferenceCloudVariable: {
+            type: 'reporter',
+            category: 'Data Tools',
+            spec: '%cloudOutline cloud variable %txt'
         },
         doGetMethodParameter: {
             type: 'reporter',
@@ -2438,7 +2443,8 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         //blocks.push(block('doRunCloudMethod'));
         blocks.push('=');
         blocks.push(block('doSetCloudVariable'));
-        blocks.push(block('doGetCloudVariable'));
+        blocks.push(block('doRetrieveDataFromCloudVariable'));
+        blocks.push(block('doReferenceCloudVariable'));
         //blocks.push(block('doGetMethodParameter'));
         //blocks.push(block('doCloudReport'));
         blocks.push('=');
@@ -5604,7 +5610,8 @@ StageMorph.prototype.blockTemplates = function (category) {
         //blocks.push(block('doRunCloudMethod'));
         blocks.push('=');
         blocks.push(block('doSetCloudVariable'));
-        blocks.push(block('doGetCloudVariable'));
+        blocks.push(block('doRetrieveDataFromCloudVariable'));
+        blocks.push(block('doReferenceCloudVariable'));
         //blocks.push(block('doGetMethodParameter'));
         //blocks.push(block('doCloudReport'));
         blocks.push('=');

@@ -3875,7 +3875,11 @@ Process.prototype.doSetCloudVariable = function (varName, varValue) {
     return;
 };
 
-Process.prototype.doGetCloudVariable = function (varName) {
+Process.prototype.doRetrieveDataFromCloudVariable = function (varName) {
+    return varName;
+};
+
+Process.prototype.doReferenceCloudVariable = function (varName) {
     return varName;
 };
 
