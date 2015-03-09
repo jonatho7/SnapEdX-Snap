@@ -3885,7 +3885,7 @@ Process.prototype.doSetCloudVariable = function (varName, varValue) {
     //Get the user's id number, or make one if the user does not already have one.
     user_id = retrieveOrMakeGuid();
 
-	var urlBase = "doSetCloudVariable";
+	var urlBase = "dataProcessing/doSetCloudVariable";
 	var jsonArgs = {"user_id": user_id, "variable_name": varName, "variable_value": varValue};
     var isAsync = false;
 	var ajaxResponse = Process.prototype.ajaxRequest(urlBase, jsonArgs, isAsync);
@@ -3919,7 +3919,7 @@ Process.prototype.doRetrieveDataFromCloudVariable = function (varName) {
     //Get the user's id number, or make one if the user does not already have one.
     user_id = retrieveOrMakeGuid();
 
-	var urlBase = "doRetrieveDataFromCloudVariable";
+	var urlBase = "dataProcessing/doRetrieveDataFromCloudVariable";
 	var jsonArgs = {"user_id": user_id,"variable_name": varName};
     var isAsync = false;
 	var ajaxResponse = Process.prototype.ajaxRequest(urlBase, jsonArgs, isAsync);
