@@ -2434,13 +2434,18 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         //blocks.push(block('reportURLWithCaching')); Discontinued.
         blocks.push(block('reportJSONData'));
         blocks.push('=');
-        blocks.push(block('doDefineCloudMethod'));
-        blocks.push(block('doRunCloudMethod'));
+        //blocks.push(block('doDefineCloudMethod'));
+        //blocks.push(block('doRunCloudMethod'));
         blocks.push('=');
         blocks.push(block('doSetCloudVariable'));
         blocks.push(block('doGetCloudVariable'));
-        blocks.push(block('doGetMethodParameter'));
-        blocks.push(block('doCloudReport'));
+        //blocks.push(block('doGetMethodParameter'));
+        //blocks.push(block('doCloudReport'));
+        blocks.push('=');
+        blocks.push(block('reportDataSelector'));
+        blocks.push(block('reportDataCondition'));
+        blocks.push(block('reportDataFilterOrderBy'));
+        blocks.push(block('reportDataFilterLimit'));
         blocks.push('=');
         blocks.push(block('reportDataMaximum'));
         blocks.push(block('reportDataAverage'));
@@ -2448,12 +2453,6 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportDataSelectUnique'));
         blocks.push(block('reportDataMaximumForEach'));
         blocks.push(block('reportDataAverageForEach'));
-        blocks.push('=');
-        blocks.push(block('reportDataSelector'));
-        blocks.push(block('reportDataCondition'));
-        blocks.push(block('reportDataFilterOrderBy'));
-        blocks.push(block('reportDataFilterLimit'));
-        blocks.push('=');
         //blocks.push(block('reportDataFromColumn'));
         //blocks.push(block('reportDataFromRow'));
 
@@ -5601,13 +5600,18 @@ StageMorph.prototype.blockTemplates = function (category) {
         //blocks.push(block('reportURLWithCaching'));
         blocks.push(block('reportJSONData'));
         blocks.push('=');
-        blocks.push(block('doDefineCloudMethod'));
-        blocks.push(block('doRunCloudMethod'));
+        //blocks.push(block('doDefineCloudMethod'));
+        //blocks.push(block('doRunCloudMethod'));
         blocks.push('=');
         blocks.push(block('doSetCloudVariable'));
         blocks.push(block('doGetCloudVariable'));
-        blocks.push(block('doGetMethodParameter'));
-        blocks.push(block('doCloudReport'));
+        //blocks.push(block('doGetMethodParameter'));
+        //blocks.push(block('doCloudReport'));
+        blocks.push('=');
+        blocks.push(block('reportDataSelector'));
+        blocks.push(block('reportDataCondition'));
+        blocks.push(block('reportDataFilterOrderBy'));
+        blocks.push(block('reportDataFilterLimit'));
         blocks.push('=');
         blocks.push(block('reportDataMaximum'));
         blocks.push(block('reportDataAverage'));
@@ -5615,12 +5619,6 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportDataSelectUnique'));
         blocks.push(block('reportDataMaximumForEach'));
         blocks.push(block('reportDataAverageForEach'));
-        blocks.push('=');
-        blocks.push(block('reportDataSelector'));
-        blocks.push(block('reportDataCondition'));
-        blocks.push(block('reportDataFilterOrderBy'));
-        blocks.push(block('reportDataFilterLimit'));
-        blocks.push('=');
         //blocks.push(block('reportDataFromColumn'));
         //blocks.push(block('reportDataFromRow'));
 
