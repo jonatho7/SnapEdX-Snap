@@ -1299,7 +1299,7 @@ SpriteMorph.prototype.initBlocks = function () {
         doSetCloudVariable: {
             type: 'command',
             category: 'Data Tools',
-            spec: '%cloudOutline set cloud variable %txt to %n'
+            spec: '%cloudOutline set cloud variable %txt to %txt'
         },
         doRetrieveDataFromCloudVariable: {
             type: 'reporter',

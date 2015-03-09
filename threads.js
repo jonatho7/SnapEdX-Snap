@@ -3872,11 +3872,82 @@ Process.prototype.doRunCloudMethod = function (methodName, parameterList) {
 
 
 Process.prototype.doSetCloudVariable = function (varName, varValue) {
-    return;
+    //Check the parameters.
+    if (varName == ""){
+        throw new Error('Invalid name for cloud variable');
+    }
+    if (varValue == ""){
+        throw new Error('Invalid value for cloud variable');
+    }
+
+    var data;
+
+    //Get the user's id number, or make one if the user does not already have one.
+    user_id = retrieveOrMakeGuid();
+
+	var urlBase = "doSetCloudVariable";
+	var jsonArgs = {"user_id": user_id, "variable_name": varName, "variable_value": varValue};
+    var isAsync = false;
+	var ajaxResponse = Process.prototype.ajaxRequest(urlBase, jsonArgs, isAsync);
+
+	var json = JSON.parse( ajaxResponse );
+	console.log(json);
+
+	var report = json['report'];
+	//Check to see if there is a valid report object.
+	if (report == ""){
+		throw new Error('Unable to set cloud variable');
+	}
+	data = report['data'];
+
+	if ((data) || (data == "")){
+		return data;
+	} else {
+		throw new Error('Unable to set cloud variable');
+	}
+
 };
 
 Process.prototype.doRetrieveDataFromCloudVariable = function (varName) {
-    return varName;
+    //Check the parameters
+    if (varName == ""){
+        throw new Error('Invalid name for cloud variable');
+    }
+
+    var data;
+
+    //Get the user's id number, or make one if the user does not already have one.
+    user_id = retrieveOrMakeGuid();
+
+	var urlBase = "doRetrieveDataFromCloudVariable";
+	var jsonArgs = {"user_id": user_id,"variable_name": varName};
+    var isAsync = false;
+	var ajaxResponse = Process.prototype.ajaxRequest(urlBase, jsonArgs, isAsync);
+
+	var json = JSON.parse( ajaxResponse );
+	console.log(json);
+
+	var report = json['report'];
+	//Check to see if there is a valid report object.
+	if (report == ""){
+		throw new Error('Unable to retrieve data from cloud variable');
+	}
+
+    if(report['wasValueRetrieved'] == false){
+        //Failed to get the cloud variable value.
+        throw new Error('Unable to retrieve data from cloud variable');
+    } else {
+        //Successfully retrieved the cloud variable value.
+
+        data = report['data'];
+
+        if ((data) || (data == "")){
+            return data;
+        } else {
+            throw new Error('Unable to retrieve data from cloud variable');
+        }
+    }
+
 };
 
 Process.prototype.doReferenceCloudVariable = function (varName) {
@@ -4765,4 +4836,30 @@ var cacheController = new CacheController();
 var googleMarkerList = [];
 var googleCircleList = [];
 var googlePointList = [];
+
+var user_guid = null;
+
+/**
+ * Retrieves a user's generally universal id if they have one.
+ * If they do not have one, one is created, and then returned.
+ */
+function retrieveOrMakeGuid() {
+    //Define a function that is needed.
+    function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+    }
+
+    //If the user does not have a user_guid, make one.
+    if (user_guid == null){
+        //32 characters:
+        //user_guid = s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+        // 16 characters:
+        user_guid = "ID_" + s4() + s4() + s4() +  s4();
+    }
+
+    return user_guid;
+
+}
 
