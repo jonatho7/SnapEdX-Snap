@@ -3954,6 +3954,10 @@ Process.prototype.doReferenceCloudVariable = function (varName) {
     return varName;
 };
 
+Process.prototype.reportDataSelect = function (selectedFields, conditionsText, filtersText, dataSourceCSVString) {
+    return 850;
+};
+
 Process.prototype.doGetMethodParameter = function (varName) {
     return varName;
 };
@@ -3996,10 +4000,7 @@ Process.prototype.reportDataAverageForEach = function (columnNumber, rowStart, r
 
 
 
-Process.prototype.reportDataSelector = function (selectedFields, sheetsURL, conditionsText, filtersText) {
 
-    return 850;
-};
 
 
 
