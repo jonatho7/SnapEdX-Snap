@@ -3950,13 +3950,63 @@ Process.prototype.doRetrieveDataFromCloudVariable = function (varName) {
 
 };
 
+
 Process.prototype.doReferenceCloudVariable = function (varName) {
     return varName;
 };
 
+
 Process.prototype.reportDataSelect = function (selectedFields, conditionsText, filtersText, dataSourceCSVString) {
     return 850;
 };
+
+
+Process.prototype.reportDataCondition = function (conditionField, conditionOperator, conditionValue) {
+    //Check the parameters.
+    if (conditionField == "" || (typeof conditionField != "string" && typeof conditionField != "number")){
+        throw new Error('Condition field must be a valid string or number');
+    }
+    if ( conditionOperator != "=="
+        && conditionOperator != "!="
+        && conditionOperator != ">"
+        && conditionOperator != ">="
+        && conditionOperator != "<"
+        && conditionOperator != "<="
+    ) {
+        throw new Error('Condition operator must be equal to one of the following: ==, !=, >, >=, <, <= ');
+    }
+    if (conditionValue == "" || (typeof conditionValue != "string" && typeof conditionValue != "number")){
+        throw new Error('Condition value must be a string or a number');
+    }
+
+    //Convert the parameters from objects to strings if necessary.
+    if (typeof conditionOperator == "object"){
+        conditionOperator = conditionOperator.toString();
+    }
+
+    //Form the JSON object, and return it.
+    var conditionJSON = { "conditionField": conditionField,
+        "conditionOperator": conditionOperator,
+        "conditionValue": conditionValue };
+
+    console.log(conditionJSON);
+    return conditionJSON;
+};
+
+
+Process.prototype.reportDataFilterOrderBy = function (field, orderByType) {
+
+    return 900;
+};
+
+
+Process.prototype.reportDataFilterLimit = function (startIndex, numRecords) {
+
+    return 925;
+};
+
+
+
 
 Process.prototype.doGetMethodParameter = function (varName) {
     return varName;
@@ -4004,22 +4054,7 @@ Process.prototype.reportDataAverageForEach = function (columnNumber, rowStart, r
 
 
 
-Process.prototype.reportDataCondition = function (field, dataOperator, value) {
 
-    return 875;
-};
-
-
-
-Process.prototype.reportDataFilterOrderBy = function (field, orderByType) {
-
-    return 900;
-};
-
-Process.prototype.reportDataFilterLimit = function (startIndex, numRecords) {
-
-    return 925;
-};
 
 
 /*
