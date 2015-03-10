@@ -3900,11 +3900,10 @@ Process.prototype.doSetCloudVariable = function (varName, varValue) {
 	}
 	data = report['data'];
 
-	if ((data) || (data == "")){
-		return data;
-	} else {
-		throw new Error('Unable to set cloud variable');
-	}
+    if (data == "failure"){
+        throw new Error('Unable to set cloud variable');
+    }
+
 
 };
 
@@ -3967,10 +3966,11 @@ Process.prototype.reportDataSelect = function (selectedFields, conditionJSON, fi
     }
 
     //Check the conditionJSON parameter.
-    var conditionField = conditionJSON['conditionField'];
-    var conditionOperator = conditionJSON['conditionOperator'];
-    var conditionValue = conditionJSON['conditionValue'];
-    throwErrorIfConditionParametersAreInvalid(conditionField, conditionOperator, conditionValue);
+    formattedConditions = throwErrorIfConditionParametersAreInvalid(conditionJSON['conditionField'],
+        conditionJSON['conditionOperator'], conditionJSON['conditionValue']);
+    conditionField = formattedConditions[0];
+    conditionOperator = formattedConditions[1];
+    conditionValue = formattedConditions[2];
 
     //Check the filterJSON parameter.
 
@@ -4015,7 +4015,10 @@ Process.prototype.reportDataSelect = function (selectedFields, conditionJSON, fi
 
 Process.prototype.reportDataCondition = function (conditionField, conditionOperator, conditionValue) {
     //Check the parameters.
-    throwErrorIfConditionParametersAreInvalid(conditionField, conditionOperator, conditionValue)
+    formattedConditions = throwErrorIfConditionParametersAreInvalid(conditionField, conditionOperator, conditionValue);
+    conditionField = formattedConditions[0];
+    conditionOperator = formattedConditions[1];
+    conditionValue = formattedConditions[2];
 
     //Form the JSON object, and return it.
     var conditionJSON = { "conditionField": conditionField,
@@ -4041,20 +4044,29 @@ function throwErrorIfConditionParametersAreInvalid(conditionField, conditionOper
     if (conditionField == "" || (typeof conditionField != "string" && typeof conditionField != "number")){
         throw new Error('Condition field must be a valid string or number');
     }
+
+    if (conditionOperator instanceof Array){
+        if (conditionOperator.length != 1){
+            throw new Error('Condition operator must be equal to one of the following: ==, !=, >, >=, <, <= ');
+        } else {
+            conditionOperator = conditionOperator[0];
+        }
+    }
     if ( conditionOperator != "=="
         && conditionOperator != "!="
         && conditionOperator != ">"
         && conditionOperator != ">="
         && conditionOperator != "<"
         && conditionOperator != "<="
-    ) {
+    ){
         throw new Error('Condition operator must be equal to one of the following: ==, !=, >, >=, <, <= ');
     }
+
     if (conditionValue == "" || (typeof conditionValue != "string" && typeof conditionValue != "number")){
         throw new Error('Condition value must be a string or a number');
     }
 
-    return;
+    return [conditionField, conditionOperator, conditionValue];
 }
 
 
