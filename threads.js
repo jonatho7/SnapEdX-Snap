@@ -3880,13 +3880,26 @@ Process.prototype.doSetCloudVariable = function (varName, varValue) {
         throw new Error('Invalid value for cloud variable');
     }
 
+    var isValueAReferenceIndex = false;
+
+    //Modify the parameters as needed.
+    // Double check to make sure that if the value is an object, that the object is already on the cloud server.
+    if (varValue instanceof Object ){
+        if( varValue['variable_reference_index'] === undefined){
+            throw new Error("Can only set a cloud variable equal to the result of a cloud processing operation such as a 'select' or 'get maximum' query");
+        } else {
+            varValue = varValue['variable_reference_index'];
+            isValueAReferenceIndex = true;
+        }
+    }
+
     var data;
 
     //Get the user's id number, or make one if the user does not already have one.
     user_id = retrieveOrMakeGuid();
 
 	var urlBase = "dataProcessing/doSetCloudVariable";
-	var jsonArgs = {"user_id": user_id, "variable_name": varName, "variable_value": varValue};
+	var jsonArgs = {"user_id": user_id, "isValueAReferenceIndex": isValueAReferenceIndex, "variable_name": varName, "variable_value": varValue};
     var isAsync = false;
 	var ajaxResponse = Process.prototype.ajaxRequest(urlBase, jsonArgs, isAsync);
 
