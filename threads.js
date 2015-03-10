@@ -3870,6 +3870,11 @@ Process.prototype.doRunCloudMethod = function (methodName, parameterList) {
 };
 
 
+Process.prototype.doReturnDataUrl_Flu = function () {
+
+    return "https://drive.google.com/uc?export=download&id=0B-WWj_i0WSomaUkwQVpYenlRWm8";
+
+}
 
 Process.prototype.doSetCloudVariable = function (varName, varValue) {
     //Check the parameters.
@@ -3946,8 +3951,8 @@ Process.prototype.doRetrieveDataFromCloudVariable = function (varName) {
 	}
 
     if(report['wasValueRetrieved'] == false){
-        //Failed to get the cloud variable value.
-        throw new Error('Unable to retrieve data from cloud variable');
+        var errorMessage = report['errorMessage'];
+        throw new Error(errorMessage);
     } else {
         //Successfully retrieved the cloud variable value.
 
@@ -3985,9 +3990,15 @@ Process.prototype.reportDataSelect = function (selectedFields, conditionJSON, fi
     conditionOperator = formattedConditions[1];
     conditionValue = formattedConditions[2];
 
+    console.log("conditionField");
+    console.log(conditionField);
+
     //Check the filterJSON parameter.
 
     //Check the dataSourceCSVString parameter.
+    if (dataSourceCSVString == ""){
+        throw new Error('Invalid data source');
+    }
     if (typeof dataSourceCSVString != "string"){
         throw new Error('A string was expected for the data source, but an object was received');
     }
@@ -4000,7 +4011,8 @@ Process.prototype.reportDataSelect = function (selectedFields, conditionJSON, fi
 
 	var urlBase = "dataProcessing/select";
 	var jsonArgs = {"user_id": user_id, "isSelectAllFields": isSelectAllFields,
-        "selectedFields": selectedFields, "conditionJSON": conditionJSON,
+        "selectedFields": selectedFields, "conditionField": conditionField,
+        "conditionOperator": conditionOperator, "conditionValue": conditionValue,
         "filterJSON": filterJSON, "dataSourceCSVString": dataSourceCSVString
     };
     var isAsync = false;
@@ -4014,6 +4026,12 @@ Process.prototype.reportDataSelect = function (selectedFields, conditionJSON, fi
 	if (report == ""){
 		throw new Error("Unable to perform 'select' block");
 	}
+    if(report['errorMessage'] != null){
+        //There was an error. Print out the error for the user.
+        console.log("Got to here somehow.")
+        throw new Error(report['errorMessage']);
+    }
+
 
 
     data = report['data'];

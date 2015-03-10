@@ -1294,7 +1294,11 @@ SpriteMorph.prototype.initBlocks = function () {
             defaults: ['myMethodName']
         },
 
-
+        doReturnDataUrl_Flu: {
+            type: 'reporter',
+            category: 'Data Tools',
+            spec: '%cloudOutline data source: ILINet flu data'
+        },
 
         doSetCloudVariable: {
             type: 'command',
@@ -2441,6 +2445,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push('=');
         //blocks.push(block('doDefineCloudMethod'));
         //blocks.push(block('doRunCloudMethod'));
+        blocks.push(block('doReturnDataUrl_Flu'));
         blocks.push('=');
         blocks.push(block('doSetCloudVariable'));
         blocks.push(block('doRetrieveDataFromCloudVariable'));
@@ -5608,6 +5613,7 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push('=');
         //blocks.push(block('doDefineCloudMethod'));
         //blocks.push(block('doRunCloudMethod'));
+        blocks.push(block('doReturnDataUrl_Flu'));
         blocks.push('=');
         blocks.push(block('doSetCloudVariable'));
         blocks.push(block('doRetrieveDataFromCloudVariable'));
