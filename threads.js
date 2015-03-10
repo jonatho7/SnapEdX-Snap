@@ -3956,13 +3956,62 @@ Process.prototype.doReferenceCloudVariable = function (varName) {
 };
 
 
-Process.prototype.reportDataSelect = function (selectedFields, conditionsText, filtersText, dataSourceCSVString) {
+Process.prototype.reportDataSelect = function (selectedFields, conditionJSON, filterJSON, dataSourceCSVString) {
+    //Check selectedFields parameter.
+    var isSelectAllFields = false;
+    if (typeof selectedFields == "object" && selectedFields == "all fields"){
+        selectedFields = selectedFields.toString();
+        isSelectAllFields = true;
+    } else if (typeof selectedFields == "object"){
+        throw new Error('A string was expected for the selected fields, but an object was received');
+    }
+
+    //Check the conditionJSON parameter.
+    var conditionField = conditionJSON['conditionField'];
+    var conditionOperator = conditionJSON['conditionOperator'];
+    var conditionValue = conditionJSON['conditionValue'];
+    throwErrorIfConditionParametersAreInvalid(conditionField, conditionOperator, conditionValue);
+
+    //Check the filterJSON parameter.
+
+    //Check the dataSourceCSVString parameter.
+    if (typeof dataSourceCSVString != "string"){
+        throw new Error('A string was expected for the data source, but an object was received');
+    }
+
+
+
+
+
     return 850;
 };
 
 
 Process.prototype.reportDataCondition = function (conditionField, conditionOperator, conditionValue) {
     //Check the parameters.
+    throwErrorIfConditionParametersAreInvalid(conditionField, conditionOperator, conditionValue)
+
+    //Form the JSON object, and return it.
+    var conditionJSON = { "conditionField": conditionField,
+        "conditionOperator": conditionOperator,
+        "conditionValue": conditionValue };
+
+    console.log(conditionJSON);
+    return conditionJSON;
+};
+
+function throwErrorIfConditionParametersAreInvalid(conditionField, conditionOperator, conditionValue){
+    //Check the parameters.
+    if (conditionField == undefined){
+        throw new Error('Condition field is undefined');
+    }
+    if (conditionOperator == undefined){
+        throw new Error('Condition operator is undefined');
+    }
+    if (conditionValue == undefined){
+        throw new Error('Condition value is undefined');
+    }
+
     if (conditionField == "" || (typeof conditionField != "string" && typeof conditionField != "number")){
         throw new Error('Condition field must be a valid string or number');
     }
@@ -3979,19 +4028,13 @@ Process.prototype.reportDataCondition = function (conditionField, conditionOpera
         throw new Error('Condition value must be a string or a number');
     }
 
-    //Convert the parameters from objects to strings if necessary.
-    if (typeof conditionOperator == "object"){
-        conditionOperator = conditionOperator.toString();
-    }
+    return;
+}
 
-    //Form the JSON object, and return it.
-    var conditionJSON = { "conditionField": conditionField,
-        "conditionOperator": conditionOperator,
-        "conditionValue": conditionValue };
 
-    console.log(conditionJSON);
-    return conditionJSON;
-};
+
+
+
 
 
 Process.prototype.reportDataFilterOrderBy = function (field, orderByType) {
