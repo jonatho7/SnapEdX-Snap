@@ -3872,18 +3872,23 @@ Process.prototype.doRunCloudMethod = function (methodName, parameterList) {
 
 Process.prototype.doReturnDataUrl_Flu = function () {
 
-    return "https://drive.google.com/uc?export=download&id=0B-WWj_i0WSomaUkwQVpYenlRWm8";
+    return {"type": "url", "value": "https://drive.google.com/uc?export=download&id=0B-WWj_i0WSomaUkwQVpYenlRWm8"};
 
-}
+};
 
 Process.prototype.doSetCloudVariable = function (varName, varValue) {
     //Check the parameters.
     if (varName == ""){
-        throw new Error('Invalid name for cloud variable');
+        throw new Error('Cloud variable name is empty');
     }
+    if (!isString(varName) && !isValidNumber(varName)){
+        throw new Error('Cloud variable name must be a string or a number');
+    }
+
     if (varValue == ""){
-        throw new Error('Invalid value for cloud variable');
+        throw new Error('Cloud variable value is empty');
     }
+
 
     var isValueAReferenceIndex = false;
 
@@ -3891,7 +3896,7 @@ Process.prototype.doSetCloudVariable = function (varName, varValue) {
     // Double check to make sure that if the value is an object, that the object is already on the cloud server.
     if (varValue instanceof Object ){
         if( varValue['variable_reference_index'] === undefined){
-            throw new Error("Can only set a cloud variable equal to the result of a cloud processing operation such as a 'select' or 'get maximum' query");
+            throw new Error("Can only set a cloud variable equal to a string, a number, or the result of a cloud processing operation such as a 'select' or 'get maximum' query");
         } else {
             varValue = varValue['variable_reference_index'];
             isValueAReferenceIndex = true;
@@ -3916,7 +3921,7 @@ Process.prototype.doSetCloudVariable = function (varName, varValue) {
 	if (report == ""){
 		throw new Error('Unable to set cloud variable');
 	}
-	data = report['data'];
+	data = report['data'];github
 
     if (data == "failure"){
         throw new Error('Unable to set cloud variable');
@@ -3928,7 +3933,10 @@ Process.prototype.doSetCloudVariable = function (varName, varValue) {
 Process.prototype.doRetrieveDataFromCloudVariable = function (varName) {
     //Check the parameters
     if (varName == ""){
-        throw new Error('Invalid name for cloud variable');
+        throw new Error('Cloud variable name is empty');
+    }
+    if (!isString(varName) && !isValidNumber(varName)){
+        throw new Error('Cloud variable name must be a string or a number');
     }
 
     var data;
@@ -3937,7 +3945,7 @@ Process.prototype.doRetrieveDataFromCloudVariable = function (varName) {
     user_id = retrieveOrMakeGuid();
 
 	var urlBase = "dataProcessing/doRetrieveDataFromCloudVariable";
-	var jsonArgs = {"user_id": user_id,"variable_name": varName};
+	var jsonArgs = {"user_id": user_id, "variable_name": varName};
     var isAsync = false;
 	var ajaxResponse = Process.prototype.ajaxRequest(urlBase, jsonArgs, isAsync);
 
@@ -3969,11 +3977,19 @@ Process.prototype.doRetrieveDataFromCloudVariable = function (varName) {
 
 
 Process.prototype.doReferenceCloudVariable = function (varName) {
-    return varName;
+    //Check the parameters
+    if (varName == ""){
+        throw new Error('Cloud variable name is empty');
+    }
+    if (!isString(varName) && !isValidNumber(varName)){
+        throw new Error('Cloud variable name must be a string or a number');
+    }
+
+    return {"type": "cloud_variable", "value": varName};
 };
 
 
-Process.prototype.reportDataSelect = function (selectedFields, conditionJSON, filterJSON, dataSourceCSVString) {
+Process.prototype.reportDataSelect = function (selectedFields, conditionJSON, filterJSON, dataSourceJSON) {
     //Check selectedFields parameter.
     var isSelectAllFields = false;
     if (typeof selectedFields == "object" && selectedFields == "all fields"){
@@ -3995,13 +4011,25 @@ Process.prototype.reportDataSelect = function (selectedFields, conditionJSON, fi
 
     //Check the filterJSON parameter.
 
-    //Check the dataSourceCSVString parameter.
-    if (dataSourceCSVString == ""){
+    //Check the dataSourceJSON parameter.
+    dataSourceType = null;
+    dataSourceValue = null;
+    //Check the dataSourceJSON parameter.
+    if (dataSourceJSON == ""){
         throw new Error('Invalid data source');
     }
-    if (typeof dataSourceCSVString != "string"){
-        throw new Error('A string was expected for the data source, but an object was received');
+    if (typeof dataSourceJSON == "string"){
+        dataSourceType = "url";
+        dataSourceValue = dataSourceJSON;
+    } else if ((dataSourceJSON['type'] != "url" && dataSourceJSON['type'] != "cloud_variable") || dataSourceJSON['value'] == null){
+        //The data source is not a string, and it is not a JSON with the required items. Throw an error.
+        throw new Error('Invalid data source');
+    } else {
+        //Then the data source is a JSON with the required items.
+        dataSourceType = dataSourceJSON['type'];
+        dataSourceValue = dataSourceJSON['value'];
     }
+
 
 
     var data;
@@ -4013,7 +4041,8 @@ Process.prototype.reportDataSelect = function (selectedFields, conditionJSON, fi
 	var jsonArgs = {"user_id": user_id, "isSelectAllFields": isSelectAllFields,
         "selectedFields": selectedFields, "conditionField": conditionField,
         "conditionOperator": conditionOperator, "conditionValue": conditionValue,
-        "filterJSON": filterJSON, "dataSourceCSVString": dataSourceCSVString
+        "filterJSON": filterJSON,
+        "dataSourceType": dataSourceType, "dataSourceValue": dataSourceValue
     };
     var isAsync = false;
 	var ajaxResponse = Process.prototype.ajaxRequest(urlBase, jsonArgs, isAsync);
@@ -4028,7 +4057,6 @@ Process.prototype.reportDataSelect = function (selectedFields, conditionJSON, fi
 	}
     if(report['errorMessage'] != null){
         //There was an error. Print out the error for the user.
-        console.log("Got to here somehow.")
         throw new Error(report['errorMessage']);
     }
 
