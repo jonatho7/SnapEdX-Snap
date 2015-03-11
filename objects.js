@@ -1231,7 +1231,7 @@ SpriteMorph.prototype.initBlocks = function () {
         reportTestBlock: {
             type: 'reporter',
             category: 'sensing',
-            spec: 'testing block'
+            spec: 'testing block - project xml'
         },
         reportTestBlock2: {
             type: 'reporter',

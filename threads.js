@@ -3843,30 +3843,7 @@ Process.prototype.doDefineCloudMethod = function (methodName, parameterList) {
 };
 
 Process.prototype.doRunCloudMethod = function (methodName, parameterList) {
-    var data;
-
-    var project_xml_string = global_ide.exportProjectWithoutMessages();
-	var urlBase = "computeservice/runTestCloudMethod2";
-	var jsonArgs = { "project_xml_string": project_xml_string};
-    var isAsync = false;
-	var ajaxResponse = Process.prototype.ajaxRequest(urlBase, jsonArgs, isAsync);
-
-	var json = JSON.parse( ajaxResponse );
-	console.log(json);
-
-	var report = json['report'];
-	//Check to see if there is a valid report object.
-	if (report == ""){
-		return null;
-	}
-	data = report['data'];
-
-
-	if ((data) || (data == "")){
-		return data;
-	} else {
-		return null;
-	}
+    return 800;
 };
 
 
