@@ -1219,7 +1219,7 @@ SpriteMorph.prototype.initBlocks = function () {
         reportTwitterRetweets: {
             type: 'reporter',
             category: 'data',
-            spec: '%storage get highest number of %twitterFactor for tweets mentioning: %s for last 7 days',
+            spec: '%storage get %twitterFactor for tweets mentioning: %s for last 7 days',
             defaults: ['retweets','hunger games']
         },
         reportTwitterTweetsFromPerson: {
