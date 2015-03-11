@@ -1241,7 +1241,7 @@ SpriteMorph.prototype.initBlocks = function () {
         reportBusinessData: {
             type: 'reporter',
             category: 'data',
-            spec: '%storage get %businessFactor from business number %n from location: %txt (Prototype)',
+            spec: '%storage get %businessFactor from business # %numbers1to10 from location: %txt',
             defaults: ['name', 1, 'Seattle, WA']
         },
         reportNumEarthquakes: {

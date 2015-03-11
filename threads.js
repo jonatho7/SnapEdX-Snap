@@ -3482,7 +3482,8 @@ Process.prototype.reportTwitterTweetsFromPerson = function (twitterFromPerson, t
 
 
 Process.prototype.reportBusinessData = function (businessName, businessNumber, location) {
-	return "testResult";
+
+    return "Prototype";
 };
 
 Process.prototype.reportNumEarthquakes = function (earthquakePeriod) {

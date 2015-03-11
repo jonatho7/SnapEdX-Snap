@@ -1049,6 +1049,25 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
             );
             part.setContents(['magnitude']);
             break;
+        case '%numbers1to10':
+            part = new InputSlotMorph(
+                null,
+                true,
+                {
+                    1 : 1,
+                    2 : 2,
+                    3 : 3,
+                    4 : 4,
+                    5 : 5,
+                    6 : 6,
+                    7 : 7,
+                    8 : 8,
+                    9 : 9,
+                    10 : 10
+                }
+            );
+            part.setContents(1);
+            break;
         case '%dataMaximumFactor':
             part = new InputSlotMorph(
                 null, // text
