@@ -3921,7 +3921,7 @@ Process.prototype.doSetCloudVariable = function (varName, varValue) {
 	if (report == ""){
 		throw new Error('Unable to set cloud variable');
 	}
-	data = report['data'];github
+	data = report['data'];
 
     if (data == "failure"){
         throw new Error('Unable to set cloud variable');
