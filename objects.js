@@ -1291,7 +1291,12 @@ SpriteMorph.prototype.initBlocks = function () {
         doReturnDataUrl_Flu: {
             type: 'reporter',
             category: 'Data Tools',
-            spec: '%cloudOutline data source: ILINet flu data'
+            spec: '%cloudOutline data source: flu data from CDC ILINET'
+        },
+        doReturnDataUrl_2013Movies: {
+            type: 'reporter',
+            category: 'Data Tools',
+            spec: '%cloudOutline data source: 2013 movie data from the-numbers.com'
         },
 
         doSetCloudVariable: {
@@ -2440,6 +2445,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         //blocks.push(block('doDefineCloudMethod'));
         //blocks.push(block('doRunCloudMethod'));
         blocks.push(block('doReturnDataUrl_Flu'));
+        blocks.push(block('doReturnDataUrl_2013Movies'));
         blocks.push('=');
         blocks.push(block('doSetCloudVariable'));
         blocks.push(block('doRetrieveDataFromCloudVariable'));
@@ -5607,6 +5613,7 @@ StageMorph.prototype.blockTemplates = function (category) {
         //blocks.push(block('doDefineCloudMethod'));
         //blocks.push(block('doRunCloudMethod'));
         blocks.push(block('doReturnDataUrl_Flu'));
+        blocks.push(block('doReturnDataUrl_2013Movies'));
         blocks.push('=');
         blocks.push(block('doSetCloudVariable'));
         blocks.push(block('doRetrieveDataFromCloudVariable'));
