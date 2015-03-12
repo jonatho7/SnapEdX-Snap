@@ -3053,9 +3053,6 @@ Process.prototype.reportWeather = function (weatherFactor, location) {
 		else if ((this.inputOption(weatherFactor) === 'weather description')) {
 			weatherValue = weatherReport.weather.description;
 		}
-		else if ((this.inputOption(weatherFactor) === 'weather image')) {
-			weatherValue = weatherReport.weather.image_url;
-		}
 		else if ((this.inputOption(weatherFactor) === 'visibility in miles')) {
 			weatherValue = weatherReport.weather.visibility;
 		}
@@ -3076,7 +3073,7 @@ Process.prototype.reportWeather = function (weatherFactor, location) {
 
 
 
-Process.prototype.reportLowHighTemp = function (temperatureFactor, location, temperatureDays) {
+Process.prototype.reportLowHighTemp = function (temperatureFactor, location, dayNumber) {
 	var weatherReport = null;
 	if ( ! cacheController.hasCachedWeatherReport(location) ){
 		//Use AJAX to retrieve data.
@@ -3099,27 +3096,27 @@ Process.prototype.reportLowHighTemp = function (temperatureFactor, location, tem
 	var temp1 = null;
 	var temp2 = null;
 	if (weatherReport != null) {
-		if (this.inputOption(temperatureDays) === 'Today'){
+		if (dayNumber == 1){
 			temp1 = weatherReport.forecasts[0].temperature;
 			temp2 = weatherReport.forecasts[1].temperature;
 		}
-		else if (this.inputOption(temperatureDays) === 'Day 1'){
+		else if (dayNumber == 2){
 			temp1 = weatherReport.forecasts[2].temperature;
 			temp2 = weatherReport.forecasts[3].temperature;
 		}
-		else if (this.inputOption(temperatureDays) === 'Day 2'){
+		else if (dayNumber == 3){
 			temp1 = weatherReport.forecasts[4].temperature;
 			temp2 = weatherReport.forecasts[5].temperature;
 		}
-		else if (this.inputOption(temperatureDays) === 'Day 3'){
+		else if (dayNumber == 4){
 			temp1 = weatherReport.forecasts[6].temperature;
 			temp2 = weatherReport.forecasts[7].temperature;
 		}
-		else if (this.inputOption(temperatureDays) === 'Day 4'){
+		else if (dayNumber == 5){
 			temp1 = weatherReport.forecasts[8].temperature;
 			temp2 = weatherReport.forecasts[9].temperature;
 		}
-		else if (this.inputOption(temperatureDays) === 'Day 5'){
+		else if (dayNumber == 6){
 			temp1 = weatherReport.forecasts[10].temperature;
 			temp2 = weatherReport.forecasts[11].temperature;
 		}
@@ -3140,7 +3137,7 @@ Process.prototype.reportLowHighTemp = function (temperatureFactor, location, tem
 };
 
 
-Process.prototype.reportPrecipitation = function (precipFactor, location, precipDays) {
+Process.prototype.reportPrecipitation = function (precipFactor, location, dayNumber, afternoonOrNight) {
 	var weatherReport = null;
 	if ( ! cacheController.hasCachedWeatherReport(location) ){
 		//Use AJAX to retrieve data.
@@ -3162,45 +3159,40 @@ Process.prototype.reportPrecipitation = function (precipFactor, location, precip
 	var weatherValue = "";
 	var forecastIndex = null;
 	if (weatherReport != null) {
-		if (this.inputOption(precipDays) === 'This Afternoon'){
-			//if (weatherReport.forecasts[0]['period_name'] == "Tonight"){
-			//	forecastIndex = null;
-			//} else {
-			//	forecastIndex = 0;
-			//}
+		if (dayNumber == 1 && afternoonOrNight == 'afternoon'){
             forecastIndex = 0;
 		}
-		else if (this.inputOption(precipDays) === 'Tonight'){
+		else if (dayNumber == 1 && afternoonOrNight == 'night'){
 			forecastIndex = 0;
 		}
-		else if (this.inputOption(precipDays) === 'Day 1'){
+		else if (dayNumber == 2 && afternoonOrNight == 'afternoon'){
 			forecastIndex = 2;
 		}
-		else if (this.inputOption(precipDays) === 'Day 1 Night'){
+		else if (dayNumber == 2 && afternoonOrNight == 'night'){
 			forecastIndex = 3;
 		}
-		else if (this.inputOption(precipDays) === 'Day 2'){
+		else if (dayNumber == 3 && afternoonOrNight == 'afternoon'){
 			forecastIndex = 4;
 		}
-		else if (this.inputOption(precipDays) === 'Day 2 Night'){
+		else if (dayNumber == 3 && afternoonOrNight == 'night'){
 			forecastIndex = 5;
 		}
-		else if (this.inputOption(precipDays) === 'Day 3'){
+		else if (dayNumber == 4 && afternoonOrNight == 'afternoon'){
 			forecastIndex = 6;
 		}
-		else if (this.inputOption(precipDays) === 'Day 3 Night'){
+		else if (dayNumber == 4 && afternoonOrNight == 'night'){
 			forecastIndex = 7;
 		}
-		else if (this.inputOption(precipDays) === 'Day 4'){
+		else if (dayNumber == 5 && afternoonOrNight == 'afternoon'){
 			forecastIndex = 8;
 		}
-		else if (this.inputOption(precipDays) === 'Day 4 Night'){
+		else if (dayNumber == 5 && afternoonOrNight == 'night'){
 			forecastIndex = 9;
 		}
-		else if (this.inputOption(precipDays) === 'Day 5'){
+		else if (dayNumber == 6 && afternoonOrNight == 'afternoon'){
 			forecastIndex = 10;
 		}
-		else if (this.inputOption(precipDays) === 'Day 5 Night'){
+		else if (dayNumber == 6 && afternoonOrNight == 'night'){
 			forecastIndex = 11;
 		}
 		else {

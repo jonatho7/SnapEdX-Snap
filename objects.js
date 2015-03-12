@@ -1157,37 +1157,37 @@ SpriteMorph.prototype.initBlocks = function () {
             type: 'reporter',
             category: 'data',
             spec: 'get latitude at %txt',
-            defaults: [localize('Blacksburg, VA')]
+            defaults: ['Blacksburg, VA']
         },
         reportLongitude: {
             type: 'reporter',
             category: 'data',
             spec: 'get longitude at %txt',
-            defaults: [localize('Blacksburg, VA')]
+            defaults: ['Blacksburg, VA']
         },
         retrieveWeatherData: {
             type: 'command',
             category: 'data',
             spec: 'retrieve weather data at %s',
-            defaults: [localize('Blacksburg, VA')]
+            defaults: ['Blacksburg, VA']
         },
         reportWeather: {
             type: 'reporter',
             category: 'data',
             spec: '%storage get %weatherFactor at %s',
-            defaults: [localize('temperature in F'), localize('Blacksburg, VA')]
+            defaults: [null, 'Blacksburg, VA']
         },
         reportLowHighTemp: {
             type: 'reporter',
             category: 'data',
-            spec: '%storage get %temperatureFactor at %s for forecast %temperatureDays',
-            defaults: [localize('low temperature in F'), localize('Blacksburg, VA')]
+            spec: '%storage get %temperatureFactor at %s for day # %numbers1to6',
+            defaults: [null, 'Blacksburg, VA', null]
         },
         reportPrecipitation: {
             type: 'reporter',
             category: 'data',
-            spec: '%storage get %precipFactor at %s for forecast %precipDays',
-            defaults: [localize('chance of precipitation'), localize('Blacksburg, VA')]
+            spec: '%storage get %precipFactor at %s for day # %numbers1to6 %afternoonOrNight',
+            defaults: [null, 'Blacksburg, VA', null, null ]
         },
         reportRedditPosts: {
             type: 'reporter',
@@ -1214,19 +1214,19 @@ SpriteMorph.prototype.initBlocks = function () {
             type: 'reporter',
             category: 'data',
             spec: '%storage get %stockFactor for stock: %s',
-            defaults: ['last trade price','GOOG']
+            defaults: [null,'GOOG']
         },
         reportTwitterRetweets: {
             type: 'reporter',
             category: 'data',
-            spec: '%storage get %twitterFactor for tweets mentioning: %s for last 7 days',
-            defaults: ['retweets','hunger games']
+            spec: '%storage get # %twitterFactor for tweets mentioning: %s for last 7 days',
+            defaults: [null,'hunger games']
         },
         reportTwitterTweetsFromPerson: {
             type: 'reporter',
             category: 'data',
             spec: '%storage get number of tweets sent %twitterFromPerson %s for last 7 days',
-            defaults: ['from person','HarryPotterFilm']
+            defaults: [null,'HarryPotterFilm']
         },
         reportTestBlock: {
             type: 'reporter',
@@ -1242,19 +1242,19 @@ SpriteMorph.prototype.initBlocks = function () {
             type: 'reporter',
             category: 'data',
             spec: '%storage get %businessFactor from business # %numbers1to10 from location: %txt',
-            defaults: ['name', 1, 'Seattle, WA']
+            defaults: [null, 1, 'Seattle, WA']
         },
         reportNumEarthquakes: {
             type: 'reporter',
             category: 'data',
             spec: '%storage get # of earthquakes for past %earthquakePeriod',
-            defaults: ['day']
+            defaults: [null]
         },
         reportEarthquakeData: {
             type: 'reporter',
             category: 'data',
             spec: '%storage get %earthquakeQuery of earthquake # %n for past %earthquakePeriod',
-            defaults: ['magnitude', 1, 'day']
+            defaults: [null, 1, null]
         },
         //End of Data Blocks.
 
