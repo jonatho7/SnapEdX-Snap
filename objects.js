@@ -2479,6 +2479,12 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push('=');
         blocks.push(block('reportStocks'));
         blocks.push('=');
+        blocks.push(block('reportLatitude'));
+        blocks.push(block('reportLongitude'));
+        blocks.push('=');
+        blocks.push(block('reportNumEarthquakes'));
+        blocks.push(block('reportEarthquakeData'));
+        blocks.push('=');
         blocks.push(block('reportTwitterRetweets'));
         blocks.push(block('reportTwitterTweetsFromPerson'));
         blocks.push('=');
@@ -2487,13 +2493,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportRedditComments'));
         blocks.push(block('reportRedditCommentInfo'));
         blocks.push('=');
-        blocks.push(block('reportLatitude'));
-        blocks.push(block('reportLongitude'));
-        blocks.push('=');
-        blocks.push(block('reportNumEarthquakes'));
-        blocks.push(block('reportEarthquakeData'));
-        blocks.push('=');
-        blocks.push(block('reportBusinessData'));
+        //blocks.push(block('reportBusinessData'));
 
     }
     return blocks;
@@ -5646,6 +5646,12 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push('=');
         blocks.push(block('reportStocks'));
         blocks.push('=');
+        blocks.push(block('reportLatitude'));
+        blocks.push(block('reportLongitude'));
+        blocks.push('=');
+        blocks.push(block('reportNumEarthquakes'));
+        blocks.push(block('reportEarthquakeData'));
+        blocks.push('=');
         blocks.push(block('reportTwitterRetweets'));
         blocks.push(block('reportTwitterTweetsFromPerson'));
         blocks.push('=');
@@ -5654,13 +5660,7 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportRedditComments'));
         blocks.push(block('reportRedditCommentInfo'));
         blocks.push('=');
-        blocks.push(block('reportLatitude'));
-        blocks.push(block('reportLongitude'));
-        blocks.push('=');
-        blocks.push(block('reportNumEarthquakes'));
-        blocks.push(block('reportEarthquakeData'));
-        blocks.push('=');
-        blocks.push(block('reportBusinessData'));
+        //blocks.push(block('reportBusinessData'));
 
     }
     return blocks;
