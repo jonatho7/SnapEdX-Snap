@@ -2603,18 +2603,6 @@ Process.prototype.reportDate = function (datefn) {
     return result;
 };
 
-Process.prototype.retrieveWeatherData = function (location) {
-	//TODO. add in 15minute expiration, if wanted.
-	if ( ! cacheController.hasCachedWeatherReport(location) ){
-		//Use AJAX to retrieve data. ASYNCHRONOUS, so that program will not stop.
-		var urlBase = "weather";
-		var isAsync = true;
-		Process.prototype.weatherAjaxRequest(urlBase, location, isAsync);
-	}
-	return;
-};
-
-
 Process.prototype.encodeQueryData = function (data) {
    var ret = [];
    for (var d in data)

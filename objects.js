@@ -1165,12 +1165,6 @@ SpriteMorph.prototype.initBlocks = function () {
             spec: 'get longitude at %txt',
             defaults: ['Blacksburg, VA']
         },
-        retrieveWeatherData: {
-            type: 'command',
-            category: 'data',
-            spec: 'retrieve weather data at %s',
-            defaults: ['Blacksburg, VA']
-        },
         reportWeather: {
             type: 'reporter',
             category: 'data',
@@ -2471,7 +2465,6 @@ SpriteMorph.prototype.blockTemplates = function (category) {
     } else if (cat === 'data') {
 
         blocks.push(block('reportDate'));
-        //blocks.push(block('retrieveWeatherData'));
         blocks.push('=');
         blocks.push(block('reportWeather'));
         blocks.push(block('reportLowHighTemp'));
@@ -5638,7 +5631,6 @@ StageMorph.prototype.blockTemplates = function (category) {
     } else if (cat === 'data') {
 
         blocks.push(block('reportDate'));
-        //blocks.push(block('retrieveWeatherData'));
         blocks.push('=');
         blocks.push(block('reportWeather'));
         blocks.push(block('reportLowHighTemp'));
