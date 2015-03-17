@@ -1382,8 +1382,8 @@ SpriteMorph.prototype.initBlocks = function () {
         reportDataSelect: {
             type: 'reporter',
             category: 'Data Tools',
-            spec: '%cloudOutline SELECT: %dataSelector WHERE condition: %txt with FILTER: %txt FROM data source: %txt',
-            defaults: [null, null, null, null ]
+            spec: '%cloudOutline SELECT: %dataSelector WHERE condition: %txt FROM data source: %txt',
+            defaults: [null, null, null]
         },
 
 
@@ -2468,8 +2468,8 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push('=');
         blocks.push(block('reportDataSelect'));
         blocks.push(block('reportDataCondition'));
-        blocks.push(block('reportDataFilterOrderBy'));
-        blocks.push(block('reportDataFilterLimit'));
+        //blocks.push(block('reportDataFilterOrderBy'));
+        //blocks.push(block('reportDataFilterLimit'));
         blocks.push('=');
         blocks.push(block('reportDataMaximum'));
         blocks.push(block('reportDataAverage'));
@@ -5638,8 +5638,8 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push('=');
         blocks.push(block('reportDataSelect'));
         blocks.push(block('reportDataCondition'));
-        blocks.push(block('reportDataFilterOrderBy'));
-        blocks.push(block('reportDataFilterLimit'));
+        //blocks.push(block('reportDataFilterOrderBy'));
+        //blocks.push(block('reportDataFilterLimit'));
         blocks.push('=');
         blocks.push(block('reportDataMaximum'));
         blocks.push(block('reportDataAverage'));
