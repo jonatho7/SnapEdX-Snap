@@ -2473,10 +2473,10 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push('=');
         blocks.push(block('reportDataMaximum'));
         blocks.push(block('reportDataAverage'));
-        blocks.push(block('reportDataWordFrequency'));
-        blocks.push(block('reportDataSelectUnique'));
-        blocks.push(block('reportDataMaximumForEach'));
-        blocks.push(block('reportDataAverageForEach'));
+        //blocks.push(block('reportDataWordFrequency'));
+        //blocks.push(block('reportDataSelectUnique'));
+        //blocks.push(block('reportDataMaximumForEach'));
+        //blocks.push(block('reportDataAverageForEach'));
         //blocks.push(block('reportDataFromColumn'));
         //blocks.push(block('reportDataFromRow'));
 
@@ -5643,10 +5643,10 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push('=');
         blocks.push(block('reportDataMaximum'));
         blocks.push(block('reportDataAverage'));
-        blocks.push(block('reportDataWordFrequency'));
-        blocks.push(block('reportDataSelectUnique'));
-        blocks.push(block('reportDataMaximumForEach'));
-        blocks.push(block('reportDataAverageForEach'));
+        //blocks.push(block('reportDataWordFrequency'));
+        //blocks.push(block('reportDataSelectUnique'));
+        //blocks.push(block('reportDataMaximumForEach'));
+        //blocks.push(block('reportDataAverageForEach'));
         //blocks.push(block('reportDataFromColumn'));
         //blocks.push(block('reportDataFromRow'));
 
