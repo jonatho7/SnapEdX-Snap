@@ -1062,9 +1062,9 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
                 false, // non-numeric
                 {
                     'maximum' : ['maximum'],
-                    'minimum' : ['minimum'],
-                    'median' : ['median'],
-                    'mode' : ['mode']
+                    'minimum' : ['minimum']//,
+                    //'median' : ['median'],
+                    //'mode' : ['mode']
                 },
                 true // read-only
             );
@@ -1077,7 +1077,7 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
                 {
                     'average' : ['average'],
                     'sum' : ['sum'],
-                    'multiply' : ['multiply']
+                    'product' : ['product']
                 },
                 true // read-only
             );
