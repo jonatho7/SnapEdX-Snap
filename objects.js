@@ -1298,6 +1298,17 @@ SpriteMorph.prototype.initBlocks = function () {
             category: 'Data Tools',
             spec: '%cloudOutline data source: 2013 movie data from the-numbers.com'
         },
+        doReturnDataUrl_USAUnemployment: {
+            type: 'reporter',
+            category: 'Data Tools',
+            spec: '%cloudOutline data source: USA unemployment rates from multpl.com'
+        },
+        doReturnDataUrl: {
+            type: 'reporter',
+            category: 'Data Tools',
+            spec: '%cloudOutline data source: URL %txt',
+            defaults: ['http://']
+        },
 
         doSetCloudVariable: {
             type: 'command',
@@ -2446,6 +2457,8 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         //blocks.push(block('doRunCloudMethod'));
         blocks.push(block('doReturnDataUrl_Flu'));
         blocks.push(block('doReturnDataUrl_2013Movies'));
+        blocks.push(block('doReturnDataUrl_USAUnemployment'));
+        blocks.push(block('doReturnDataUrl'));
         blocks.push('=');
         blocks.push(block('doSetCloudVariable'));
         blocks.push(block('doRetrieveDataFromCloudVariable'));
@@ -5614,6 +5627,8 @@ StageMorph.prototype.blockTemplates = function (category) {
         //blocks.push(block('doRunCloudMethod'));
         blocks.push(block('doReturnDataUrl_Flu'));
         blocks.push(block('doReturnDataUrl_2013Movies'));
+        blocks.push(block('doReturnDataUrl_USAUnemployment'));
+        blocks.push(block('doReturnDataUrl'));
         blocks.push('=');
         blocks.push(block('doSetCloudVariable'));
         blocks.push(block('doRetrieveDataFromCloudVariable'));

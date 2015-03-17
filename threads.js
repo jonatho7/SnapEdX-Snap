@@ -3842,6 +3842,23 @@ Process.prototype.doReturnDataUrl_2013Movies = function () {
 };
 
 
+Process.prototype.doReturnDataUrl_USAUnemployment = function () {
+
+    return {"type": "url", "value": "https://drive.google.com/uc?export=download&id=0B-WWj_i0WSomcjhXN1pHdmVKRjQ"};
+
+};
+
+
+Process.prototype.doReturnDataUrl = function (userInputURL) {
+    if (!isString(userInputURL)){
+        throw new Error('The URL entered is not a string. Please enter a string.');
+    }
+
+    return {"type": "url", "value": userInputURL};
+
+};
+
+
 Process.prototype.doSetCloudVariable = function (varName, varValue) {
     //Check the parameters.
     if (varName == ""){
