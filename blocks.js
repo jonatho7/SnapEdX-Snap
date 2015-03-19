@@ -1061,14 +1061,14 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
                 null, // text
                 false, // non-numeric
                 {
-                    'maximum' : ['maximum'],
-                    'minimum' : ['minimum']//,
+                    'maximum' : 'maximum',
+                    'minimum' : 'minimum'//,
                     //'median' : ['median'],
                     //'mode' : ['mode']
                 },
                 true // read-only
             );
-            part.setContents(['maximum']);
+            part.setContents('maximum');
             break;
         case '%dataAverageFactor':
             part = new InputSlotMorph(
@@ -1100,12 +1100,12 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
                 null, // text
                 false, // non-numeric
                 {
-                    'value only' : ['value only'],
-                    'entire row' : ['entire row']
+                    'value only' : 'value only',
+                    'entire row' : 'entire row'
                 },
                 true // read-only
             );
-            part.setContents(['value only']);
+            part.setContents('value only');
             break;
         case '%dataSelector':
             part = new InputSlotMorph(
@@ -1113,7 +1113,8 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
                 false,
                 {
                     'all fields' : ['all fields']
-                }
+                },
+                true // read-only
             );
             part.setContents(['all fields']);
             break;
@@ -1131,7 +1132,7 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
                 },
                 true
             );
-            part.setContents(['==']);
+            part.setContents(['>']);
             break;
         case '%dataOrderBy':
             part = new InputSlotMorph(

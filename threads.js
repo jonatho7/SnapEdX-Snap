@@ -3972,7 +3972,7 @@ Process.prototype.doReferenceCloudVariable = function (varName) {
 };
 
 
-Process.prototype.reportDataSelect = function (selectedFields, conditionJSON, filterJSON, dataSourceJSON) {
+Process.prototype.reportDataSelect = function (selectedFields, conditionJSON, dataSourceJSON) {
     //Check selectedFields parameter.
     var isSelectAllFields = false;
     if (typeof selectedFields == "object" && selectedFields == "all fields"){
@@ -4014,17 +4014,16 @@ Process.prototype.reportDataSelect = function (selectedFields, conditionJSON, fi
     }
 
 
-
+    //Now perform the operation.
     var data;
 
     //Get the user's id number, or make one if the user does not already have one.
-    user_id = retrieveOrMakeGuid();
+    var user_id = retrieveOrMakeGuid();
 
 	var urlBase = "dataProcessing/select";
 	var jsonArgs = {"user_id": user_id, "isSelectAllFields": isSelectAllFields,
         "selectedFields": selectedFields, "conditionField": conditionField,
         "conditionOperator": conditionOperator, "conditionValue": conditionValue,
-        "filterJSON": filterJSON,
         "dataSourceType": dataSourceType, "dataSourceValue": dataSourceValue
     };
     var isAsync = false;
@@ -4055,6 +4054,12 @@ Process.prototype.reportDataSelect = function (selectedFields, conditionJSON, fi
 };
 
 
+Process.prototype.reportDataFields = function (fieldsArray) {
+    throw new Error("Invalid fields.");
+
+};
+
+
 Process.prototype.reportDataCondition = function (conditionField, conditionOperator, conditionValue) {
     //Check the parameters.
     formattedConditions = throwErrorIfConditionParametersAreInvalid(conditionField, conditionOperator, conditionValue);
@@ -4073,20 +4078,22 @@ Process.prototype.reportDataCondition = function (conditionField, conditionOpera
 
 function throwErrorIfConditionParametersAreInvalid(conditionField, conditionOperator, conditionValue){
     //Check the parameters.
+
+
+    if (conditionField == undefined && conditionOperator == undefined && conditionValue == undefined) {
+        //Since all three of these are undefined, the condition block is probably not being used.
+        throw new Error('A condition block was expected.');
+    }
     if (conditionField == undefined){
         throw new Error('Condition field is undefined');
     }
-    if (conditionOperator == undefined){
-        throw new Error('Condition operator is undefined');
-    }
-    if (conditionValue == undefined){
-        throw new Error('Condition value is undefined');
-    }
-
     if (conditionField == "" || (typeof conditionField != "string" && typeof conditionField != "number")){
         throw new Error('Condition field must be a valid string or number');
     }
 
+    if (conditionOperator == undefined){
+        throw new Error('Condition operator is undefined');
+    }
     if (conditionOperator instanceof Array){
         if (conditionOperator.length != 1){
             throw new Error('Condition operator must be equal to one of the following: ==, !=, >, >=, <, <= ');
@@ -4104,6 +4111,9 @@ function throwErrorIfConditionParametersAreInvalid(conditionField, conditionOper
         throw new Error('Condition operator must be equal to one of the following: ==, !=, >, >=, <, <= ');
     }
 
+    if (conditionValue == undefined){
+        throw new Error('Condition value is undefined');
+    }
     if (conditionValue == "" || (typeof conditionValue != "string" && typeof conditionValue != "number")){
         throw new Error('Condition value must be a string or a number');
     }
@@ -4112,6 +4122,95 @@ function throwErrorIfConditionParametersAreInvalid(conditionField, conditionOper
 }
 
 
+Process.prototype.reportDataMaximum = function (operationType, field, dataSourceJSON, returnType) {
+    //Check the operationType parameter.
+    if (operationType !== "maximum" && operationType !== "minimum"){
+        throw new Error('Expected the operation type to be "maximum" or "minimum".');
+    }
+
+    //Check the field parameter.
+    if (field == undefined){
+        throw new Error('Field is undefined');
+    }
+    if (field == "" || (typeof field != "string" && typeof field != "number")){
+        throw new Error('Field must be a valid string or number');
+    }
+
+    //Check the dataSourceJSON parameter.
+    dataSourceType = null;
+    dataSourceValue = null;
+    //Check the dataSourceJSON parameter.
+    if (dataSourceJSON == ""){
+        throw new Error('Invalid data source');
+    }
+    if (typeof dataSourceJSON == "string"){
+        dataSourceType = "url";
+        dataSourceValue = dataSourceJSON;
+    } else if ((dataSourceJSON['type'] != "url" && dataSourceJSON['type'] != "cloud_variable") || dataSourceJSON['value'] == null){
+        //The data source is not a string, and it is not a JSON with the required items. Throw an error.
+        throw new Error('Invalid data source');
+    } else {
+        //Then the data source is a JSON with the required items.
+        dataSourceType = dataSourceJSON['type'];
+        dataSourceValue = dataSourceJSON['value'];
+    }
+
+    //Check the returnType parameter.
+    if (returnType !== "value only" && returnType !== "entire row"){
+        throw new Error('Expected the return type to be "value only" or "entire row".');
+    }
+
+
+    //Now perform the operation.
+    var data;
+
+    //Get the user's id number, or make one if the user does not already have one.
+    var user_id = retrieveOrMakeGuid();
+
+	var urlBase = "dataProcessing/methodSet1";
+	var jsonArgs = {"user_id": user_id, "operationType": operationType,
+        "field": field,
+        "dataSourceType": dataSourceType,
+        "dataSourceValue": dataSourceValue,
+        "returnType": returnType
+    };
+    var isAsync = false;
+	var ajaxResponse = Process.prototype.ajaxRequest(urlBase, jsonArgs, isAsync);
+
+	var json = JSON.parse( ajaxResponse );
+	console.log(json);
+
+	var report = json['report'];
+	//Check to see if there is a valid report object.
+	if (report == ""){
+		throw new Error("Unable to perform 'get " + operationType +  "' block");
+	}
+    if(report['errorMessage'] != null){
+        //There was an error. Print out the error for the user.
+        throw new Error(report['errorMessage']);
+    }
+
+
+    data = report['data'];
+    if ((data) || (data == "")){
+        return data;
+    } else {
+        throw new Error("Unable to perform 'get " + operationType +  "' block");
+    }
+
+
+    return 500;
+};
+
+
+
+
+
+
+Process.prototype.reportDataAverage = function (columnNumber, rowStart, rowEnd, sheetNumber, sheetsURL) {
+
+    return 700;
+};
 
 
 
@@ -4140,16 +4239,7 @@ Process.prototype.doCloudReport = function (returnValue) {
 };
 
 
-Process.prototype.reportDataMaximum = function (columnNumber, rowStart, rowEnd, sheetNumber, sheetsURL) {
 
-    return 500;
-};
-
-
-Process.prototype.reportDataAverage = function (columnNumber, rowStart, rowEnd, sheetNumber, sheetsURL) {
-
-    return 700;
-};
 
 Process.prototype.reportDataWordFrequency = function (columnNumber, rowStart, rowEnd, sheetNumber, sheetsURL) {
 

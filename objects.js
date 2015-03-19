@@ -168,7 +168,7 @@ SpriteMorph.prototype.categories =
         'mapping',
         'data',
         'Data Tools',
-        'SQL'
+        'Cloud'
 
     ];
 
@@ -186,7 +186,7 @@ SpriteMorph.prototype.blockColor = {
     mapping: new Color(255, 102, 102),
     'Data Tools': new Color(171, 111, 209),//(188, 95, 212),
     data: new Color(77, 189, 85),
-    SQL: new Color(209, 111, 186)
+    Cloud: new Color(209, 111, 186)
 };
 
 SpriteMorph.prototype.paletteColor = new Color(55, 55, 55);
@@ -1276,65 +1276,65 @@ SpriteMorph.prototype.initBlocks = function () {
         },
         //End of Data Tools Blocks.
 
-        //Start of SQL Blocks.
+        //Start of Cloud Blocks.
         doDefineCloudMethod: {
             type: 'command',
-            category: 'SQL',
+            category: 'Cloud',
             spec: '%cloudOutline Define cloud method with name %txt with parameter names %mult%s server: %txt %c',
             defaults: ['myMethodName', null, 'think.cs.vt.edu']
         },
         doRunCloudMethod: {
             type: 'reporter',
-            category: 'SQL',
+            category: 'Cloud',
             spec: '%cloudOutline run cloud method with name %txt %inputs',
             defaults: ['myMethodName']
         },
 
         doReturnDataUrl_Flu: {
             type: 'reporter',
-            category: 'SQL',
+            category: 'Cloud',
             spec: '%cloudOutline data source: flu data from CDC ILINET'
         },
         doReturnDataUrl_2013Movies: {
             type: 'reporter',
-            category: 'SQL',
+            category: 'Cloud',
             spec: '%cloudOutline data source: 2013 movie data from the-numbers.com'
         },
         doReturnDataUrl_USAUnemployment: {
             type: 'reporter',
-            category: 'SQL',
+            category: 'Cloud',
             spec: '%cloudOutline data source: USA unemployment rates from multpl.com'
         },
         doReturnDataUrl: {
             type: 'reporter',
-            category: 'SQL',
+            category: 'Cloud',
             spec: '%cloudOutline data source: URL %txt',
             defaults: ['http://']
         },
 
         doSetCloudVariable: {
             type: 'command',
-            category: 'SQL',
+            category: 'Cloud',
             spec: '%cloudOutline set cloud variable %txt to %txt'
         },
         doRetrieveDataFromCloudVariable: {
             type: 'reporter',
-            category: 'SQL',
+            category: 'Cloud',
             spec: '%cloudOutline retrieve data from cloud variable %txt'
         },
         doReferenceCloudVariable: {
             type: 'reporter',
-            category: 'SQL',
+            category: 'Cloud',
             spec: '%cloudOutline cloud variable %txt'
         },
         doGetMethodParameter: {
             type: 'reporter',
-            category: 'SQL',
+            category: 'Cloud',
             spec: '%cloudOutline get method parameter %txt'
         },
         doCloudReport: {
             type: 'command',
-            category: 'SQL',
+            category: 'Cloud',
             spec: '%cloudOutline report %s'
         },
 
@@ -1344,37 +1344,37 @@ SpriteMorph.prototype.initBlocks = function () {
 
         reportDataMaximum: {
             type: 'reporter',
-            category: 'SQL',
+            category: 'Cloud',
             spec: '%cloudOutline get %dataMaximumFactor from field %txt from data source %txt and return %dataFactor',
             defaults: [null, null, null, null]
         },
         reportDataAverage: {
             type: 'reporter',
-            category: 'SQL',
+            category: 'Cloud',
             spec: '%cloudOutline get %dataAverageFactor from field %txt from data source %txt',
             defaults: [null, null, null]
         },
         reportDataWordFrequency: {
             type: 'reporter',
-            category: 'SQL',
+            category: 'Cloud',
             spec: '%cloudOutline get word frequency of words %l from field %txt from data source %txt',
             defaults: [null, null, null]
         },
         reportDataSelectUnique: {
             type: 'reporter',
-            category: 'SQL',
+            category: 'Cloud',
             spec: '%cloudOutline get %dataSelectUniqueFactor from field %txt from data source %txt',
             defaults: [null, null, null]
         },
         reportDataMaximumForEach: {
             type: 'reporter',
-            category: 'SQL',
+            category: 'Cloud',
             spec: '%cloudOutline get %dataMaximumFactor of field %txt for each in field %txt from data source %txt and return %dataFactor',
             defaults: [null, null, null, null]
         },
         reportDataAverageForEach: {
             type: 'reporter',
-            category: 'SQL',
+            category: 'Cloud',
             spec: '%cloudOutline get %dataAverageFactor of field %txt for each in field %txt from data source %txt',
             defaults: [null, null, null, null]
         },
@@ -1383,16 +1383,20 @@ SpriteMorph.prototype.initBlocks = function () {
 
         reportDataSelect: {
             type: 'reporter',
-            category: 'SQL',
+            category: 'Cloud',
             spec: '%cloudOutline SELECT: %dataSelector WHERE condition: %txt FROM data source: %txt',
             defaults: [null, null, null]
         },
 
-
+        reportDataFields: {
+            type: 'reporter',
+            category: 'Cloud',
+            spec: '%cloudOutline fields: %mult%txt'
+        },
 
         reportDataCondition: {
             type: 'reporter',
-            category: 'SQL',
+            category: 'Cloud',
             spec: '%cloudOutline condition: %txt %dataOperator %txt',
             defaults: ['WEEK', null, '26']
         },
@@ -1401,13 +1405,13 @@ SpriteMorph.prototype.initBlocks = function () {
 
         reportDataFilterOrderBy: {
             type: 'reporter',
-            category: 'SQL',
+            category: 'Cloud',
             spec: '%cloudOutline filter: ORDER BY: %txt %dataOrderBy',
             defaults: ['WEEK', null]
         },
         reportDataFilterLimit: {
             type: 'reporter',
-            category: 'SQL',
+            category: 'Cloud',
             spec: '%cloudOutline filter: start at index: %n and get: %n records',
             defaults: [1, 50]
         },
@@ -1416,20 +1420,20 @@ SpriteMorph.prototype.initBlocks = function () {
         /*
         reportDataFromColumn: {
             type: 'reporter',
-            category: 'SQL',
+            category: 'Cloud',
             spec: '%cloudOutline retrieve data as list from column # %n row # %n to # %n of sheet # %n at URL: %txt',
             defaults: [5, 3, 36, 1, 'spreadsheets.google.com/feeds/cells/1MV9UdRDTUPvgk9K4bxCavQjRrNcNnVFLNK79URV6n0Y/1/public/values?alt=json']
         },
         reportDataFromRow: {
             type: 'reporter',
-            category: 'SQL',
+            category: 'Cloud',
             spec: '%cloudOutline retrieve data as list from row # %n column # %n to # %n of sheet # %n at URL: %txt',
             defaults: [1, 1, 50, 1, 'Google Sheets URL']
         },
         */
 
 
-        //End of SQL Blocks.
+        //End of Cloud Blocks.
 
 
 
@@ -2481,7 +2485,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push('=');
         //blocks.push(block('reportBusinessData'));
 
-    }   else if (cat === 'SQL') {
+    }   else if (cat === 'Cloud') {
 
         blocks.push(block('doReturnDataUrl_Flu'));
         blocks.push(block('doReturnDataUrl_2013Movies'));
@@ -2495,6 +2499,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         //blocks.push(block('doCloudReport'));
         blocks.push('=');
         blocks.push(block('reportDataSelect'));
+        blocks.push(block('reportDataFields'));
         blocks.push(block('reportDataCondition'));
         //blocks.push(block('reportDataFilterOrderBy'));
         //blocks.push(block('reportDataFilterLimit'));
@@ -5650,7 +5655,7 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push('=');
         //blocks.push(block('reportBusinessData'));
 
-    } else if (cat === 'SQL') {
+    } else if (cat === 'Cloud') {
 
         blocks.push(block('doReturnDataUrl_Flu'));
         blocks.push(block('doReturnDataUrl_2013Movies'));
@@ -5664,6 +5669,7 @@ StageMorph.prototype.blockTemplates = function (category) {
         //blocks.push(block('doCloudReport'));
         blocks.push('=');
         blocks.push(block('reportDataSelect'));
+        blocks.push(block('reportDataFields'));
         blocks.push(block('reportDataCondition'));
         //blocks.push(block('reportDataFilterOrderBy'));
         //blocks.push(block('reportDataFilterLimit'));
