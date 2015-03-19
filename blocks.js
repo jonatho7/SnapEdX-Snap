@@ -1077,7 +1077,9 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
                 {
                     'average' : 'average',
                     'sum' : 'sum',
-                    'product' : 'product'
+                    'product' : 'product',
+                    'median' : 'median'//,
+                    //'mode' : 'mode'
                 },
                 true // read-only
             );

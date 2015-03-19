@@ -4078,8 +4078,6 @@ Process.prototype.reportDataCondition = function (conditionField, conditionOpera
 
 function throwErrorIfConditionParametersAreInvalid(conditionField, conditionOperator, conditionValue){
     //Check the parameters.
-
-
     if (conditionField == undefined && conditionOperator == undefined && conditionValue == undefined) {
         //Since all three of these are undefined, the condition block is probably not being used.
         throw new Error('A condition block was expected.');
@@ -4123,11 +4121,6 @@ function throwErrorIfConditionParametersAreInvalid(conditionField, conditionOper
 
 
 Process.prototype.reportDataMaximum = function (operationType, field, dataSourceJSON, returnType) {
-    //Check the operationType parameter.
-    if (operationType !== "maximum" && operationType !== "minimum"){
-        throw new Error('Expected the operation type to be "maximum" or "minimum".');
-    }
-
     //Check the field parameter.
     if (field == undefined){
         throw new Error('Field is undefined');
@@ -4203,11 +4196,6 @@ Process.prototype.reportDataMaximum = function (operationType, field, dataSource
 
 
 Process.prototype.reportDataAverage = function (operationType, field, dataSourceJSON) {
-    //Check the operationType parameter.
-    if (operationType !== "average" && operationType !== "sum" && operationType !== "product"){
-        throw new Error('Expected the operation type to be "average", "sum", or "product".');
-    }
-
     //Check the field parameter.
     if (field == undefined){
         throw new Error('Field is undefined');
