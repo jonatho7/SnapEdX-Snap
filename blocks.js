@@ -1075,13 +1075,13 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
                 null, // text
                 false, // non-numeric
                 {
-                    'average' : ['average'],
-                    'sum' : ['sum'],
-                    'product' : ['product']
+                    'average' : 'average',
+                    'sum' : 'sum',
+                    'product' : 'product'
                 },
                 true // read-only
             );
-            part.setContents(['average']);
+            part.setContents('average');
             break;
         case '%dataSelectUniqueFactor':
             part = new InputSlotMorph(

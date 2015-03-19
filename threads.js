@@ -4198,18 +4198,78 @@ Process.prototype.reportDataMaximum = function (operationType, field, dataSource
         throw new Error("Unable to perform 'get " + operationType +  "' block");
     }
 
-
-    return 500;
 };
 
 
 
+Process.prototype.reportDataAverage = function (operationType, field, dataSourceJSON) {
+    //Check the operationType parameter.
+    if (operationType !== "average" && operationType !== "sum" && operationType !== "product"){
+        throw new Error('Expected the operation type to be "average", "sum", or "product".');
+    }
+
+    //Check the field parameter.
+    if (field == undefined){
+        throw new Error('Field is undefined');
+    }
+    if (field == "" || (typeof field != "string" && typeof field != "number")){
+        throw new Error('Field must be a valid string or number');
+    }
+
+    //Check the dataSourceJSON parameter.
+    dataSourceType = null;
+    dataSourceValue = null;
+    //Check the dataSourceJSON parameter.
+    if (dataSourceJSON == ""){
+        throw new Error('Invalid data source');
+    }
+    if (typeof dataSourceJSON == "string"){
+        dataSourceType = "url";
+        dataSourceValue = dataSourceJSON;
+    } else if ((dataSourceJSON['type'] != "url" && dataSourceJSON['type'] != "cloud_variable") || dataSourceJSON['value'] == null){
+        //The data source is not a string, and it is not a JSON with the required items. Throw an error.
+        throw new Error('Invalid data source');
+    } else {
+        //Then the data source is a JSON with the required items.
+        dataSourceType = dataSourceJSON['type'];
+        dataSourceValue = dataSourceJSON['value'];
+    }
+
+    //Now perform the operation.
+    var data;
+
+    //Get the user's id number, or make one if the user does not already have one.
+    var user_id = retrieveOrMakeGuid();
+
+	var urlBase = "dataProcessing/methodSet2";
+	var jsonArgs = {"user_id": user_id, "operationType": operationType,
+        "field": field,
+        "dataSourceType": dataSourceType,
+        "dataSourceValue": dataSourceValue
+    };
+    var isAsync = false;
+	var ajaxResponse = Process.prototype.ajaxRequest(urlBase, jsonArgs, isAsync);
+
+	var json = JSON.parse( ajaxResponse );
+	console.log(json);
+
+	var report = json['report'];
+	//Check to see if there is a valid report object.
+	if (report == ""){
+		throw new Error("Unable to perform 'get " + operationType +  "' block");
+	}
+    if(report['errorMessage'] != null){
+        //There was an error. Print out the error for the user.
+        throw new Error(report['errorMessage']);
+    }
 
 
-
-Process.prototype.reportDataAverage = function (columnNumber, rowStart, rowEnd, sheetNumber, sheetsURL) {
-
-    return 700;
+    data = report['data'];
+    if ((data) || (data == "")){
+        return data;
+    } else {
+        throw new Error("Unable to perform 'get " + operationType +  "' block");
+    }
 };
 
 
