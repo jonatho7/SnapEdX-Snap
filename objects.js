@@ -1232,7 +1232,12 @@ SpriteMorph.prototype.initBlocks = function () {
         reportTestBlock2: {
             type: 'reporter',
             category: 'sensing',
-            spec: 'testing block 2 - computeservice - runTestCloudMethod1'
+            spec: 'testing block 2 - return value'
+        },
+        reportTestBlock3: {
+            type: 'reporter',
+            category: 'sensing',
+            spec: 'testing block 3 - call another block'
         },
         reportBusinessData: {
             type: 'reporter',
@@ -2223,6 +2228,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push('-');
         blocks.push(block('reportTestBlock'));
         blocks.push(block('reportTestBlock2'));
+        blocks.push(block('reportTestBlock3'));
 
     // for debugging: ///////////////
 
@@ -5399,6 +5405,7 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push('-');
         blocks.push(block('reportTestBlock'));
         blocks.push(block('reportTestBlock2'));
+        blocks.push(block('reportTestBlock3'));
         
 
     // for debugging: ///////////////

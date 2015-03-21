@@ -3561,7 +3561,9 @@ Process.prototype.reportTestBlock = function () {
 
 
 Process.prototype.reportTestBlock2 = function () {
+    return 400;
 
+    /*
     var data;
 
 	var urlBase = "runTestCloudMethod1";
@@ -3591,8 +3593,18 @@ Process.prototype.reportTestBlock2 = function () {
 	} else {
 		return null;
 	}
-
+    */
 };
+
+Process.prototype.reportTestBlock3 = function () {
+    //var mine = this.reportTestBlock2() + 111;
+
+    var mine = this.reportTextSplit("hello,world",',');
+
+
+
+    return mine;
+}
 
 
 //Start of Google Maps Blocks.
