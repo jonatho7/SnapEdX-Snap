@@ -2937,13 +2937,13 @@ Process.prototype.urlAjaxRequest = function (urlBase, jsonArgs, isAsync) {
 };
 
 
-Process.prototype.reportLatitude = function (address) {
+Process.prototype.reportLatitude = function (location) {
 
     var latitudeValue;
 
-	var urlBase = "location";
+	var urlBase = "api/dataservice/location";
 	var isAsync = false;
-	var jsonArgs = { "address": address };
+	var jsonArgs = { "address": location };
 	var ajaxResponse = Process.prototype.ajaxRequest(urlBase, jsonArgs, isAsync);
 
 	var json = JSON.parse( ajaxResponse );
@@ -2966,13 +2966,13 @@ Process.prototype.reportLatitude = function (address) {
 
 };
 
-Process.prototype.reportLongitude = function (address) {
+Process.prototype.reportLongitude = function (location) {
 
     var longitudeValue;
 
-	var urlBase = "location";
+	var urlBase = "api/dataservice/location";
 	var isAsync = false;
-	var jsonArgs = { "address": address };
+	var jsonArgs = { "address": location };
 	var ajaxResponse = Process.prototype.ajaxRequest(urlBase, jsonArgs, isAsync);
 
 	var json = JSON.parse( ajaxResponse );
@@ -3006,7 +3006,7 @@ Process.prototype.reportWeather = function (weatherFactor, location) {
 		 //the weather service (through a Python library maybe).		 
 		
 		//Use AJAX to retrieve data.
-		var urlBase = "weather";
+		var urlBase = "api/dataservice/weather";
 		var isAsync = false;
 		var ajaxResponse = Process.prototype.weatherAjaxRequest(urlBase, location, isAsync);
 		
@@ -3065,7 +3065,7 @@ Process.prototype.reportLowHighTemp = function (temperatureFactor, location, day
 	var weatherReport = null;
 	if ( ! cacheController.hasCachedWeatherReport(location) ){
 		//Use AJAX to retrieve data.
-		var urlBase = "weather";
+		var urlBase = "api/dataservice/weather";
 		var isAsync = false;
 		var ajaxResponse = Process.prototype.weatherAjaxRequest(urlBase, location, isAsync);
 		
@@ -3129,7 +3129,7 @@ Process.prototype.reportPrecipitation = function (precipFactor, location, dayNum
 	var weatherReport = null;
 	if ( ! cacheController.hasCachedWeatherReport(location) ){
 		//Use AJAX to retrieve data.
-		var urlBase = "weather";
+		var urlBase = "api/dataservice/weather";
 		var isAsync = false;
 		var ajaxResponse = Process.prototype.weatherAjaxRequest(urlBase, location, isAsync);
 		
@@ -3207,7 +3207,7 @@ Process.prototype.reportPrecipitation = function (precipFactor, location, dayNum
 
 
 Process.prototype.reportRedditPosts = function (subreddit) {
-	var urlBase = "redditPosts";
+	var urlBase = "api/dataservice/redditPosts";
 	var isAsync = false;
 	var jsonArgs = { "subreddit": subreddit};
 	var ajaxResponse = Process.prototype.redditAjaxRequest(urlBase, jsonArgs, isAsync);
@@ -3278,7 +3278,7 @@ Process.prototype.reportRedditPostInfo = function (redditPostFactor, post) {
 };
 
 Process.prototype.reportRedditComments = function (postObject) {
-	var urlBase = "redditComments";
+	var urlBase = "api/dataservice/redditComments";
 	var isAsync = false;
 	var postID = postObject['id'];
 	var jsonArgs = { "postID": postID };
@@ -3354,7 +3354,7 @@ Process.prototype.reportRedditCommentInfo = function (redditCommentFactor, comme
 Process.prototype.reportStocks = function (stockFactor, stockQuery) {
 	var stockValue;
 	
-	var urlBase = "stocks";
+	var urlBase = "api/dataservice/stocks";
 	var isAsync = false;
 	var jsonArgs = { "stockQuery": stockQuery};
 	var ajaxResponse = Process.prototype.stocksAjaxRequest(urlBase, jsonArgs, isAsync);
@@ -3396,7 +3396,7 @@ Process.prototype.reportStocks = function (stockFactor, stockQuery) {
 Process.prototype.reportTwitterRetweets = function (twitterFactor, twitterQuery) {
 	var twitterValue;
 	
-	var urlBase = "twitter";
+	var urlBase = "api/dataservice/twitter";
 	var isAsync = false;
 	var jsonArgs = { "twitterFactor": twitterFactor, "twitterQuery": twitterQuery};
 	var ajaxResponse = Process.prototype.twitterAjaxRequest(urlBase, jsonArgs, isAsync);
@@ -3424,7 +3424,7 @@ Process.prototype.reportTwitterRetweets = function (twitterFactor, twitterQuery)
 Process.prototype.reportTwitterTweetsFromPerson = function (twitterFromPerson, twitterQuery) {
 	var twitterValue;
 	
-	var urlBase = "twitter";
+	var urlBase = "api/dataservice/twitter";
 	var isAsync = false;
 	
 	//Add characters at the beginning of the query based on the desired result.
@@ -3473,7 +3473,7 @@ Process.prototype.reportNumEarthquakes = function (earthquakePeriod) {
 	if ( ! cacheController.hasCachedEarthquakeReport(earthquakePeriod) ){
 
 		//Use AJAX to retrieve data.
-		var urlBase = "earthquakes";
+		var urlBase = "api/dataservice/earthquakes";
 		var isAsync = false;
         var jsonArgs = { "earthquakePeriod": earthquakePeriod };
 		var ajaxResponse = Process.prototype.earthquakeAjaxRequest(urlBase, jsonArgs, isAsync);
@@ -3503,7 +3503,7 @@ Process.prototype.reportEarthquakeData = function (earthquakeQuery, earthquakeIn
 	if ( ! cacheController.hasCachedEarthquakeReport(earthquakePeriod) ){
 
 		//Use AJAX to retrieve data.
-		var urlBase = "earthquakes";
+		var urlBase = "api/dataservice/earthquakes";
 		var isAsync = false;
         var jsonArgs = { "earthquakePeriod": earthquakePeriod };
 		var ajaxResponse = Process.prototype.earthquakeAjaxRequest(urlBase, jsonArgs, isAsync);
@@ -3747,7 +3747,7 @@ Process.prototype.reportURLUsingServer = function (urlArray) {
         urlString += urlArray.at(i);
 	}
 
-    var urlBase = "urlRequestForClient";
+    var urlBase = "api/dataservice/urlRequestForClient";
     var isAsync = false;
     var jsonArgs = { "urlString": urlString };
     var ajaxResponse = Process.prototype.urlAjaxRequest(urlBase, jsonArgs, isAsync);
@@ -3903,7 +3903,7 @@ Process.prototype.doSetCloudVariable = function (varName, varValue) {
     //Get the user's id number, or make one if the user does not already have one.
     user_id = retrieveOrMakeGuid();
 
-	var urlBase = "dataProcessing/doSetCloudVariable";
+	var urlBase = "api/cloudvariables/doSetCloudVariable";
 	var jsonArgs = {"user_id": user_id, "isValueAReferenceIndex": isValueAReferenceIndex, "variable_name": varName, "variable_value": varValue};
     var isAsync = false;
 	var ajaxResponse = Process.prototype.ajaxRequest(urlBase, jsonArgs, isAsync);
@@ -3939,7 +3939,7 @@ Process.prototype.doRetrieveDataFromCloudVariable = function (varName) {
     //Get the user's id number, or make one if the user does not already have one.
     user_id = retrieveOrMakeGuid();
 
-	var urlBase = "dataProcessing/doRetrieveDataFromCloudVariable";
+	var urlBase = "api/cloudvariables/doRetrieveDataFromCloudVariable";
 	var jsonArgs = {"user_id": user_id, "variable_name": varName};
     var isAsync = false;
 	var ajaxResponse = Process.prototype.ajaxRequest(urlBase, jsonArgs, isAsync);
@@ -4032,7 +4032,7 @@ Process.prototype.reportDataSelect = function (selectedFields, conditionJSON, da
     //Get the user's id number, or make one if the user does not already have one.
     var user_id = retrieveOrMakeGuid();
 
-	var urlBase = "dataProcessing/select";
+	var urlBase = "api/dataprocessing/select";
 	var jsonArgs = {"user_id": user_id, "isSelectAllFields": isSelectAllFields,
         "selectedFields": selectedFields, "conditionField": conditionField,
         "conditionOperator": conditionOperator, "conditionValue": conditionValue,
@@ -4172,7 +4172,7 @@ Process.prototype.reportDataMaximum = function (operationType, field, dataSource
     //Get the user's id number, or make one if the user does not already have one.
     var user_id = retrieveOrMakeGuid();
 
-	var urlBase = "dataProcessing/methodSet1";
+	var urlBase = "api/dataprocessing/methodSet1";
 	var jsonArgs = {"user_id": user_id, "operationType": operationType,
         "field": field,
         "dataSourceType": dataSourceType,
@@ -4241,7 +4241,7 @@ Process.prototype.reportDataAverage = function (operationType, field, dataSource
     //Get the user's id number, or make one if the user does not already have one.
     var user_id = retrieveOrMakeGuid();
 
-	var urlBase = "dataProcessing/methodSet2";
+	var urlBase = "api/dataprocessing/methodSet2";
 	var jsonArgs = {"user_id": user_id, "operationType": operationType,
         "field": field,
         "dataSourceType": dataSourceType,
