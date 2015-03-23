@@ -1076,10 +1076,10 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
                 false, // non-numeric
                 {
                     'average' : 'average',
-                    'sum' : 'sum',
-                    'product' : 'product',
-                    'median' : 'median'//,
+                    'median' : 'median',
                     //'mode' : 'mode'
+                    'sum' : 'sum',
+                    'product' : 'product'
                 },
                 true // read-only
             );
