@@ -3599,11 +3599,13 @@ Process.prototype.reportTestBlock2 = function () {
 Process.prototype.reportTestBlock3 = function () {
     //var mine = this.reportTestBlock2() + 111;
 
-    var mine = this.reportTextSplit("hello,world",',');
+    var myList = this.reportTextSplit("hello\nworld",'line');
+
+    //Delete the last item of the list.
+    this.doDeleteFromList('last', myList);
 
 
-
-    return mine;
+    return myList;
 }
 
 
@@ -3829,6 +3831,47 @@ Process.prototype.reportJSONData = function (jsonText, jsonParams) {
 };
 
 
+Process.prototype.reportCSVValue = function (CSVAsList, field, CSVIndex) {
+    //Check the index to make sure it is valid.
+
+
+    //Grab the CSV header line.
+    var headerLine = CSVAsList.at(1);
+    console.log("headerLine");
+    console.log(headerLine);
+
+    //Split the header line by comma.
+    var headerLineList = new List(headerLine.split(','));
+
+    //Get the index in the headerLineList where the field is at.
+    var fieldIndex = null;
+    for(var i = 1; i <= headerLineList.length(); i++){
+        if (headerLineList.at(i) == field){
+            fieldIndex = i;
+            break;
+        }
+    }
+
+    //Throw an error if the field was not found.
+    if (fieldIndex == null){
+        throw new Error('The field: "' + field.toString() + '" was not found in the CSV.');
+    }
+
+    //Now get the value at the desired field and index - Start.
+
+    //Grab the correct line of the CSV.
+    var specificLine = CSVAsList.at(CSVIndex);
+
+    var specificLineList = new List(specificLine.split(','));
+
+    //Grab the correct index of this line.
+    var specificValue = specificLineList.at(fieldIndex);
+
+    //Now get the value at the desired field and index - End.
+
+    return specificValue;
+};
+
 
 Process.prototype.doDefineCloudMethod = function (methodName, parameterList) {
 
@@ -3959,7 +4002,25 @@ Process.prototype.doRetrieveDataFromCloudVariable = function (varName) {
     } else {
         //Successfully retrieved the cloud variable value.
 
+        // Get the data.
         data = report['data'];
+
+        //If the retrieved data is a dataframe, present the dataframe as a List, for better display.
+
+        if (report['data_type'] == "dataframe"){
+            var data = new List(data.split('\n'));
+            data.remove(data.length());
+            /*
+            Known Bug: Sometimes the List does not open up for display automatically.
+             */
+
+            return data;
+        }
+
+
+        //Delete the last item of the list, which is an empty line.
+        //this.doDeleteFromList('last', data);
+
 
         if ((data) || (data == "")){
             return data;

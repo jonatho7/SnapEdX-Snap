@@ -1279,6 +1279,12 @@ SpriteMorph.prototype.initBlocks = function () {
             spec: 'from JSON text %txt get %mult%txt',
             defaults: ['','']
         },
+        reportCSVValue: {
+            type: 'reporter',
+            category: 'Data Tools',
+            spec: 'from CSV %txt get value at field %txt index # %n'
+        },
+
         //End of Data Tools Blocks.
 
         //Start of Cloud Blocks.
@@ -2464,6 +2470,8 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportURLUsingServer'));
         //blocks.push(block('reportURLWithCaching')); Discontinued.
         blocks.push(block('reportJSONData'));
+        blocks.push('=');
+        blocks.push(block('reportCSVValue'));
 
     } else if (cat === 'data') {
 
@@ -5635,6 +5643,8 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportURLUsingServer'));
         //blocks.push(block('reportURLWithCaching'));
         blocks.push(block('reportJSONData'));
+        blocks.push('=');
+        blocks.push(block('reportCSVValue'));
 
     } else if (cat === 'data') {
 
