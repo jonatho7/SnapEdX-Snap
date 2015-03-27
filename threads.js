@@ -4093,7 +4093,7 @@ Process.prototype.reportDataSelect = function (selectedFields, conditionJSON, da
     //Get the user's id number, or make one if the user does not already have one.
     var user_id = retrieveOrMakeGuid();
 
-	var urlBase = "api/dataprocessing/select";
+	var urlBase = "api/internaldataprocessing/select";
 	var jsonArgs = {"user_id": user_id, "isSelectAllFields": isSelectAllFields,
         "selectedFields": selectedFields, "conditionField": conditionField,
         "conditionOperator": conditionOperator, "conditionValue": conditionValue,
@@ -4233,7 +4233,7 @@ Process.prototype.reportDataMaximum = function (operationType, field, dataSource
     //Get the user's id number, or make one if the user does not already have one.
     var user_id = retrieveOrMakeGuid();
 
-	var urlBase = "api/dataprocessing/methodSet1";
+	var urlBase = "api/internaldataprocessing/methodSet1";
 	var jsonArgs = {"user_id": user_id, "operationType": operationType,
         "field": field,
         "dataSourceType": dataSourceType,
@@ -4302,7 +4302,7 @@ Process.prototype.reportDataAverage = function (operationType, field, dataSource
     //Get the user's id number, or make one if the user does not already have one.
     var user_id = retrieveOrMakeGuid();
 
-	var urlBase = "api/dataprocessing/methodSet2";
+	var urlBase = "api/internaldataprocessing/methodSet2";
 	var jsonArgs = {"user_id": user_id, "operationType": operationType,
         "field": field,
         "dataSourceType": dataSourceType,
