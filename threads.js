@@ -3832,8 +3832,10 @@ Process.prototype.reportJSONData = function (jsonText, jsonParams) {
 
 
 Process.prototype.reportCSVValue = function (CSVAsList, field, CSVIndex) {
-    //Check the index to make sure it is valid.
-
+    //Check to see if the CSV is equal to "None".
+    if (CSVAsList == "None"){
+        return "None";
+    }
 
     //Grab the CSV header line.
     var headerLine = CSVAsList.at(1);
