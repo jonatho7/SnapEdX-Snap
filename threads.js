@@ -3885,6 +3885,13 @@ Process.prototype.doRunCloudMethod = function (methodName, parameterList) {
 };
 
 
+Process.prototype.doReturnDataUrl_Flu_National = function () {
+
+    return {"type": "url", "value": "https://drive.google.com/uc?export=download&id=0B-WWj_i0WSomWUFaRkpQbW9ENjg"};
+
+};
+
+
 Process.prototype.doReturnDataUrl_Flu = function () {
 
     return {"type": "url", "value": "https://drive.google.com/uc?export=download&id=0B-WWj_i0WSomaUkwQVpYenlRWm8"};

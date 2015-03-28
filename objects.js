@@ -1301,10 +1301,15 @@ SpriteMorph.prototype.initBlocks = function () {
             defaults: ['myMethodName']
         },
 
+        doReturnDataUrl_Flu_National: {
+            type: 'reporter',
+            category: 'Cloud',
+            spec: '%cloudOutline data source: National flu data from CDC ILINET'
+        },
         doReturnDataUrl_Flu: {
             type: 'reporter',
             category: 'Cloud',
-            spec: '%cloudOutline data source: flu data from CDC ILINET'
+            spec: '%cloudOutline data source: HHS Regions flu data from CDC ILINET'
         },
         doReturnDataUrl_2013Movies: {
             type: 'reporter',
@@ -2504,7 +2509,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         //blocks.push(block('reportBusinessData'));
 
     }   else if (cat === 'Cloud') {
-
+        blocks.push(block('doReturnDataUrl_Flu_National'));
         blocks.push(block('doReturnDataUrl_Flu'));
         blocks.push(block('doReturnDataUrl_2013Movies'));
         blocks.push(block('doReturnDataUrl_USAUnemployment'));
@@ -5679,6 +5684,7 @@ StageMorph.prototype.blockTemplates = function (category) {
 
     } else if (cat === 'Cloud') {
 
+        blocks.push(block('doReturnDataUrl_Flu_National'));
         blocks.push(block('doReturnDataUrl_Flu'));
         blocks.push(block('doReturnDataUrl_2013Movies'));
         blocks.push(block('doReturnDataUrl_USAUnemployment'));
