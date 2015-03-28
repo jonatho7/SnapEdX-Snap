@@ -4143,7 +4143,7 @@ Process.prototype.reportDataFields = function (fieldsArray) {
 
 
 Process.prototype.reportDataConditions = function (conditionsArray) {
-    throw new Error("Conditions stub. Please do not use this block yet, but use separate methods for now.");
+    throw new Error("Conditions method stub. Please do not use this block yet, but use separate conditions for now.");
 
 };
 
@@ -4348,6 +4348,10 @@ Process.prototype.reportDataAverage = function (operationType, field, dataSource
 };
 
 
+Process.prototype.reportDataAppend = function (csvOne, csvTwo) {
+    throw new Error("append method stub. Please do not use this block yet, but use separate methods for now.");
+
+};
 
 
 

@@ -1370,6 +1370,14 @@ SpriteMorph.prototype.initBlocks = function () {
             spec: '%cloudOutline get %dataAverageFactor from field %txt from data source %txt',
             defaults: [null, null, null]
         },
+
+        reportDataAppend: {
+            type: 'reporter',
+            category: 'Cloud',
+            spec: '%cloudOutline append CSV %txt with CSV %txt'
+        },
+
+
         reportDataWordFrequency: {
             type: 'reporter',
             category: 'Cloud',
@@ -2530,6 +2538,8 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push('=');
         blocks.push(block('reportDataMaximum'));
         blocks.push(block('reportDataAverage'));
+        blocks.push('=');
+        blocks.push(block('reportDataAppend'));
         //blocks.push(block('reportDataWordFrequency'));
         //blocks.push(block('reportDataSelectUnique'));
         //blocks.push(block('reportDataMaximumForEach'));
@@ -5705,6 +5715,8 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push('=');
         blocks.push(block('reportDataMaximum'));
         blocks.push(block('reportDataAverage'));
+        blocks.push('=');
+        blocks.push(block('reportDataAppend'));
         //blocks.push(block('reportDataWordFrequency'));
         //blocks.push(block('reportDataSelectUnique'));
         //blocks.push(block('reportDataMaximumForEach'));
