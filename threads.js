@@ -4135,6 +4135,11 @@ Process.prototype.reportDataFields = function (fieldsArray) {
 };
 
 
+Process.prototype.reportDataConditions = function (conditionsArray) {
+    throw new Error("Conditions stub. Please do not use this block yet, but use separate methods for now.");
+
+};
+
 Process.prototype.reportDataCondition = function (conditionField, conditionOperator, conditionValue) {
     //Check the parameters.
     formattedConditions = throwErrorIfConditionParametersAreInvalid(conditionField, conditionOperator, conditionValue);

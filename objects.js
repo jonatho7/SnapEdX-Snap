@@ -1404,7 +1404,11 @@ SpriteMorph.prototype.initBlocks = function () {
             category: 'Cloud',
             spec: '%cloudOutline fields: %mult%txt'
         },
-
+        reportDataConditions: {
+            type: 'reporter',
+            category: 'Cloud',
+            spec: '%cloudOutline conditions: %mult%txt'
+        },
         reportDataCondition: {
             type: 'reporter',
             category: 'Cloud',
@@ -2514,6 +2518,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push('=');
         blocks.push(block('reportDataSelect'));
         blocks.push(block('reportDataFields'));
+        blocks.push(block('reportDataConditions'));
         blocks.push(block('reportDataCondition'));
         //blocks.push(block('reportDataFilterOrderBy'));
         //blocks.push(block('reportDataFilterLimit'));
@@ -5687,6 +5692,7 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push('=');
         blocks.push(block('reportDataSelect'));
         blocks.push(block('reportDataFields'));
+        blocks.push(block('reportDataConditions'));
         blocks.push(block('reportDataCondition'));
         //blocks.push(block('reportDataFilterOrderBy'));
         //blocks.push(block('reportDataFilterLimit'));
