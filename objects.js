@@ -155,20 +155,21 @@ SpriteMorph.uber = PenMorph.prototype;
 
 SpriteMorph.prototype.categories =
     [
-        'motion',
+        //'motion',     //hidden.
         'control',
-        'looks',
-        'sensing',
-        'sound',
+        //'looks',      //hidden.
+        //'sensing',    //hidden.
+        //'sound',      //hidden.
         'operators',
-        'pen',
+        //'pen',        //hidden.
         'variables',
         'lists',
         'other',
-        'mapping',
+        'visualization',
         'data',
         'Data Tools',
-        'Cloud'
+        'Cloud',
+        'epidemiology'
 
     ];
 
@@ -183,10 +184,11 @@ SpriteMorph.prototype.blockColor = {
     variables : new Color(243, 118, 29),
     lists : new Color(217, 77, 17),
     other: new Color(150, 150, 150),
-    mapping: new Color(255, 102, 102),
-    'Data Tools': new Color(171, 111, 209),//(188, 95, 212),
+    visualization: new Color(255, 102, 102),
+    'Data Tools': new Color(171, 111, 209), //Another color option: (188, 95, 212)
     data: new Color(77, 189, 85),
-    Cloud: new Color(209, 111, 186)
+    Cloud: new Color(209, 111, 186),
+    epidemiology : new Color(143, 86, 227)  //Same color as the Looks tab
 };
 
 SpriteMorph.prototype.paletteColor = new Color(55, 55, 55);
@@ -1470,35 +1472,35 @@ SpriteMorph.prototype.initBlocks = function () {
         //Start of Google Maps Blocks.
         doPlaceMarker: {
             type: 'command',
-            category: 'mapping',
+            category: 'visualization',
             spec: '%crosshairs place marker at latitude: %n longitude: %n',
             defaults: ['38.8951','-77.0367']
         },
         doPlaceCircle: {
             type: 'command',
-            category: 'mapping',
+            category: 'visualization',
             spec: '%crosshairs place circle at latitude: %n longitude: %n radius: %n',
             defaults: ['38.8951','-77.0367', 200.0]
         },
         doPlacePoint: {
             type: 'command',
-            category: 'mapping',
+            category: 'visualization',
             spec: '%crosshairs place point at latitude: %n longitude: %n size: %n',
             defaults: ['38.8951','-77.0367', 30]
         },
         doRemoveMarkers: {
             type: 'command',
-            category: 'mapping',
+            category: 'visualization',
             spec: '%crosshairs remove all markers from map'
         },
         doRemoveCircles: {
             type: 'command',
-            category: 'mapping',
+            category: 'visualization',
             spec: '%crosshairs remove all circles from map'
         },
         doRemovePoints: {
             type: 'command',
-            category: 'mapping',
+            category: 'visualization',
             spec: '%crosshairs remove all points from map'
         },
         //End of Google Maps Blocks.
@@ -2472,7 +2474,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         button.selector = 'addCustomBlock';
         button.showHelp = BlockMorph.prototype.showHelp;
         blocks.push(button);
-    }  else if (cat === 'mapping') {
+    }  else if (cat === 'visualization') {
 
         blocks.push(block('doPlaceMarker'));
         blocks.push(block('doPlaceCircle'));
@@ -5648,7 +5650,7 @@ StageMorph.prototype.blockTemplates = function (category) {
             'Make a block'
         );
         blocks.push(button);
-    }  else if (cat === 'mapping') {
+    }  else if (cat === 'visualization') {
 
         blocks.push(block('doPlaceMarker'));
         blocks.push(block('doPlaceCircle'));
