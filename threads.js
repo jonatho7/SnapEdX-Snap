@@ -2937,13 +2937,13 @@ Process.prototype.urlAjaxRequest = function (urlBase, jsonArgs, isAsync) {
 };
 
 
-Process.prototype.reportLatitude = function (location) {
+Process.prototype.reportLatitude = function (address) {
 
     var latitudeValue;
 
 	var urlBase = "api/dataservice/location";
 	var isAsync = false;
-	var jsonArgs = { "address": location };
+	var jsonArgs = { "address": address };
 	var ajaxResponse = Process.prototype.ajaxRequest(urlBase, jsonArgs, isAsync);
 
 	var json = JSON.parse( ajaxResponse );
@@ -2966,13 +2966,13 @@ Process.prototype.reportLatitude = function (location) {
 
 };
 
-Process.prototype.reportLongitude = function (location) {
+Process.prototype.reportLongitude = function (address) {
 
     var longitudeValue;
 
 	var urlBase = "api/dataservice/location";
 	var isAsync = false;
-	var jsonArgs = { "address": location };
+	var jsonArgs = { "address": address };
 	var ajaxResponse = Process.prototype.ajaxRequest(urlBase, jsonArgs, isAsync);
 
 	var json = JSON.parse( ajaxResponse );
