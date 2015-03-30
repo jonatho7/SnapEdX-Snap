@@ -377,7 +377,7 @@ SnapSerializer.prototype.loadProjectModel = function (xmlNode) {
         project.pentrails.src = model.pentrails.contents;
     }
     project.stage.setTempo(model.stage.attributes.tempo);
-    StageMorph.prototype.dimensions = new Point(480, 360);
+    StageMorph.prototype.dimensions = new Point(480, 327);
     if (model.stage.attributes.width) {
         StageMorph.prototype.dimensions.x =
             Math.max(+model.stage.attributes.width, 480);

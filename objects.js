@@ -4651,7 +4651,7 @@ StageMorph.uber = FrameMorph.prototype;
 
 // StageMorph preferences settings
 
-StageMorph.prototype.dimensions = new Point(480, 360); // unscaled extent
+StageMorph.prototype.dimensions = new Point(480, 327); // unscaled extent
 
 StageMorph.prototype.frameRate = 0; // unscheduled per default
 

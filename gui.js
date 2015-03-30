@@ -2719,7 +2719,7 @@ IDE_Morph.prototype.newProject = function () {
     this.globalVariables = new VariableFrame();
     this.currentSprite = new SpriteMorph(this.globalVariables);
     this.sprites = new List([this.currentSprite]);
-    StageMorph.prototype.dimensions = new Point(480, 360);
+    StageMorph.prototype.dimensions = new Point(480, 327);
     StageMorph.prototype.hiddenPrimitives = {};
     StageMorph.prototype.codeMappings = {};
     StageMorph.prototype.codeHeaders = {};
@@ -3591,7 +3591,7 @@ IDE_Morph.prototype.userSetStageSize = function () {
     ).promptVector(
         "Stage size",
         StageMorph.prototype.dimensions,
-        new Point(480, 360),
+        new Point(480, 327),
         'Stage width',
         'Stage height',
         this.world(),
