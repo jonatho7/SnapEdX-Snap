@@ -1266,7 +1266,7 @@ SpriteMorph.prototype.initBlocks = function () {
         reportURLUsingServer: {
             type: 'reporter',
             category: 'data',
-            spec: '%storage get data as JSON from URL: http:// %http1',
+            spec: '%storage get JSON from URL: http:// %http1',
             defaults: ['forecast.weather.gov/MapClick.php?lat=37.2295733&lon=-80.4139393&FcstType=json']
         },
         reportURLWithCaching: {
@@ -1277,13 +1277,13 @@ SpriteMorph.prototype.initBlocks = function () {
         },
         reportJSONData: {
             type: 'reporter',
-            category: 'Data Tools',
+            category: 'data',
             spec: 'from JSON text %txt get %mult%txt',
             defaults: ['','']
         },
         reportCSVValue: {
             type: 'reporter',
-            category: 'Data Tools',
+            category: 'Cloud',
             spec: 'from CSV %txt get value at field %txt index # %n'
         },
 
@@ -2486,11 +2486,6 @@ SpriteMorph.prototype.blockTemplates = function (category) {
 
     }  else if (cat === 'Data Tools') {
 
-        //blocks.push(block('reportURLWithCaching')); Discontinued.
-        blocks.push(block('reportJSONData'));
-        blocks.push('=');
-        blocks.push(block('reportCSVValue'));
-
     } else if (cat === 'data') {
 
         blocks.push(block('reportDate'));
@@ -2516,6 +2511,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportRedditCommentInfo'));
         blocks.push('=');
         blocks.push(block('reportURLUsingServer'));
+        blocks.push(block('reportJSONData'));
         //blocks.push(block('reportBusinessData'));
 
     }   else if (cat === 'Cloud') {
@@ -2542,6 +2538,8 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportDataAverage'));
         blocks.push('=');
         blocks.push(block('reportDataAppend'));
+        blocks.push('=');
+        blocks.push(block('reportCSVValue'));
         //blocks.push(block('reportDataWordFrequency'));
         //blocks.push(block('reportDataSelectUnique'));
         //blocks.push(block('reportDataMaximumForEach'));
@@ -5662,11 +5660,6 @@ StageMorph.prototype.blockTemplates = function (category) {
 
     } else if (cat === 'Data Tools') {
 
-        //blocks.push(block('reportURLWithCaching'));
-        blocks.push(block('reportJSONData'));
-        blocks.push('=');
-        blocks.push(block('reportCSVValue'));
-
     } else if (cat === 'data') {
 
         blocks.push(block('reportDate'));
@@ -5692,6 +5685,7 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportRedditCommentInfo'));
         blocks.push('=');
         blocks.push(block('reportURLUsingServer'));
+        blocks.push(block('reportJSONData'));
         //blocks.push(block('reportBusinessData'));
 
     } else if (cat === 'Cloud') {
@@ -5719,6 +5713,8 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportDataAverage'));
         blocks.push('=');
         blocks.push(block('reportDataAppend'));
+        blocks.push('=');
+        blocks.push(block('reportCSVValue'));
         //blocks.push(block('reportDataWordFrequency'));
         //blocks.push(block('reportDataSelectUnique'));
         //blocks.push(block('reportDataMaximumForEach'));
