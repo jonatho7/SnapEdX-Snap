@@ -167,7 +167,6 @@ SpriteMorph.prototype.categories =
         'other',
         'visualization',
         'data',
-        'Data Tools',
         'Cloud',
         'epidemiology'
 
@@ -185,7 +184,7 @@ SpriteMorph.prototype.blockColor = {
     lists : new Color(217, 77, 17),
     other: new Color(150, 150, 150),
     visualization: new Color(255, 102, 102),
-    'Data Tools': new Color(171, 111, 209), //Another color option: (188, 95, 212)
+    //'Data Tools': new Color(171, 111, 209), //Another color option: (188, 95, 212)
     data: new Color(77, 189, 85),
     Cloud: new Color(209, 111, 186),
     epidemiology : new Color(143, 86, 227)  //Same color as the Looks tab
@@ -1262,7 +1261,6 @@ SpriteMorph.prototype.initBlocks = function () {
         //End of Data Blocks.
 
 
-        //Start of Data Tools Blocks.
         reportURLUsingServer: {
             type: 'reporter',
             category: 'data',
@@ -1271,7 +1269,7 @@ SpriteMorph.prototype.initBlocks = function () {
         },
         reportURLWithCaching: {
             type: 'reporter',
-            category: 'Data Tools',
+            category: 'data',
             spec: 'http:// %http1 and keep result stored for %n seconds (Prototype)',
             defaults: ['date.jsontest.com', '60']
         },
@@ -1287,7 +1285,6 @@ SpriteMorph.prototype.initBlocks = function () {
             spec: 'from CSV %txt get value at field %txt index # %n'
         },
 
-        //End of Data Tools Blocks.
 
         //Start of Cloud Blocks.
         doDefineCloudMethod: {
@@ -2483,8 +2480,6 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('doRemoveMarkers'));
         blocks.push(block('doRemoveCircles'));
         blocks.push(block('doRemovePoints'));
-
-    }  else if (cat === 'Data Tools') {
 
     } else if (cat === 'data') {
 
@@ -5657,8 +5652,6 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('doRemoveMarkers'));
         blocks.push(block('doRemoveCircles'));
         blocks.push(block('doRemovePoints'));
-
-    } else if (cat === 'Data Tools') {
 
     } else if (cat === 'data') {
 
