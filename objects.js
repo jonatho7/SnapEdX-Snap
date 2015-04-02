@@ -1160,13 +1160,13 @@ SpriteMorph.prototype.initBlocks = function () {
         reportLatitude: {
             type: 'reporter',
             category: 'data',
-            spec: 'get latitude at %txt',
+            spec: '%storage get latitude at %txt',
             defaults: ['Blacksburg, VA']
         },
         reportLongitude: {
             type: 'reporter',
             category: 'data',
-            spec: 'get longitude at %txt',
+            spec: '%storage get longitude at %txt',
             defaults: ['Blacksburg, VA']
         },
         reportWeather: {
@@ -1265,8 +1265,8 @@ SpriteMorph.prototype.initBlocks = function () {
         //Start of Data Tools Blocks.
         reportURLUsingServer: {
             type: 'reporter',
-            category: 'Data Tools',
-            spec: 'return JSON from URL: http:// %http1',
+            category: 'data',
+            spec: '%storage get data as JSON from URL: http:// %http1',
             defaults: ['forecast.weather.gov/MapClick.php?lat=37.2295733&lon=-80.4139393&FcstType=json']
         },
         reportURLWithCaching: {
@@ -2486,7 +2486,6 @@ SpriteMorph.prototype.blockTemplates = function (category) {
 
     }  else if (cat === 'Data Tools') {
 
-        blocks.push(block('reportURLUsingServer'));
         //blocks.push(block('reportURLWithCaching')); Discontinued.
         blocks.push(block('reportJSONData'));
         blocks.push('=');
@@ -2516,6 +2515,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportRedditComments'));
         blocks.push(block('reportRedditCommentInfo'));
         blocks.push('=');
+        blocks.push(block('reportURLUsingServer'));
         //blocks.push(block('reportBusinessData'));
 
     }   else if (cat === 'Cloud') {
@@ -5662,7 +5662,6 @@ StageMorph.prototype.blockTemplates = function (category) {
 
     } else if (cat === 'Data Tools') {
 
-        blocks.push(block('reportURLUsingServer'));
         //blocks.push(block('reportURLWithCaching'));
         blocks.push(block('reportJSONData'));
         blocks.push('=');
@@ -5692,6 +5691,7 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportRedditComments'));
         blocks.push(block('reportRedditCommentInfo'));
         blocks.push('=');
+        blocks.push(block('reportURLUsingServer'));
         //blocks.push(block('reportBusinessData'));
 
     } else if (cat === 'Cloud') {
