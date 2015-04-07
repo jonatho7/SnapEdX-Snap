@@ -1,4 +1,4 @@
-# SnapEdX-Snap
+# SnapEdX-Snap (CS 6604 course project )
 The repository for the original/modified Snap code
 
 
