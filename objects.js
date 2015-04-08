@@ -168,7 +168,7 @@ SpriteMorph.prototype.categories =
         'visualization',
         'data',
         'Cloud',
-        'epidemiology'
+        'Domain-Exp'
 
     ];
 
@@ -187,7 +187,7 @@ SpriteMorph.prototype.blockColor = {
     //'Data Tools': new Color(171, 111, 209), //Another color option: (188, 95, 212)
     data: new Color(77, 189, 85),
     Cloud: new Color(209, 111, 186),
-    epidemiology : new Color(143, 86, 227)  //Same color as the Looks tab
+    "Domain-Exp" : new Color(143, 86, 227)  //Same color as the Looks tab
 };
 
 SpriteMorph.prototype.paletteColor = new Color(55, 55, 55);
@@ -2521,7 +2521,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('doReturnDataUrl_2013Movies'));
         blocks.push(block('doReturnDataUrl_USAUnemployment'));
         blocks.push(block('doReturnDataUrl'));
-        blocks.push(block('doImportCSV'));
+        //blocks.push(block('doImportCSV'));                    //commented out for now.
         blocks.push('=');
         blocks.push(block('doSetCloudVariable'));
         blocks.push(block('doRetrieveDataFromCloudVariable'));
@@ -2530,8 +2530,8 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         //blocks.push(block('doCloudReport'));
         blocks.push('=');
         blocks.push(block('reportDataSelect'));
-        blocks.push(block('reportDataFields'));
-        blocks.push(block('reportDataConditions'));
+        //blocks.push(block('reportDataFields'));               //commented out for now.
+        //blocks.push(block('reportDataConditions'));           //commented out for now.
         blocks.push(block('reportDataCondition'));
         //blocks.push(block('reportDataFilterOrderBy'));
         //blocks.push(block('reportDataFilterLimit'));
@@ -2539,8 +2539,8 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportDataMaximum'));
         blocks.push(block('reportDataAverage'));
         blocks.push('=');
-        blocks.push(block('reportDataAppend'));
-        blocks.push('=');
+        //blocks.push(block('reportDataAppend'));               //commented out for now.
+        //blocks.push('=');
         blocks.push(block('reportCSVValue'));
         //blocks.push(block('reportDataWordFrequency'));
         //blocks.push(block('reportDataSelectUnique'));
@@ -5695,7 +5695,7 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('doReturnDataUrl_2013Movies'));
         blocks.push(block('doReturnDataUrl_USAUnemployment'));
         blocks.push(block('doReturnDataUrl'));
-        blocks.push(block('doImportCSV'));
+        //blocks.push(block('doImportCSV'));                    //commented out for now.
         blocks.push('=');
         blocks.push(block('doSetCloudVariable'));
         blocks.push(block('doRetrieveDataFromCloudVariable'));
@@ -5704,8 +5704,8 @@ StageMorph.prototype.blockTemplates = function (category) {
         //blocks.push(block('doCloudReport'));
         blocks.push('=');
         blocks.push(block('reportDataSelect'));
-        blocks.push(block('reportDataFields'));
-        blocks.push(block('reportDataConditions'));
+        //blocks.push(block('reportDataFields'));               //commented out for now.
+        //blocks.push(block('reportDataConditions'));           //commented out for now.
         blocks.push(block('reportDataCondition'));
         //blocks.push(block('reportDataFilterOrderBy'));
         //blocks.push(block('reportDataFilterLimit'));
@@ -5713,8 +5713,8 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportDataMaximum'));
         blocks.push(block('reportDataAverage'));
         blocks.push('=');
-        blocks.push(block('reportDataAppend'));
-        blocks.push('=');
+        //blocks.push(block('reportDataAppend'));               //commented out for now.
+        //blocks.push('=');
         blocks.push(block('reportCSVValue'));
         //blocks.push(block('reportDataWordFrequency'));
         //blocks.push(block('reportDataSelectUnique'));
