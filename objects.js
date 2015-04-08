@@ -1326,6 +1326,12 @@ SpriteMorph.prototype.initBlocks = function () {
             spec: '%cloudOutline data source: URL %txt',
             defaults: ['http://']
         },
+        doImportCSV: {
+            type: 'reporter',
+            category: 'Cloud',
+            spec: '%cloudOutline import CSV from data source: %txt'
+        },
+
 
         doSetCloudVariable: {
             type: 'command',
@@ -2515,6 +2521,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('doReturnDataUrl_2013Movies'));
         blocks.push(block('doReturnDataUrl_USAUnemployment'));
         blocks.push(block('doReturnDataUrl'));
+        blocks.push(block('doImportCSV'));
         blocks.push('=');
         blocks.push(block('doSetCloudVariable'));
         blocks.push(block('doRetrieveDataFromCloudVariable'));
@@ -5688,6 +5695,7 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('doReturnDataUrl_2013Movies'));
         blocks.push(block('doReturnDataUrl_USAUnemployment'));
         blocks.push(block('doReturnDataUrl'));
+        blocks.push(block('doImportCSV'));
         blocks.push('=');
         blocks.push(block('doSetCloudVariable'));
         blocks.push(block('doRetrieveDataFromCloudVariable'));
