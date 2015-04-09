@@ -1289,6 +1289,18 @@ SpriteMorph.prototype.initBlocks = function () {
             defaults: ['','']
         },
 
+        doProgramInputs: {
+            type: 'command',
+            category: 'Data Tools',
+            spec: 'Program inputs: %mult%txt'
+        },
+
+        reportInput: {
+            type: 'reporter',
+            category: 'Data Tools',
+            spec: 'input: %var = %txt'
+        },
+
         doInsertYourCodeHere: {
             type: 'command',
             category: 'Data Tools',
@@ -2457,6 +2469,8 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         //blocks.push(block('reportURLWithCaching')); Discontinued.
         blocks.push(block('reportJSONData'));
         blocks.push('=');
+        blocks.push(block('doProgramInputs'));
+        blocks.push(block('reportInput'));
         blocks.push(block('doInsertYourCodeHere'));
         blocks.push(block('doAnswer'));
         /*
@@ -5629,6 +5643,8 @@ StageMorph.prototype.blockTemplates = function (category) {
         //blocks.push(block('reportURLWithCaching'));
         blocks.push(block('reportJSONData'));
         blocks.push('=');
+        blocks.push(block('doProgramInputs'));
+        blocks.push(block('reportInput'));
         blocks.push(block('doInsertYourCodeHere'));
         blocks.push(block('doAnswer'));
         /*

@@ -3836,6 +3836,19 @@ Process.prototype.reportJSONData = function (jsonText, jsonParams) {
 };
 
 
+
+Process.prototype.doProgramInputs = function (listOfInputs) {
+	;
+};
+
+Process.prototype.reportInput = function (varName, varValue) {
+
+    this.doSetVar(varName, varValue);
+
+    return 15;
+};
+
+
 Process.prototype.doInsertYourCodeHere = function () {
 	;
 };
