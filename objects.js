@@ -1146,6 +1146,13 @@ SpriteMorph.prototype.initBlocks = function () {
             defaults: [1, null, localize('thing')]
         },
 
+        reportPickRandomItemFromList: {
+            type: 'reporter',
+            category: 'lists',
+            spec: 'pick random item from list %l'
+        },
+
+
         //Start of Data Blocks.
 
         reportDate: {
@@ -1259,6 +1266,9 @@ SpriteMorph.prototype.initBlocks = function () {
         //End of Data Blocks.
 
 
+
+
+
         //Start of Data Tools Blocks.
         reportURLUsingServer: {
             type: 'reporter',
@@ -1279,6 +1289,17 @@ SpriteMorph.prototype.initBlocks = function () {
             defaults: ['','']
         },
 
+        doInsertYourCodeHere: {
+            type: 'command',
+            category: 'Data Tools',
+            spec: 'Insert your code below this block'
+        },
+
+        doAnswer: {
+            type: 'command',
+            category: 'Data Tools',
+            spec: 'Report answer: %txt'
+        },
 
 
         doDefineCloudMethod: {
@@ -2358,6 +2379,8 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('doDeleteFromList'));
         blocks.push(block('doInsertInList'));
         blocks.push(block('doReplaceInList'));
+        blocks.push(block('reportPickRandomItemFromList'));
+
 
     // for debugging: ///////////////
 
@@ -2434,6 +2457,8 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         //blocks.push(block('reportURLWithCaching')); Discontinued.
         blocks.push(block('reportJSONData'));
         blocks.push('=');
+        blocks.push(block('doInsertYourCodeHere'));
+        blocks.push(block('doAnswer'));
         /*
         blocks.push(block('doDefineCloudMethod'));
         blocks.push(block('doRunCloudMethod'));
@@ -5530,6 +5555,7 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('doDeleteFromList'));
         blocks.push(block('doInsertInList'));
         blocks.push(block('doReplaceInList'));
+        blocks.push(block('reportPickRandomItemFromList'));
 
 
     // for debugging: ///////////////
@@ -5603,6 +5629,8 @@ StageMorph.prototype.blockTemplates = function (category) {
         //blocks.push(block('reportURLWithCaching'));
         blocks.push(block('reportJSONData'));
         blocks.push('=');
+        blocks.push(block('doInsertYourCodeHere'));
+        blocks.push(block('doAnswer'));
         /*
         blocks.push(block('doDefineCloudMethod'));
         blocks.push(block('doRunCloudMethod'));

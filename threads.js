@@ -3836,6 +3836,20 @@ Process.prototype.reportJSONData = function (jsonText, jsonParams) {
 };
 
 
+Process.prototype.doInsertYourCodeHere = function () {
+	;
+};
+
+Process.prototype.doAnswer = function (input) {
+	;
+};
+
+Process.prototype.reportPickRandomItemFromList = function (list) {
+    idx = this.reportRandom(1, list.length());
+    return list.at(idx);
+};
+
+
 
 Process.prototype.doDefineCloudMethod = function (methodName, parameterList) {
 
