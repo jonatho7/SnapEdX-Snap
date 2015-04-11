@@ -2603,18 +2603,6 @@ Process.prototype.reportDate = function (datefn) {
     return result;
 };
 
-Process.prototype.retrieveWeatherData = function (location) {
-	//TODO. add in 15minute expiration, if wanted.
-	if ( ! cacheController.hasCachedWeatherReport(location) ){
-		//Use AJAX to retrieve data. ASYNCHRONOUS, so that program will not stop.
-		var urlBase = "weather";
-		var isAsync = true;
-		Process.prototype.weatherAjaxRequest(urlBase, location, isAsync);
-	}
-	return;
-};
-
-
 Process.prototype.encodeQueryData = function (data) {
    var ret = [];
    for (var d in data)
@@ -2953,7 +2941,7 @@ Process.prototype.reportLatitude = function (address) {
 
     var latitudeValue;
 
-	var urlBase = "location";
+	var urlBase = "api/dataservice/location";
 	var isAsync = false;
 	var jsonArgs = { "address": address };
 	var ajaxResponse = Process.prototype.ajaxRequest(urlBase, jsonArgs, isAsync);
@@ -2982,7 +2970,7 @@ Process.prototype.reportLongitude = function (address) {
 
     var longitudeValue;
 
-	var urlBase = "location";
+	var urlBase = "api/dataservice/location";
 	var isAsync = false;
 	var jsonArgs = { "address": address };
 	var ajaxResponse = Process.prototype.ajaxRequest(urlBase, jsonArgs, isAsync);
@@ -3018,7 +3006,7 @@ Process.prototype.reportWeather = function (weatherFactor, location) {
 		 //the weather service (through a Python library maybe).		 
 		
 		//Use AJAX to retrieve data.
-		var urlBase = "weather";
+		var urlBase = "api/dataservice/weather";
 		var isAsync = false;
 		var ajaxResponse = Process.prototype.weatherAjaxRequest(urlBase, location, isAsync);
 		
@@ -3053,9 +3041,6 @@ Process.prototype.reportWeather = function (weatherFactor, location) {
 		else if ((this.inputOption(weatherFactor) === 'weather description')) {
 			weatherValue = weatherReport.weather.description;
 		}
-		else if ((this.inputOption(weatherFactor) === 'weather image')) {
-			weatherValue = weatherReport.weather.image_url;
-		}
 		else if ((this.inputOption(weatherFactor) === 'visibility in miles')) {
 			weatherValue = weatherReport.weather.visibility;
 		}
@@ -3076,11 +3061,11 @@ Process.prototype.reportWeather = function (weatherFactor, location) {
 
 
 
-Process.prototype.reportLowHighTemp = function (temperatureFactor, location, temperatureDays) {
+Process.prototype.reportLowHighTemp = function (temperatureFactor, location, dayNumber) {
 	var weatherReport = null;
 	if ( ! cacheController.hasCachedWeatherReport(location) ){
 		//Use AJAX to retrieve data.
-		var urlBase = "weather";
+		var urlBase = "api/dataservice/weather";
 		var isAsync = false;
 		var ajaxResponse = Process.prototype.weatherAjaxRequest(urlBase, location, isAsync);
 		
@@ -3099,27 +3084,27 @@ Process.prototype.reportLowHighTemp = function (temperatureFactor, location, tem
 	var temp1 = null;
 	var temp2 = null;
 	if (weatherReport != null) {
-		if (this.inputOption(temperatureDays) === 'Today'){
+		if (dayNumber == 1){
 			temp1 = weatherReport.forecasts[0].temperature;
 			temp2 = weatherReport.forecasts[1].temperature;
 		}
-		else if (this.inputOption(temperatureDays) === 'Day 1'){
+		else if (dayNumber == 2){
 			temp1 = weatherReport.forecasts[2].temperature;
 			temp2 = weatherReport.forecasts[3].temperature;
 		}
-		else if (this.inputOption(temperatureDays) === 'Day 2'){
+		else if (dayNumber == 3){
 			temp1 = weatherReport.forecasts[4].temperature;
 			temp2 = weatherReport.forecasts[5].temperature;
 		}
-		else if (this.inputOption(temperatureDays) === 'Day 3'){
+		else if (dayNumber == 4){
 			temp1 = weatherReport.forecasts[6].temperature;
 			temp2 = weatherReport.forecasts[7].temperature;
 		}
-		else if (this.inputOption(temperatureDays) === 'Day 4'){
+		else if (dayNumber == 5){
 			temp1 = weatherReport.forecasts[8].temperature;
 			temp2 = weatherReport.forecasts[9].temperature;
 		}
-		else if (this.inputOption(temperatureDays) === 'Day 5'){
+		else if (dayNumber == 6){
 			temp1 = weatherReport.forecasts[10].temperature;
 			temp2 = weatherReport.forecasts[11].temperature;
 		}
@@ -3140,11 +3125,11 @@ Process.prototype.reportLowHighTemp = function (temperatureFactor, location, tem
 };
 
 
-Process.prototype.reportPrecipitation = function (precipFactor, location, precipDays) {
+Process.prototype.reportPrecipitation = function (precipFactor, location, dayNumber, afternoonOrNight) {
 	var weatherReport = null;
 	if ( ! cacheController.hasCachedWeatherReport(location) ){
 		//Use AJAX to retrieve data.
-		var urlBase = "weather";
+		var urlBase = "api/dataservice/weather";
 		var isAsync = false;
 		var ajaxResponse = Process.prototype.weatherAjaxRequest(urlBase, location, isAsync);
 		
@@ -3162,45 +3147,40 @@ Process.prototype.reportPrecipitation = function (precipFactor, location, precip
 	var weatherValue = "";
 	var forecastIndex = null;
 	if (weatherReport != null) {
-		if (this.inputOption(precipDays) === 'This Afternoon'){
-			//if (weatherReport.forecasts[0]['period_name'] == "Tonight"){
-			//	forecastIndex = null;
-			//} else {
-			//	forecastIndex = 0;
-			//}
+		if (dayNumber == 1 && afternoonOrNight == 'afternoon'){
             forecastIndex = 0;
 		}
-		else if (this.inputOption(precipDays) === 'Tonight'){
+		else if (dayNumber == 1 && afternoonOrNight == 'night'){
 			forecastIndex = 0;
 		}
-		else if (this.inputOption(precipDays) === 'Day 1'){
+		else if (dayNumber == 2 && afternoonOrNight == 'afternoon'){
 			forecastIndex = 2;
 		}
-		else if (this.inputOption(precipDays) === 'Day 1 Night'){
+		else if (dayNumber == 2 && afternoonOrNight == 'night'){
 			forecastIndex = 3;
 		}
-		else if (this.inputOption(precipDays) === 'Day 2'){
+		else if (dayNumber == 3 && afternoonOrNight == 'afternoon'){
 			forecastIndex = 4;
 		}
-		else if (this.inputOption(precipDays) === 'Day 2 Night'){
+		else if (dayNumber == 3 && afternoonOrNight == 'night'){
 			forecastIndex = 5;
 		}
-		else if (this.inputOption(precipDays) === 'Day 3'){
+		else if (dayNumber == 4 && afternoonOrNight == 'afternoon'){
 			forecastIndex = 6;
 		}
-		else if (this.inputOption(precipDays) === 'Day 3 Night'){
+		else if (dayNumber == 4 && afternoonOrNight == 'night'){
 			forecastIndex = 7;
 		}
-		else if (this.inputOption(precipDays) === 'Day 4'){
+		else if (dayNumber == 5 && afternoonOrNight == 'afternoon'){
 			forecastIndex = 8;
 		}
-		else if (this.inputOption(precipDays) === 'Day 4 Night'){
+		else if (dayNumber == 5 && afternoonOrNight == 'night'){
 			forecastIndex = 9;
 		}
-		else if (this.inputOption(precipDays) === 'Day 5'){
+		else if (dayNumber == 6 && afternoonOrNight == 'afternoon'){
 			forecastIndex = 10;
 		}
-		else if (this.inputOption(precipDays) === 'Day 5 Night'){
+		else if (dayNumber == 6 && afternoonOrNight == 'night'){
 			forecastIndex = 11;
 		}
 		else {
@@ -3227,7 +3207,7 @@ Process.prototype.reportPrecipitation = function (precipFactor, location, precip
 
 
 Process.prototype.reportRedditPosts = function (subreddit) {
-	var urlBase = "redditPosts";
+	var urlBase = "api/dataservice/redditPosts";
 	var isAsync = false;
 	var jsonArgs = { "subreddit": subreddit};
 	var ajaxResponse = Process.prototype.redditAjaxRequest(urlBase, jsonArgs, isAsync);
@@ -3298,7 +3278,7 @@ Process.prototype.reportRedditPostInfo = function (redditPostFactor, post) {
 };
 
 Process.prototype.reportRedditComments = function (postObject) {
-	var urlBase = "redditComments";
+	var urlBase = "api/dataservice/redditComments";
 	var isAsync = false;
 	var postID = postObject['id'];
 	var jsonArgs = { "postID": postID };
@@ -3374,7 +3354,7 @@ Process.prototype.reportRedditCommentInfo = function (redditCommentFactor, comme
 Process.prototype.reportStocks = function (stockFactor, stockQuery) {
 	var stockValue;
 	
-	var urlBase = "stocks";
+	var urlBase = "api/dataservice/stocks";
 	var isAsync = false;
 	var jsonArgs = { "stockQuery": stockQuery};
 	var ajaxResponse = Process.prototype.stocksAjaxRequest(urlBase, jsonArgs, isAsync);
@@ -3416,7 +3396,7 @@ Process.prototype.reportStocks = function (stockFactor, stockQuery) {
 Process.prototype.reportTwitterRetweets = function (twitterFactor, twitterQuery) {
 	var twitterValue;
 	
-	var urlBase = "twitter";
+	var urlBase = "api/dataservice/twitter";
 	var isAsync = false;
 	var jsonArgs = { "twitterFactor": twitterFactor, "twitterQuery": twitterQuery};
 	var ajaxResponse = Process.prototype.twitterAjaxRequest(urlBase, jsonArgs, isAsync);
@@ -3444,7 +3424,7 @@ Process.prototype.reportTwitterRetweets = function (twitterFactor, twitterQuery)
 Process.prototype.reportTwitterTweetsFromPerson = function (twitterFromPerson, twitterQuery) {
 	var twitterValue;
 	
-	var urlBase = "twitter";
+	var urlBase = "api/dataservice/twitter";
 	var isAsync = false;
 	
 	//Add characters at the beginning of the query based on the desired result.
@@ -3482,7 +3462,8 @@ Process.prototype.reportTwitterTweetsFromPerson = function (twitterFromPerson, t
 
 
 Process.prototype.reportBusinessData = function (businessName, businessNumber, location) {
-	return "testResult";
+
+    return "Prototype";
 };
 
 Process.prototype.reportNumEarthquakes = function (earthquakePeriod) {
@@ -3492,7 +3473,7 @@ Process.prototype.reportNumEarthquakes = function (earthquakePeriod) {
 	if ( ! cacheController.hasCachedEarthquakeReport(earthquakePeriod) ){
 
 		//Use AJAX to retrieve data.
-		var urlBase = "earthquakes";
+		var urlBase = "api/dataservice/earthquakes";
 		var isAsync = false;
         var jsonArgs = { "earthquakePeriod": earthquakePeriod };
 		var ajaxResponse = Process.prototype.earthquakeAjaxRequest(urlBase, jsonArgs, isAsync);
@@ -3522,7 +3503,7 @@ Process.prototype.reportEarthquakeData = function (earthquakeQuery, earthquakeIn
 	if ( ! cacheController.hasCachedEarthquakeReport(earthquakePeriod) ){
 
 		//Use AJAX to retrieve data.
-		var urlBase = "earthquakes";
+		var urlBase = "api/dataservice/earthquakes";
 		var isAsync = false;
         var jsonArgs = { "earthquakePeriod": earthquakePeriod };
 		var ajaxResponse = Process.prototype.earthquakeAjaxRequest(urlBase, jsonArgs, isAsync);
@@ -3580,7 +3561,9 @@ Process.prototype.reportTestBlock = function () {
 
 
 Process.prototype.reportTestBlock2 = function () {
+    return 400;
 
+    /*
     var data;
 
 	var urlBase = "runTestCloudMethod1";
@@ -3610,8 +3593,20 @@ Process.prototype.reportTestBlock2 = function () {
 	} else {
 		return null;
 	}
-
+    */
 };
+
+Process.prototype.reportTestBlock3 = function () {
+    //var mine = this.reportTestBlock2() + 111;
+
+    var myList = this.reportTextSplit("hello\nworld",'line');
+
+    //Delete the last item of the list.
+    this.doDeleteFromList('last', myList);
+
+
+    return myList;
+}
 
 
 //Start of Google Maps Blocks.
@@ -3754,7 +3749,7 @@ Process.prototype.reportURLUsingServer = function (urlArray) {
         urlString += urlArray.at(i);
 	}
 
-    var urlBase = "urlRequestForClient";
+    var urlBase = "api/dataservice/urlRequestForClient";
     var isAsync = false;
     var jsonArgs = { "urlString": urlString };
     var ajaxResponse = Process.prototype.urlAjaxRequest(urlBase, jsonArgs, isAsync);
@@ -3836,6 +3831,49 @@ Process.prototype.reportJSONData = function (jsonText, jsonParams) {
 };
 
 
+Process.prototype.reportCSVValue = function (CSVAsList, field, CSVIndex) {
+    //Check to see if the CSV is equal to "None".
+    if (CSVAsList == "None"){
+        return "None";
+    }
+
+    //Grab the CSV header line.
+    var headerLine = CSVAsList.at(1);
+    console.log("headerLine");
+    console.log(headerLine);
+
+    //Split the header line by comma.
+    var headerLineList = new List(headerLine.split(','));
+
+    //Get the index in the headerLineList where the field is at.
+    var fieldIndex = null;
+    for(var i = 1; i <= headerLineList.length(); i++){
+        if (headerLineList.at(i) == field){
+            fieldIndex = i;
+            break;
+        }
+    }
+
+    //Throw an error if the field was not found.
+    if (fieldIndex == null){
+        throw new Error('The field: "' + field.toString() + '" was not found in the CSV.');
+    }
+
+    //Now get the value at the desired field and index - Start.
+
+    //Grab the correct line of the CSV.
+    var specificLine = CSVAsList.at(CSVIndex);
+
+    var specificLineList = new List(specificLine.split(','));
+
+    //Grab the correct index of this line.
+    var specificValue = specificLineList.at(fieldIndex);
+
+    //Now get the value at the desired field and index - End.
+
+    return specificValue;
+};
+
 
 Process.prototype.doProgramInputs = function (listOfInputs) {
 	;
@@ -3870,12 +3908,83 @@ Process.prototype.doDefineCloudMethod = function (methodName, parameterList) {
 };
 
 Process.prototype.doRunCloudMethod = function (methodName, parameterList) {
+    return 800;
+};
+
+
+Process.prototype.doReturnDataUrl_Flu_National = function () {
+
+    return {"type": "url", "value": "https://drive.google.com/uc?export=download&id=0B-WWj_i0WSomWUFaRkpQbW9ENjg"};
+
+};
+
+
+Process.prototype.doReturnDataUrl_Flu = function () {
+
+    return {"type": "url", "value": "https://drive.google.com/uc?export=download&id=0B-WWj_i0WSomaUkwQVpYenlRWm8"};
+
+};
+
+
+Process.prototype.doReturnDataUrl_2013Movies = function () {
+
+    return {"type": "url", "value": "https://drive.google.com/uc?export=download&id=0B-WWj_i0WSoma2dVNnhSWGFDaDQ"};
+
+};
+
+
+Process.prototype.doReturnDataUrl_USAUnemployment = function () {
+
+    return {"type": "url", "value": "https://drive.google.com/uc?export=download&id=0B-WWj_i0WSomcjhXN1pHdmVKRjQ"};
+
+};
+
+
+Process.prototype.doReturnDataUrl = function (userInputURL) {
+    if (!isString(userInputURL)){
+        throw new Error('The URL entered is not a string. Please enter a string.');
+    }
+
+    return {"type": "url", "value": userInputURL};
+
+};
+
+
+Process.prototype.doSetCloudVariable = function (varName, varValue) {
+    //Check the parameters.
+    if (varName == ""){
+        throw new Error('Cloud variable name is empty');
+    }
+    if (!isString(varName) && !isValidNumber(varName)){
+        throw new Error('Cloud variable name must be a string or a number');
+    }
+
+    if (varValue == ""){
+        throw new Error('Cloud variable value is empty');
+    }
+
+
+    var isValueAReferenceIndex = false;
+
+    //Modify the parameters as needed.
+    // Double check to make sure that if the value is an object, that the object is already on the cloud server.
+    if (varValue instanceof Object ){
+        if( varValue['variable_reference_index'] === undefined){
+            throw new Error("Can only set a cloud variable equal to a string, a number, or the result of a cloud processing operation such as a 'select' or 'get maximum' query");
+        } else {
+            varValue = varValue['variable_reference_index'];
+            isValueAReferenceIndex = true;
+        }
+    }
 
     var data;
 
-	var urlBase = "computeservice/runTestCloudMethod2";
-	var isAsync = false;
-	var jsonArgs = { "none": "none"};
+    //Get the user's id number, or make one if the user does not already have one.
+    user_id = retrieveOrMakeGuid();
+
+	var urlBase = "api/cloudvariables/doSetCloudVariable";
+	var jsonArgs = {"user_id": user_id, "isValueAReferenceIndex": isValueAReferenceIndex, "variable_name": varName, "variable_value": varValue};
+    var isAsync = false;
 	var ajaxResponse = Process.prototype.ajaxRequest(urlBase, jsonArgs, isAsync);
 
 	var json = JSON.parse( ajaxResponse );
@@ -3884,28 +3993,408 @@ Process.prototype.doRunCloudMethod = function (methodName, parameterList) {
 	var report = json['report'];
 	//Check to see if there is a valid report object.
 	if (report == ""){
-		return null;
+		throw new Error('Unable to set cloud variable');
 	}
-
 	data = report['data'];
 
+    if (data == "failure"){
+        throw new Error('Unable to set cloud variable');
+    }
 
-	if ((data) || (data == "")){
-		return data;
-	} else {
-		return null;
+
+};
+
+Process.prototype.doRetrieveDataFromCloudVariable = function (varName) {
+    //Check the parameters
+    if (varName == ""){
+        throw new Error('Cloud variable name is empty');
+    }
+    if (!isString(varName) && !isValidNumber(varName)){
+        throw new Error('Cloud variable name must be a string or a number');
+    }
+
+    var data;
+
+    //Get the user's id number, or make one if the user does not already have one.
+    user_id = retrieveOrMakeGuid();
+
+	var urlBase = "api/cloudvariables/doRetrieveDataFromCloudVariable";
+	var jsonArgs = {"user_id": user_id, "variable_name": varName};
+    var isAsync = false;
+	var ajaxResponse = Process.prototype.ajaxRequest(urlBase, jsonArgs, isAsync);
+
+	var json = JSON.parse( ajaxResponse );
+	console.log(json);
+
+	var report = json['report'];
+	//Check to see if there is a valid report object.
+	if (report == ""){
+		throw new Error('Unable to retrieve data from cloud variable');
 	}
+
+    if(report['wasValueRetrieved'] == false){
+        var errorMessage = report['errorMessage'];
+        throw new Error(errorMessage);
+    } else {
+        //Successfully retrieved the cloud variable value.
+
+        // Get the data.
+        data = report['data'];
+
+        //If the retrieved data is a dataframe, present the dataframe as a List, for better display.
+
+        if (report['data_type'] == "dataframe"){
+            var data = new List(data.split('\n'));
+            data.remove(data.length());
+            /*
+            Known Bug: Sometimes the List does not open up for display automatically.
+             */
+
+            return data;
+        }
+
+
+        //Delete the last item of the list, which is an empty line.
+        //this.doDeleteFromList('last', data);
+
+
+        if ((data) || (data == "")){
+            return data;
+        } else {
+            throw new Error('Unable to retrieve data from cloud variable');
+        }
+    }
+
+};
+
+
+Process.prototype.doReferenceCloudVariable = function (varName) {
+    //Check the parameters
+    if (varName == ""){
+        throw new Error('Cloud variable name is empty');
+    }
+    if (!isString(varName) && !isValidNumber(varName)){
+        throw new Error('Cloud variable name must be a string or a number');
+    }
+
+    return {"type": "cloud_variable", "value": varName};
+};
+
+
+Process.prototype.reportDataSelect = function (selectedFields, conditionJSON, dataSourceJSON) {
+    //Check selectedFields parameter.
+    var isSelectAllFields = false;
+    if (typeof selectedFields == "object" && selectedFields == "all fields"){
+        selectedFields = selectedFields.toString();
+        isSelectAllFields = true;
+    } else if (typeof selectedFields == "object"){
+        throw new Error('A string was expected for the selected fields, but an object was received');
+    }
+
+    //Check the conditionJSON parameter.
+    formattedConditions = throwErrorIfConditionParametersAreInvalid(conditionJSON['conditionField'],
+        conditionJSON['conditionOperator'], conditionJSON['conditionValue']);
+    conditionField = formattedConditions[0];
+    conditionOperator = formattedConditions[1];
+    conditionValue = formattedConditions[2];
+
+    console.log("conditionField");
+    console.log(conditionField);
+
+    //Check the filterJSON parameter.
+
+    //Check the dataSourceJSON parameter.
+    dataSourceType = null;
+    dataSourceValue = null;
+    //Check the dataSourceJSON parameter.
+    if (dataSourceJSON == ""){
+        throw new Error('Invalid data source');
+    }
+    if (typeof dataSourceJSON == "string"){
+        dataSourceType = "url";
+        dataSourceValue = dataSourceJSON;
+    } else if ((dataSourceJSON['type'] != "url" && dataSourceJSON['type'] != "cloud_variable") || dataSourceJSON['value'] == null){
+        //The data source is not a string, and it is not a JSON with the required items. Throw an error.
+        throw new Error('Invalid data source');
+    } else {
+        //Then the data source is a JSON with the required items.
+        dataSourceType = dataSourceJSON['type'];
+        dataSourceValue = dataSourceJSON['value'];
+    }
+
+
+    //Now perform the operation.
+    var data;
+
+    //Get the user's id number, or make one if the user does not already have one.
+    var user_id = retrieveOrMakeGuid();
+
+	var urlBase = "api/internaldataprocessing/select";
+	var jsonArgs = {"user_id": user_id, "isSelectAllFields": isSelectAllFields,
+        "selectedFields": selectedFields, "conditionField": conditionField,
+        "conditionOperator": conditionOperator, "conditionValue": conditionValue,
+        "dataSourceType": dataSourceType, "dataSourceValue": dataSourceValue
+    };
+    var isAsync = false;
+	var ajaxResponse = Process.prototype.ajaxRequest(urlBase, jsonArgs, isAsync);
+
+	var json = JSON.parse( ajaxResponse );
+	console.log(json);
+
+	var report = json['report'];
+	//Check to see if there is a valid report object.
+	if (report == ""){
+		throw new Error("Unable to perform 'select' block");
+	}
+    if(report['errorMessage'] != null){
+        //There was an error. Print out the error for the user.
+        throw new Error(report['errorMessage']);
+    }
+
+
+
+    data = report['data'];
+    if ((data) || (data == "")){
+        return data;
+    } else {
+        throw new Error("Unable to perform 'select' block");
+    }
+
+};
+
+
+Process.prototype.reportDataFields = function (fieldsArray) {
+    throw new Error("Invalid fields.");
+
+};
+
+
+Process.prototype.reportDataConditions = function (conditionsArray) {
+    throw new Error("Conditions method stub. Please do not use this block yet, but use separate conditions for now.");
+
+};
+
+Process.prototype.reportDataCondition = function (conditionField, conditionOperator, conditionValue) {
+    //Check the parameters.
+    formattedConditions = throwErrorIfConditionParametersAreInvalid(conditionField, conditionOperator, conditionValue);
+    conditionField = formattedConditions[0];
+    conditionOperator = formattedConditions[1];
+    conditionValue = formattedConditions[2];
+
+    //Form the JSON object, and return it.
+    var conditionJSON = { "conditionField": conditionField,
+        "conditionOperator": conditionOperator,
+        "conditionValue": conditionValue };
+
+    console.log(conditionJSON);
+    return conditionJSON;
+};
+
+function throwErrorIfConditionParametersAreInvalid(conditionField, conditionOperator, conditionValue){
+    //Check the parameters.
+    if (conditionField == undefined && conditionOperator == undefined && conditionValue == undefined) {
+        //Since all three of these are undefined, the condition block is probably not being used.
+        throw new Error('A condition block was expected.');
+    }
+    if (conditionField == undefined){
+        throw new Error('Condition field is undefined');
+    }
+    if (conditionField == "" || (typeof conditionField != "string" && typeof conditionField != "number")){
+        throw new Error('Condition field must be a valid string or number');
+    }
+
+    if (conditionOperator == undefined){
+        throw new Error('Condition operator is undefined');
+    }
+    if (conditionOperator instanceof Array){
+        if (conditionOperator.length != 1){
+            throw new Error('Condition operator must be equal to one of the following: ==, !=, >, >=, <, <= ');
+        } else {
+            conditionOperator = conditionOperator[0];
+        }
+    }
+    if ( conditionOperator != "=="
+        && conditionOperator != "!="
+        && conditionOperator != ">"
+        && conditionOperator != ">="
+        && conditionOperator != "<"
+        && conditionOperator != "<="
+    ){
+        throw new Error('Condition operator must be equal to one of the following: ==, !=, >, >=, <, <= ');
+    }
+
+    if (conditionValue == undefined){
+        throw new Error('Condition value is undefined');
+    }
+    if (conditionValue == "" || (typeof conditionValue != "string" && typeof conditionValue != "number")){
+        throw new Error('Condition value must be a string or a number');
+    }
+
+    return [conditionField, conditionOperator, conditionValue];
+}
+
+
+Process.prototype.reportDataMaximum = function (operationType, field, dataSourceJSON, returnType) {
+    //Check the field parameter.
+    if (field == undefined){
+        throw new Error('Field is undefined');
+    }
+    if (field == "" || (typeof field != "string" && typeof field != "number")){
+        throw new Error('Field must be a valid string or number');
+    }
+
+    //Check the dataSourceJSON parameter.
+    dataSourceType = null;
+    dataSourceValue = null;
+    //Check the dataSourceJSON parameter.
+    if (dataSourceJSON == ""){
+        throw new Error('Invalid data source');
+    }
+    if (typeof dataSourceJSON == "string"){
+        dataSourceType = "url";
+        dataSourceValue = dataSourceJSON;
+    } else if ((dataSourceJSON['type'] != "url" && dataSourceJSON['type'] != "cloud_variable") || dataSourceJSON['value'] == null){
+        //The data source is not a string, and it is not a JSON with the required items. Throw an error.
+        throw new Error('Invalid data source');
+    } else {
+        //Then the data source is a JSON with the required items.
+        dataSourceType = dataSourceJSON['type'];
+        dataSourceValue = dataSourceJSON['value'];
+    }
+
+    //Check the returnType parameter.
+    if (returnType !== "value only" && returnType !== "entire row"){
+        throw new Error('Expected the return type to be "value only" or "entire row".');
+    }
+
+
+    //Now perform the operation.
+    var data;
+
+    //Get the user's id number, or make one if the user does not already have one.
+    var user_id = retrieveOrMakeGuid();
+
+	var urlBase = "api/internaldataprocessing/methodSet1";
+	var jsonArgs = {"user_id": user_id, "operationType": operationType,
+        "field": field,
+        "dataSourceType": dataSourceType,
+        "dataSourceValue": dataSourceValue,
+        "returnType": returnType
+    };
+    var isAsync = false;
+	var ajaxResponse = Process.prototype.ajaxRequest(urlBase, jsonArgs, isAsync);
+
+	var json = JSON.parse( ajaxResponse );
+	console.log(json);
+
+	var report = json['report'];
+	//Check to see if there is a valid report object.
+	if (report == ""){
+		throw new Error("Unable to perform 'get " + operationType +  "' block");
+	}
+    if(report['errorMessage'] != null){
+        //There was an error. Print out the error for the user.
+        throw new Error(report['errorMessage']);
+    }
+
+
+    data = report['data'];
+    if ((data) || (data == "")){
+        return data;
+    } else {
+        throw new Error("Unable to perform 'get " + operationType +  "' block");
+    }
+
 };
 
 
 
-Process.prototype.doSetCloudVariable = function (varName, varValue) {
-    return;
+Process.prototype.reportDataAverage = function (operationType, field, dataSourceJSON) {
+    //Check the field parameter.
+    if (field == undefined){
+        throw new Error('Field is undefined');
+    }
+    if (field == "" || (typeof field != "string" && typeof field != "number")){
+        throw new Error('Field must be a valid string or number');
+    }
+
+    //Check the dataSourceJSON parameter.
+    dataSourceType = null;
+    dataSourceValue = null;
+    //Check the dataSourceJSON parameter.
+    if (dataSourceJSON == ""){
+        throw new Error('Invalid data source');
+    }
+    if (typeof dataSourceJSON == "string"){
+        dataSourceType = "url";
+        dataSourceValue = dataSourceJSON;
+    } else if ((dataSourceJSON['type'] != "url" && dataSourceJSON['type'] != "cloud_variable") || dataSourceJSON['value'] == null){
+        //The data source is not a string, and it is not a JSON with the required items. Throw an error.
+        throw new Error('Invalid data source');
+    } else {
+        //Then the data source is a JSON with the required items.
+        dataSourceType = dataSourceJSON['type'];
+        dataSourceValue = dataSourceJSON['value'];
+    }
+
+    //Now perform the operation.
+    var data;
+
+    //Get the user's id number, or make one if the user does not already have one.
+    var user_id = retrieveOrMakeGuid();
+
+	var urlBase = "api/internaldataprocessing/methodSet2";
+	var jsonArgs = {"user_id": user_id, "operationType": operationType,
+        "field": field,
+        "dataSourceType": dataSourceType,
+        "dataSourceValue": dataSourceValue
+    };
+    var isAsync = false;
+	var ajaxResponse = Process.prototype.ajaxRequest(urlBase, jsonArgs, isAsync);
+
+	var json = JSON.parse( ajaxResponse );
+	console.log(json);
+
+	var report = json['report'];
+	//Check to see if there is a valid report object.
+	if (report == ""){
+		throw new Error("Unable to perform 'get " + operationType +  "' block");
+	}
+    if(report['errorMessage'] != null){
+        //There was an error. Print out the error for the user.
+        throw new Error(report['errorMessage']);
+    }
+
+
+    data = report['data'];
+    if ((data) || (data == "")){
+        return data;
+    } else {
+        throw new Error("Unable to perform 'get " + operationType +  "' block");
+    }
 };
 
-Process.prototype.doGetCloudVariable = function (varName) {
-    return varName;
+
+Process.prototype.reportDataAppend = function (csvOne, csvTwo) {
+    throw new Error("append method stub. Please do not use this block yet, but use separate methods for now.");
+
 };
+
+
+
+Process.prototype.reportDataFilterOrderBy = function (field, orderByType) {
+
+    return 900;
+};
+
+
+Process.prototype.reportDataFilterLimit = function (startIndex, numRecords) {
+
+    return 925;
+};
+
+
+
 
 Process.prototype.doGetMethodParameter = function (varName) {
     return varName;
@@ -3916,16 +4405,7 @@ Process.prototype.doCloudReport = function (returnValue) {
 };
 
 
-Process.prototype.reportDataMaximum = function (columnNumber, rowStart, rowEnd, sheetNumber, sheetsURL) {
 
-    return 500;
-};
-
-
-Process.prototype.reportDataAverage = function (columnNumber, rowStart, rowEnd, sheetNumber, sheetsURL) {
-
-    return 700;
-};
 
 Process.prototype.reportDataWordFrequency = function (columnNumber, rowStart, rowEnd, sheetNumber, sheetsURL) {
 
@@ -3949,29 +4429,11 @@ Process.prototype.reportDataAverageForEach = function (columnNumber, rowStart, r
 
 
 
-Process.prototype.reportDataSelector = function (selectedFields, sheetsURL, conditionsText, filtersText) {
-
-    return 850;
-};
 
 
 
-Process.prototype.reportDataCondition = function (field, dataOperator, value) {
-
-    return 875;
-};
 
 
-
-Process.prototype.reportDataFilterOrderBy = function (field, orderByType) {
-
-    return 900;
-};
-
-Process.prototype.reportDataFilterLimit = function (startIndex, numRecords) {
-
-    return 925;
-};
 
 
 /*
@@ -4789,4 +5251,30 @@ var cacheController = new CacheController();
 var googleMarkerList = [];
 var googleCircleList = [];
 var googlePointList = [];
+
+var user_guid = null;
+
+/**
+ * Retrieves a user's generally universal id if they have one.
+ * If they do not have one, one is created, and then returned.
+ */
+function retrieveOrMakeGuid() {
+    //Define a function that is needed.
+    function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+    }
+
+    //If the user does not have a user_guid, make one.
+    if (user_guid == null){
+        //32 characters:
+        //user_guid = s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+        // 16 characters:
+        user_guid = "ID_" + s4() + s4() + s4() +  s4();
+    }
+
+    return user_guid;
+
+}
 

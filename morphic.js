@@ -1129,6 +1129,10 @@ function isString(target) {
     return typeof target === 'string' || target instanceof String;
 }
 
+function isValidNumber(target) {
+    return ((typeof target === 'number' || target instanceof Number) && !isNaN(target));
+}
+
 function isObject(target) {
     return target !== null &&
         (typeof target === 'object' || target instanceof Object);

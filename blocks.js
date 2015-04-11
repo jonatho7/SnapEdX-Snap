@@ -855,7 +855,6 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
                     'windspeed in mph' : ['windspeed in mph'],
                     'wind direction in degrees' : ['wind direction in degrees'],
                     'weather description' : ['weather description'],
-                    'weather image' : ['weather image'],
                     'visibility in miles' : ['visibility in miles'],
                     'dewpoint in F' : ['dewpoint in F'],
                     'pressure in inches' : ['pressure in inches']
@@ -876,22 +875,6 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
             );
             part.setContents(['low temperature in F']);
             break;
-        case '%temperatureDays':
-            part = new InputSlotMorph(
-                null, // text
-                false, // non-numeric
-                {
-                    'Today' : ['Today'],
-                    'Day 1' : ['Day 1'],
-                    'Day 2' : ['Day 2'],
-                    'Day 3' : ['Day 3'],
-                    'Day 4' : ['Day 4'],
-                    'Day 5' : ['Day 5']
-                },
-                true // read-only
-            );
-            part.setContents(['Today']);
-            break;
         case '%precipFactor':
             part = new InputSlotMorph(
                 null, // text
@@ -905,27 +888,17 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
             );
             part.setContents(['chance of precipitation']);
             break;
-        case '%precipDays':
+        case '%afternoonOrNight':
             part = new InputSlotMorph(
                 null, // text
                 false, // non-numeric
                 {
-                    'This Afternoon' : ['This Afternoon'],
-                    'Tonight' : ['Tonight'],
-                    'Day 1' : ['Day 1'],
-                    'Day 1 Night' : ['Day 1 Night'],
-                    'Day 2' : ['Day 2'],
-                    'Day 2 Night' : ['Day 2 Night'],
-                    'Day 3' : ['Day 3'],
-                    'Day 3 Night' : ['Day 3 Night'],
-                    'Day 4' : ['Day 4'],
-                    'Day 4 Night' : ['Day 4 Night'],
-                    'Day 5' : ['Day 5'],
-                    'Day 5 Night' : ['Day 5 Night']
+                    'afternoon' : ['afternoon'],
+                    'night' : ['night']
                 },
                 true // read-only
             );
-            part.setContents(['This Afternoon']);
+            part.setContents(['afternoon']);
             break;
         case '%redditPostFactor':
             part = new InputSlotMorph(
@@ -1049,32 +1022,68 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
             );
             part.setContents(['magnitude']);
             break;
+        case '%numbers1to6':
+            part = new InputSlotMorph(
+                null,
+                true,
+                {
+                    1 : 1,
+                    2 : 2,
+                    3 : 3,
+                    4 : 4,
+                    5 : 5,
+                    6 : 6
+                }
+            );
+            part.setContents(1);
+            break;
+        case '%numbers1to10':
+            part = new InputSlotMorph(
+                null,
+                true,
+                {
+                    1 : 1,
+                    2 : 2,
+                    3 : 3,
+                    4 : 4,
+                    5 : 5,
+                    6 : 6,
+                    7 : 7,
+                    8 : 8,
+                    9 : 9,
+                    10 : 10
+                }
+            );
+            part.setContents(1);
+            break;
         case '%dataMaximumFactor':
             part = new InputSlotMorph(
                 null, // text
                 false, // non-numeric
                 {
-                    'maximum' : ['maximum'],
-                    'minimum' : ['minimum'],
-                    'median' : ['median'],
-                    'mode' : ['mode']
+                    'maximum' : 'maximum',
+                    'minimum' : 'minimum'//,
+                    //'median' : ['median'],
+                    //'mode' : ['mode']
                 },
                 true // read-only
             );
-            part.setContents(['maximum']);
+            part.setContents('maximum');
             break;
         case '%dataAverageFactor':
             part = new InputSlotMorph(
                 null, // text
                 false, // non-numeric
                 {
-                    'average' : ['average'],
-                    'sum' : ['sum'],
-                    'multiply' : ['multiply']
+                    'average' : 'average',
+                    'median' : 'median',
+                    //'mode' : 'mode'
+                    'sum' : 'sum',
+                    'product' : 'product'
                 },
                 true // read-only
             );
-            part.setContents(['average']);
+            part.setContents('average');
             break;
         case '%dataSelectUniqueFactor':
             part = new InputSlotMorph(
@@ -1093,12 +1102,12 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
                 null, // text
                 false, // non-numeric
                 {
-                    'value only' : ['value only'],
-                    'entire row' : ['entire row']
+                    'value only' : 'value only',
+                    'entire row' : 'entire row'
                 },
                 true // read-only
             );
-            part.setContents(['value only']);
+            part.setContents('value only');
             break;
         case '%dataSelector':
             part = new InputSlotMorph(
@@ -1106,7 +1115,8 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
                 false,
                 {
                     'all fields' : ['all fields']
-                }
+                },
+                true // read-only
             );
             part.setContents(['all fields']);
             break;
@@ -1124,7 +1134,7 @@ SyntaxElementMorph.prototype.labelPart = function (spec) {
                 },
                 true
             );
-            part.setContents(['==']);
+            part.setContents(['>']);
             break;
         case '%dataOrderBy':
             part = new InputSlotMorph(

@@ -155,19 +155,21 @@ SpriteMorph.uber = PenMorph.prototype;
 
 SpriteMorph.prototype.categories =
     [
-        'motion',
+        //'motion',     //hidden.
         'control',
-        'looks',
-        'sensing',
-        'sound',
+        //'looks',      //hidden.
+        //'sensing',    //hidden.
+        //'sound',      //hidden.
         'operators',
-        'pen',
+        //'pen',        //hidden.
         'variables',
         'lists',
         'other',
-        'mapping',
+        'visualization',
         'data',
-        'Data Tools'
+        'Cloud',
+        'Domain-Exp',
+        'grading'
 
     ];
 
@@ -182,9 +184,11 @@ SpriteMorph.prototype.blockColor = {
     variables : new Color(243, 118, 29),
     lists : new Color(217, 77, 17),
     other: new Color(150, 150, 150),
-    mapping: new Color(255, 102, 102),
-    'Data Tools': new Color(209, 111, 163),
-    data: new Color(77, 189, 85)
+    visualization: new Color(255, 102, 102),
+    data: new Color(77, 189, 85),
+    Cloud: new Color(209, 111, 186),
+    "Domain-Exp" : new Color(143, 86, 227),  //Same color as the Looks tab
+    grading: new Color(171, 111, 209) //Another color option: (188, 95, 212)
 };
 
 SpriteMorph.prototype.paletteColor = new Color(55, 55, 55);
@@ -1152,7 +1156,6 @@ SpriteMorph.prototype.initBlocks = function () {
             spec: 'pick random item from list %l'
         },
 
-
         //Start of Data Blocks.
 
         reportDate: {
@@ -1163,38 +1166,32 @@ SpriteMorph.prototype.initBlocks = function () {
         reportLatitude: {
             type: 'reporter',
             category: 'data',
-            spec: 'get latitude at %txt',
-            defaults: [localize('Blacksburg, VA')]
+            spec: '%storage get latitude at %txt',
+            defaults: ['Blacksburg, VA']
         },
         reportLongitude: {
             type: 'reporter',
             category: 'data',
-            spec: 'get longitude at %txt',
-            defaults: [localize('Blacksburg, VA')]
-        },
-        retrieveWeatherData: {
-            type: 'command',
-            category: 'data',
-            spec: 'retrieve weather data at %s',
-            defaults: [localize('Blacksburg, VA')]
+            spec: '%storage get longitude at %txt',
+            defaults: ['Blacksburg, VA']
         },
         reportWeather: {
             type: 'reporter',
             category: 'data',
             spec: '%storage get %weatherFactor at %s',
-            defaults: [localize('temperature in F'), localize('Blacksburg, VA')]
+            defaults: [null, 'Blacksburg, VA']
         },
         reportLowHighTemp: {
             type: 'reporter',
             category: 'data',
-            spec: '%storage get %temperatureFactor at %s for forecast %temperatureDays',
-            defaults: [localize('low temperature in F'), localize('Blacksburg, VA')]
+            spec: '%storage get %temperatureFactor at %s for day # %numbers1to6',
+            defaults: [null, 'Blacksburg, VA', null]
         },
         reportPrecipitation: {
             type: 'reporter',
             category: 'data',
-            spec: '%storage get %precipFactor at %s for forecast %precipDays',
-            defaults: [localize('chance of precipitation'), localize('Blacksburg, VA')]
+            spec: '%storage get %precipFactor at %s for day # %numbers1to6 %afternoonOrNight',
+            defaults: [null, 'Blacksburg, VA', null, null ]
         },
         reportRedditPosts: {
             type: 'reporter',
@@ -1221,132 +1218,177 @@ SpriteMorph.prototype.initBlocks = function () {
             type: 'reporter',
             category: 'data',
             spec: '%storage get %stockFactor for stock: %s',
-            defaults: ['last trade price','GOOG']
+            defaults: [null,'GOOG']
         },
         reportTwitterRetweets: {
             type: 'reporter',
             category: 'data',
-            spec: '%storage get highest number of %twitterFactor for tweets mentioning: %s for last 7 days',
-            defaults: ['retweets','hunger games']
+            spec: '%storage get # %twitterFactor for tweets mentioning: %s for last 7 days',
+            defaults: [null,'hunger games']
         },
         reportTwitterTweetsFromPerson: {
             type: 'reporter',
             category: 'data',
             spec: '%storage get number of tweets sent %twitterFromPerson %s for last 7 days',
-            defaults: ['from person','HarryPotterFilm']
+            defaults: [null,'HarryPotterFilm']
         },
         reportTestBlock: {
             type: 'reporter',
             category: 'sensing',
-            spec: 'testing block'
+            spec: 'testing block - project xml'
         },
         reportTestBlock2: {
             type: 'reporter',
             category: 'sensing',
-            spec: 'testing block 2 - computeservice - runTestCloudMethod1'
+            spec: 'testing block 2 - return value'
+        },
+        reportTestBlock3: {
+            type: 'reporter',
+            category: 'sensing',
+            spec: 'testing block 3 - call another block'
         },
         reportBusinessData: {
             type: 'reporter',
             category: 'data',
-            spec: '%storage get %businessFactor from business number %n from location: %txt (Prototype)',
-            defaults: ['name', 1, 'Seattle, WA']
+            spec: '%storage get %businessFactor from business # %numbers1to10 from location: %txt',
+            defaults: [null, 1, 'Seattle, WA']
         },
         reportNumEarthquakes: {
             type: 'reporter',
             category: 'data',
             spec: '%storage get # of earthquakes for past %earthquakePeriod',
-            defaults: ['day']
+            defaults: [null]
         },
         reportEarthquakeData: {
             type: 'reporter',
             category: 'data',
             spec: '%storage get %earthquakeQuery of earthquake # %n for past %earthquakePeriod',
-            defaults: ['magnitude', 1, 'day']
+            defaults: [null, 1, null]
         },
         //End of Data Blocks.
 
 
-
-
-
-        //Start of Data Tools Blocks.
         reportURLUsingServer: {
             type: 'reporter',
-            category: 'Data Tools',
-            spec: 'return JSON from URL: http:// %http1',
+            category: 'data',
+            spec: '%storage get JSON from URL: http:// %http1',
             defaults: ['forecast.weather.gov/MapClick.php?lat=37.2295733&lon=-80.4139393&FcstType=json']
         },
         reportURLWithCaching: {
             type: 'reporter',
-            category: 'Data Tools',
+            category: 'data',
             spec: 'http:// %http1 and keep result stored for %n seconds (Prototype)',
             defaults: ['date.jsontest.com', '60']
         },
         reportJSONData: {
             type: 'reporter',
-            category: 'Data Tools',
+            category: 'data',
             spec: 'from JSON text %txt get %mult%txt',
             defaults: ['','']
+        },
+        reportCSVValue: {
+            type: 'reporter',
+            category: 'Cloud',
+            spec: 'from CSV %txt get value at field %txt index # %n'
         },
 
         doProgramInputs: {
             type: 'command',
-            category: 'Data Tools',
+            category: 'grading',
             spec: 'Program inputs: %mult%txt'
         },
 
         reportInput: {
             type: 'reporter',
-            category: 'Data Tools',
+            category: 'grading',
             spec: 'input: %var = %txt'
         },
 
+
         doInsertYourCodeHere: {
             type: 'command',
-            category: 'Data Tools',
+            category: 'grading',
             spec: 'Insert your code below this block'
         },
 
         doAnswer: {
             type: 'command',
-            category: 'Data Tools',
+            category: 'grading',
             spec: 'Report answer: %txt'
         },
 
 
+
+        //Start of Cloud Blocks.
         doDefineCloudMethod: {
             type: 'command',
-            category: 'Data Tools',
+            category: 'Cloud',
             spec: '%cloudOutline Define cloud method with name %txt with parameter names %mult%s server: %txt %c',
             defaults: ['myMethodName', null, 'think.cs.vt.edu']
         },
         doRunCloudMethod: {
             type: 'reporter',
-            category: 'Data Tools',
+            category: 'Cloud',
             spec: '%cloudOutline run cloud method with name %txt %inputs',
             defaults: ['myMethodName']
         },
 
+        doReturnDataUrl_Flu_National: {
+            type: 'reporter',
+            category: 'Cloud',
+            spec: '%cloudOutline data source: National flu data from CDC ILINET'
+        },
+        doReturnDataUrl_Flu: {
+            type: 'reporter',
+            category: 'Cloud',
+            spec: '%cloudOutline data source: HHS Regions flu data from CDC ILINET'
+        },
+        doReturnDataUrl_2013Movies: {
+            type: 'reporter',
+            category: 'Cloud',
+            spec: '%cloudOutline data source: 2013 movie data from the-numbers.com'
+        },
+        doReturnDataUrl_USAUnemployment: {
+            type: 'reporter',
+            category: 'Cloud',
+            spec: '%cloudOutline data source: USA unemployment rates from multpl.com'
+        },
+        doReturnDataUrl: {
+            type: 'reporter',
+            category: 'Cloud',
+            spec: '%cloudOutline data source: URL %txt',
+            defaults: ['http://']
+        },
+        doImportCSV: {
+            type: 'reporter',
+            category: 'Cloud',
+            spec: '%cloudOutline import CSV from data source: %txt'
+        },
 
 
         doSetCloudVariable: {
             type: 'command',
-            category: 'Data Tools',
-            spec: '%cloudOutline set cloud variable %txt to %n'
+            category: 'Cloud',
+            spec: '%cloudOutline set cloud variable %txt to %txt'
         },
-        doGetCloudVariable: {
+        doRetrieveDataFromCloudVariable: {
             type: 'reporter',
-            category: 'Data Tools',
-            spec: '%cloudOutline get cloud variable %txt'
+            category: 'Cloud',
+            spec: '%cloudOutline retrieve data from cloud variable %txt'
+        },
+        doReferenceCloudVariable: {
+            type: 'reporter',
+            category: 'Cloud',
+            spec: '%cloudOutline cloud variable %txt'
         },
         doGetMethodParameter: {
             type: 'reporter',
-            category: 'Data Tools',
+            category: 'Cloud',
             spec: '%cloudOutline get method parameter %txt'
         },
         doCloudReport: {
             type: 'command',
-            category: 'Data Tools',
+            category: 'Cloud',
             spec: '%cloudOutline report %s'
         },
 
@@ -1356,55 +1398,71 @@ SpriteMorph.prototype.initBlocks = function () {
 
         reportDataMaximum: {
             type: 'reporter',
-            category: 'Data Tools',
+            category: 'Cloud',
             spec: '%cloudOutline get %dataMaximumFactor from field %txt from data source %txt and return %dataFactor',
             defaults: [null, null, null, null]
         },
         reportDataAverage: {
             type: 'reporter',
-            category: 'Data Tools',
+            category: 'Cloud',
             spec: '%cloudOutline get %dataAverageFactor from field %txt from data source %txt',
             defaults: [null, null, null]
         },
+
+        reportDataAppend: {
+            type: 'reporter',
+            category: 'Cloud',
+            spec: '%cloudOutline append CSV %txt with CSV %txt'
+        },
+
+
         reportDataWordFrequency: {
             type: 'reporter',
-            category: 'Data Tools',
+            category: 'Cloud',
             spec: '%cloudOutline get word frequency of words %l from field %txt from data source %txt',
             defaults: [null, null, null]
         },
         reportDataSelectUnique: {
             type: 'reporter',
-            category: 'Data Tools',
+            category: 'Cloud',
             spec: '%cloudOutline get %dataSelectUniqueFactor from field %txt from data source %txt',
             defaults: [null, null, null]
         },
         reportDataMaximumForEach: {
             type: 'reporter',
-            category: 'Data Tools',
+            category: 'Cloud',
             spec: '%cloudOutline get %dataMaximumFactor of field %txt for each in field %txt from data source %txt and return %dataFactor',
             defaults: [null, null, null, null]
         },
         reportDataAverageForEach: {
             type: 'reporter',
-            category: 'Data Tools',
+            category: 'Cloud',
             spec: '%cloudOutline get %dataAverageFactor of field %txt for each in field %txt from data source %txt',
             defaults: [null, null, null, null]
         },
 
 
 
-        reportDataSelector: {
+        reportDataSelect: {
             type: 'reporter',
-            category: 'Data Tools',
-            spec: '%cloudOutline SELECT: %dataSelector WHERE condition: %txt with FILTER: %txt FROM data source: %txt',
-            defaults: [null, null, null, null ]
+            category: 'Cloud',
+            spec: '%cloudOutline SELECT: %dataSelector WHERE condition: %txt FROM data source: %txt',
+            defaults: [null, null, null]
         },
 
-
-
+        reportDataFields: {
+            type: 'reporter',
+            category: 'Cloud',
+            spec: '%cloudOutline fields: %mult%txt'
+        },
+        reportDataConditions: {
+            type: 'reporter',
+            category: 'Cloud',
+            spec: '%cloudOutline conditions: %mult%txt'
+        },
         reportDataCondition: {
             type: 'reporter',
-            category: 'Data Tools',
+            category: 'Cloud',
             spec: '%cloudOutline condition: %txt %dataOperator %txt',
             defaults: ['WEEK', null, '26']
         },
@@ -1413,13 +1471,13 @@ SpriteMorph.prototype.initBlocks = function () {
 
         reportDataFilterOrderBy: {
             type: 'reporter',
-            category: 'Data Tools',
+            category: 'Cloud',
             spec: '%cloudOutline filter: ORDER BY: %txt %dataOrderBy',
             defaults: ['WEEK', null]
         },
         reportDataFilterLimit: {
             type: 'reporter',
-            category: 'Data Tools',
+            category: 'Cloud',
             spec: '%cloudOutline filter: start at index: %n and get: %n records',
             defaults: [1, 50]
         },
@@ -1428,20 +1486,20 @@ SpriteMorph.prototype.initBlocks = function () {
         /*
         reportDataFromColumn: {
             type: 'reporter',
-            category: 'Data Tools',
+            category: 'Cloud',
             spec: '%cloudOutline retrieve data as list from column # %n row # %n to # %n of sheet # %n at URL: %txt',
             defaults: [5, 3, 36, 1, 'spreadsheets.google.com/feeds/cells/1MV9UdRDTUPvgk9K4bxCavQjRrNcNnVFLNK79URV6n0Y/1/public/values?alt=json']
         },
         reportDataFromRow: {
             type: 'reporter',
-            category: 'Data Tools',
+            category: 'Cloud',
             spec: '%cloudOutline retrieve data as list from row # %n column # %n to # %n of sheet # %n at URL: %txt',
             defaults: [1, 1, 50, 1, 'Google Sheets URL']
         },
         */
 
 
-        //End of Data Tools Blocks.
+        //End of Cloud Blocks.
 
 
 
@@ -1450,35 +1508,35 @@ SpriteMorph.prototype.initBlocks = function () {
         //Start of Google Maps Blocks.
         doPlaceMarker: {
             type: 'command',
-            category: 'mapping',
+            category: 'visualization',
             spec: '%crosshairs place marker at latitude: %n longitude: %n',
             defaults: ['38.8951','-77.0367']
         },
         doPlaceCircle: {
             type: 'command',
-            category: 'mapping',
+            category: 'visualization',
             spec: '%crosshairs place circle at latitude: %n longitude: %n radius: %n',
             defaults: ['38.8951','-77.0367', 200.0]
         },
         doPlacePoint: {
             type: 'command',
-            category: 'mapping',
+            category: 'visualization',
             spec: '%crosshairs place point at latitude: %n longitude: %n size: %n',
             defaults: ['38.8951','-77.0367', 30]
         },
         doRemoveMarkers: {
             type: 'command',
-            category: 'mapping',
+            category: 'visualization',
             spec: '%crosshairs remove all markers from map'
         },
         doRemoveCircles: {
             type: 'command',
-            category: 'mapping',
+            category: 'visualization',
             spec: '%crosshairs remove all circles from map'
         },
         doRemovePoints: {
             type: 'command',
-            category: 'mapping',
+            category: 'visualization',
             spec: '%crosshairs remove all points from map'
         },
         //End of Google Maps Blocks.
@@ -2231,6 +2289,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push('-');
         blocks.push(block('reportTestBlock'));
         blocks.push(block('reportTestBlock2'));
+        blocks.push(block('reportTestBlock3'));
 
     // for debugging: ///////////////
 
@@ -2393,7 +2452,6 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('doReplaceInList'));
         blocks.push(block('reportPickRandomItemFromList'));
 
-
     // for debugging: ///////////////
 
         if (this.world().isDevMode) {
@@ -2453,7 +2511,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         button.selector = 'addCustomBlock';
         button.showHelp = BlockMorph.prototype.showHelp;
         blocks.push(button);
-    }  else if (cat === 'mapping') {
+    }  else if (cat === 'visualization') {
 
         blocks.push(block('doPlaceMarker'));
         blocks.push(block('doPlaceCircle'));
@@ -2463,52 +2521,21 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('doRemoveCircles'));
         blocks.push(block('doRemovePoints'));
 
-    }  else if (cat === 'Data Tools') {
-
-        blocks.push(block('reportURLUsingServer'));
-        //blocks.push(block('reportURLWithCaching')); Discontinued.
-        blocks.push(block('reportJSONData'));
-        blocks.push('=');
-        blocks.push(block('doProgramInputs'));
-        blocks.push(block('reportInput'));
-        blocks.push(block('doInsertYourCodeHere'));
-        blocks.push(block('doAnswer'));
-        /*
-        blocks.push(block('doDefineCloudMethod'));
-        blocks.push(block('doRunCloudMethod'));
-        blocks.push('=');
-        blocks.push(block('doSetCloudVariable'));
-        blocks.push(block('doGetCloudVariable'));
-        blocks.push(block('doGetMethodParameter'));
-        blocks.push(block('doCloudReport'));
-        blocks.push('=');
-        blocks.push(block('reportDataMaximum'));
-        blocks.push(block('reportDataAverage'));
-        blocks.push(block('reportDataWordFrequency'));
-        blocks.push(block('reportDataSelectUnique'));
-        blocks.push(block('reportDataMaximumForEach'));
-        blocks.push(block('reportDataAverageForEach'));
-        blocks.push('=');
-        blocks.push(block('reportDataSelector'));
-        blocks.push(block('reportDataCondition'));
-        blocks.push(block('reportDataFilterOrderBy'));
-        blocks.push(block('reportDataFilterLimit'));
-        blocks.push('=');
-        //blocks.push(block('reportDataFromColumn'));
-        //blocks.push(block('reportDataFromRow'));
-        */
-
-
     } else if (cat === 'data') {
 
         blocks.push(block('reportDate'));
-        //blocks.push(block('retrieveWeatherData'));
         blocks.push('=');
         blocks.push(block('reportWeather'));
         blocks.push(block('reportLowHighTemp'));
         blocks.push(block('reportPrecipitation'));
         blocks.push('=');
         blocks.push(block('reportStocks'));
+        blocks.push('=');
+        blocks.push(block('reportLatitude'));
+        blocks.push(block('reportLongitude'));
+        blocks.push('=');
+        blocks.push(block('reportNumEarthquakes'));
+        blocks.push(block('reportEarthquakeData'));
         blocks.push('=');
         blocks.push(block('reportTwitterRetweets'));
         blocks.push(block('reportTwitterTweetsFromPerson'));
@@ -2518,14 +2545,50 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportRedditComments'));
         blocks.push(block('reportRedditCommentInfo'));
         blocks.push('=');
-        blocks.push(block('reportLatitude'));
-        blocks.push(block('reportLongitude'));
-        blocks.push('=');
-        blocks.push(block('reportNumEarthquakes'));
-        blocks.push(block('reportEarthquakeData'));
-        blocks.push('=');
-        blocks.push(block('reportBusinessData'));
+        blocks.push(block('reportURLUsingServer'));
+        blocks.push(block('reportJSONData'));
 
+    }   else if (cat === 'Cloud') {
+        blocks.push(block('doReturnDataUrl_Flu_National'));
+        blocks.push(block('doReturnDataUrl_Flu'));
+        blocks.push(block('doReturnDataUrl_2013Movies'));
+        blocks.push(block('doReturnDataUrl_USAUnemployment'));
+        blocks.push(block('doReturnDataUrl'));
+        //blocks.push(block('doImportCSV'));                    //commented out for now.
+        blocks.push('=');
+        blocks.push(block('doSetCloudVariable'));
+        blocks.push(block('doRetrieveDataFromCloudVariable'));
+        blocks.push(block('doReferenceCloudVariable'));
+        //blocks.push(block('doGetMethodParameter'));
+        //blocks.push(block('doCloudReport'));
+        blocks.push('=');
+        blocks.push(block('reportDataSelect'));
+        //blocks.push(block('reportDataFields'));               //commented out for now.
+        //blocks.push(block('reportDataConditions'));           //commented out for now.
+        blocks.push(block('reportDataCondition'));
+        //blocks.push(block('reportDataFilterOrderBy'));
+        //blocks.push(block('reportDataFilterLimit'));
+        blocks.push('=');
+        blocks.push(block('reportDataMaximum'));
+        blocks.push(block('reportDataAverage'));
+        blocks.push('=');
+        //blocks.push(block('reportDataAppend'));               //commented out for now.
+        //blocks.push('=');
+        blocks.push(block('reportCSVValue'));
+        //blocks.push(block('reportDataWordFrequency'));
+        //blocks.push(block('reportDataSelectUnique'));
+        //blocks.push(block('reportDataMaximumForEach'));
+        //blocks.push(block('reportDataAverageForEach'));
+        //blocks.push(block('reportDataFromColumn'));
+        //blocks.push(block('reportDataFromRow'));
+
+
+    }   else if (cat === 'grading') {
+        blocks.push(block('doProgramInputs'));
+        blocks.push(block('reportInput'));
+        blocks.push('=');
+        blocks.push(block('doInsertYourCodeHere'));
+        blocks.push(block('doAnswer'));
     }
     return blocks;
 };
@@ -4628,7 +4691,7 @@ StageMorph.uber = FrameMorph.prototype;
 
 // StageMorph preferences settings
 
-StageMorph.prototype.dimensions = new Point(480, 360); // unscaled extent
+StageMorph.prototype.dimensions = new Point(480, 327); // unscaled extent
 
 StageMorph.prototype.frameRate = 0; // unscheduled per default
 
@@ -5412,6 +5475,7 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push('-');
         blocks.push(block('reportTestBlock'));
         blocks.push(block('reportTestBlock2'));
+        blocks.push(block('reportTestBlock3'));
         
 
     // for debugging: ///////////////
@@ -5627,7 +5691,7 @@ StageMorph.prototype.blockTemplates = function (category) {
             'Make a block'
         );
         blocks.push(button);
-    }  else if (cat === 'mapping') {
+    }  else if (cat === 'visualization') {
 
         blocks.push(block('doPlaceMarker'));
         blocks.push(block('doPlaceCircle'));
@@ -5637,51 +5701,21 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('doRemoveCircles'));
         blocks.push(block('doRemovePoints'));
 
-    } else if (cat === 'Data Tools') {
-
-        blocks.push(block('reportURLUsingServer'));
-        //blocks.push(block('reportURLWithCaching'));
-        blocks.push(block('reportJSONData'));
-        blocks.push('=');
-        blocks.push(block('doProgramInputs'));
-        blocks.push(block('reportInput'));
-        blocks.push(block('doInsertYourCodeHere'));
-        blocks.push(block('doAnswer'));
-        /*
-        blocks.push(block('doDefineCloudMethod'));
-        blocks.push(block('doRunCloudMethod'));
-        blocks.push('=');
-        blocks.push(block('doSetCloudVariable'));
-        blocks.push(block('doGetCloudVariable'));
-        blocks.push(block('doGetMethodParameter'));
-        blocks.push(block('doCloudReport'));
-        blocks.push('=');
-        blocks.push(block('reportDataMaximum'));
-        blocks.push(block('reportDataAverage'));
-        blocks.push(block('reportDataWordFrequency'));
-        blocks.push(block('reportDataSelectUnique'));
-        blocks.push(block('reportDataMaximumForEach'));
-        blocks.push(block('reportDataAverageForEach'));
-        blocks.push('=');
-        blocks.push(block('reportDataSelector'));
-        blocks.push(block('reportDataCondition'));
-        blocks.push(block('reportDataFilterOrderBy'));
-        blocks.push(block('reportDataFilterLimit'));
-        blocks.push('=');
-        //blocks.push(block('reportDataFromColumn'));
-        //blocks.push(block('reportDataFromRow'));
-        */
-
     } else if (cat === 'data') {
 
         blocks.push(block('reportDate'));
-        //blocks.push(block('retrieveWeatherData'));
         blocks.push('=');
         blocks.push(block('reportWeather'));
         blocks.push(block('reportLowHighTemp'));
         blocks.push(block('reportPrecipitation'));
         blocks.push('=');
         blocks.push(block('reportStocks'));
+        blocks.push('=');
+        blocks.push(block('reportLatitude'));
+        blocks.push(block('reportLongitude'));
+        blocks.push('=');
+        blocks.push(block('reportNumEarthquakes'));
+        blocks.push(block('reportEarthquakeData'));
         blocks.push('=');
         blocks.push(block('reportTwitterRetweets'));
         blocks.push(block('reportTwitterTweetsFromPerson'));
@@ -5691,15 +5725,52 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('reportRedditComments'));
         blocks.push(block('reportRedditCommentInfo'));
         blocks.push('=');
-        blocks.push(block('reportLatitude'));
-        blocks.push(block('reportLongitude'));
-        blocks.push('=');
-        blocks.push(block('reportNumEarthquakes'));
-        blocks.push(block('reportEarthquakeData'));
-        blocks.push('=');
-        blocks.push(block('reportBusinessData'));
+        blocks.push(block('reportURLUsingServer'));
+        blocks.push(block('reportJSONData'));
 
+    } else if (cat === 'Cloud') {
+
+        blocks.push(block('doReturnDataUrl_Flu_National'));
+        blocks.push(block('doReturnDataUrl_Flu'));
+        blocks.push(block('doReturnDataUrl_2013Movies'));
+        blocks.push(block('doReturnDataUrl_USAUnemployment'));
+        blocks.push(block('doReturnDataUrl'));
+        //blocks.push(block('doImportCSV'));                    //commented out for now.
+        blocks.push('=');
+        blocks.push(block('doSetCloudVariable'));
+        blocks.push(block('doRetrieveDataFromCloudVariable'));
+        blocks.push(block('doReferenceCloudVariable'));
+        //blocks.push(block('doGetMethodParameter'));
+        //blocks.push(block('doCloudReport'));
+        blocks.push('=');
+        blocks.push(block('reportDataSelect'));
+        //blocks.push(block('reportDataFields'));               //commented out for now.
+        //blocks.push(block('reportDataConditions'));           //commented out for now.
+        blocks.push(block('reportDataCondition'));
+        //blocks.push(block('reportDataFilterOrderBy'));
+        //blocks.push(block('reportDataFilterLimit'));
+        blocks.push('=');
+        blocks.push(block('reportDataMaximum'));
+        blocks.push(block('reportDataAverage'));
+        blocks.push('=');
+        //blocks.push(block('reportDataAppend'));               //commented out for now.
+        //blocks.push('=');
+        blocks.push(block('reportCSVValue'));
+        //blocks.push(block('reportDataWordFrequency'));
+        //blocks.push(block('reportDataSelectUnique'));
+        //blocks.push(block('reportDataMaximumForEach'));
+        //blocks.push(block('reportDataAverageForEach'));
+        //blocks.push(block('reportDataFromColumn'));
+        //blocks.push(block('reportDataFromRow'));
+
+    }   else if (cat === 'grading') {
+        blocks.push(block('doProgramInputs'));
+        blocks.push(block('reportInput'));
+        blocks.push('=');
+        blocks.push(block('doInsertYourCodeHere'));
+        blocks.push(block('doAnswer'));
     }
+
     return blocks;
 };
 
