@@ -58,6 +58,20 @@ var main = function() {
     });
 
 
+    $(".exportSpriteAsXML").click(function () {
+        console.log("The button click worked.");
+
+        //Select the correct sprite. For now, I will just assume there is only one sprite.
+        var mySprite = global_ide.sprites.contents[0];
+
+        //Run the export method.
+        var xmlString= global_ide.exportSpriteAndReturnString(mySprite);
+        console.log(xmlString);
+
+    });
+
+
+
 };
 
 $(document).ready(main);

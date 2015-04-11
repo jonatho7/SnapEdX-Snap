@@ -2888,6 +2888,14 @@ IDE_Morph.prototype.exportSprite = function (sprite) {
         + '</sprites>');
 };
 
+
+IDE_Morph.prototype.exportSpriteAndReturnString = function (sprite) {
+    var str = this.serializer.serialize(sprite.allParts());
+    return str;
+};
+
+
+
 IDE_Morph.prototype.exportScriptsPicture = function () {
     var pics = [],
         pic,
