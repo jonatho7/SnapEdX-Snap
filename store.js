@@ -842,7 +842,7 @@ SnapSerializer.prototype.loadScripts = function (scripts, model) {
     var myself = this,
         scale = SyntaxElementMorph.prototype.scale;
     //scripts.texture = 'scriptsPaneTexture.gif';
-    scripts.texture = 'static/Snap/scriptsPaneTexture.gif';
+    scripts.texture = 'static/Snap/scriptsPaneTexture.png';
     model.children.forEach(function (child) {
         var element;
         if (child.tag === 'script') {
