@@ -3876,14 +3876,31 @@ Process.prototype.reportCSVValue = function (CSVAsList, field, CSVIndex) {
 
 
 Process.prototype.doProgramInputs = function (listOfInputs) {
-	;
+
+    console.log(this);
+
+    //Iterate through the list of inputs, adding each to the testInputs dictionary.
+	for(var i = 1; i <= listOfInputs.length(); i++){
+        var variableName = listOfInputs.at(i)[0];
+        var listOfVariableValues = listOfInputs.at(i)[1];
+        var valuesList = listOfVariableValues.contents;
+
+        //Add to the testInputs JS dictionary.
+        testInputs[variableName] = valuesList;
+
+	}
+
+    //This block is finished running. Call a JS method in controlScripts.js.
+    if (graderSprite != null){
+        runTeacherProgram(this);
+    }
+
+
 };
 
 Process.prototype.reportInput = function (varName, varValue) {
 
-    this.doSetVar(varName, varValue);
-
-    return 15;
+    return [varName, varValue];
 };
 
 
@@ -3893,6 +3910,10 @@ Process.prototype.doInsertYourCodeHere = function () {
 
 Process.prototype.doAnswer = function (input) {
 	;
+
+
+
+
 };
 
 Process.prototype.reportPickRandomItemFromList = function (list) {
@@ -5278,3 +5299,5 @@ function retrieveOrMakeGuid() {
 
 }
 
+//For use with the grading blocks.
+var testInputs = {};

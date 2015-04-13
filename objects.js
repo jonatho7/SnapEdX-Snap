@@ -1295,7 +1295,7 @@ SpriteMorph.prototype.initBlocks = function () {
         doProgramInputs: {
             type: 'command',
             category: 'grading',
-            spec: 'Program inputs: %mult%txt'
+            spec: 'Set the inputs to grade the student program to: %mult%txt'
         },
 
         reportInput: {
