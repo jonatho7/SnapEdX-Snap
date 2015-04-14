@@ -1318,6 +1318,18 @@ SpriteMorph.prototype.initBlocks = function () {
         },
 
 
+        doRunTeacherTests: {
+            type: 'command',
+            category: 'grading',
+            spec: 'Run tests on the teacher program'
+        },
+
+        doRunStudentTests: {
+            type: 'command',
+            category: 'grading',
+            spec: 'Run tests on the student program'
+        },
+
 
         //Start of Cloud Blocks.
         doDefineCloudMethod: {
@@ -2589,6 +2601,9 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push('=');
         blocks.push(block('doInsertYourCodeHere'));
         blocks.push(block('doAnswer'));
+        blocks.push('=');
+        blocks.push(block('doRunTeacherTests'));
+        blocks.push(block('doRunStudentTests'));
     }
     return blocks;
 };
@@ -5769,6 +5784,9 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push('=');
         blocks.push(block('doInsertYourCodeHere'));
         blocks.push(block('doAnswer'));
+        blocks.push('=');
+        blocks.push(block('doRunTeacherTests'));
+        blocks.push(block('doRunStudentTests'));
     }
 
     return blocks;
