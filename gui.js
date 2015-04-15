@@ -2281,6 +2281,44 @@ IDE_Morph.prototype.settingsMenu = function () {
     menu.popup(world, pos);
 };
 
+
+
+IDE_Morph.prototype.selectSpriteToImport = function () {
+    var myself=this;
+
+    var inp = document.createElement('input');
+    if (myself.filePicker) {
+        document.body.removeChild(myself.filePicker);
+        myself.filePicker = null;
+    }
+    inp.type = 'file';
+    inp.style.color = "transparent";
+    inp.style.backgroundColor = "transparent";
+    inp.style.border = "none";
+    inp.style.outline = "none";
+    inp.style.position = "absolute";
+    inp.style.top = "0px";
+    inp.style.left = "0px";
+    inp.style.width = "0px";
+    inp.style.height = "0px";
+    inp.addEventListener(
+        "change",
+        function () {
+            document.body.removeChild(inp);
+            myself.filePicker = null;
+            world.hand.processDrop(inp.files);
+        },
+        false
+    );
+    document.body.appendChild(inp);
+    myself.filePicker = inp;
+    inp.click();
+
+};
+
+
+
+
 IDE_Morph.prototype.projectMenu = function () {
     var menu,
         myself = this,
@@ -2889,7 +2927,7 @@ IDE_Morph.prototype.exportSprite = function (sprite) {
 };
 
 
-IDE_Morph.prototype.exportSpriteAndReturnString = function (sprite) {
+IDE_Morph.prototype.exportSpriteAsXMLString = function (sprite) {
     var str = this.serializer.serialize(sprite.allParts());
     return str;
 };
