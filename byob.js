@@ -1437,13 +1437,11 @@ BlockDialogMorph.prototype.setType = function (blockType) {
 BlockDialogMorph.prototype.createScopeButtons = function () {
     var myself = this;
 
-    /*
     this.addScopeButton(
         function () {myself.setScope('gobal'); },
         "for all sprites",
         function () {return myself.isGlobal; }
     );
-    */
     this.addScopeButton(
         function () {myself.setScope('local'); },
         "for this sprite only",
@@ -3043,13 +3041,11 @@ VariableDialogMorph.prototype.init = function (target, action, environment) {
 VariableDialogMorph.prototype.createTypeButtons = function () {
     var myself = this;
 
-    /*
     this.addTypeButton(
         function () {myself.setType('gobal'); },
         "for all sprites",
         function () {return myself.isGlobal; }
     );
-    */
     this.addTypeButton(
         function () {myself.setType('local'); },
         "for this sprite only",
