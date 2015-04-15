@@ -84,13 +84,19 @@ var main = function() {
 
     $(".broadcastAMethod").click(function () {
         //Get the Control Sprite.
-        var controlSprite = getSprite("Control");
+        //var controlSprite = getSprite("Control");
 
         //Get the Control sprite's script. Assume it only has one.
-        var controlSpriteScripts = controlSprite.scripts.children[0];
+        //var controlSpriteScripts = controlSprite.scripts.children[0];
 
         //Click on this script, in order to run it.
-        controlSpriteScripts.mouseClickLeft();
+        //controlSpriteScripts.mouseClickLeft();
+
+
+
+        runTests();
+
+
 
     });
 
@@ -98,6 +104,35 @@ var main = function() {
 
 
 };
+
+
+function runTests() {
+    //Grab the first sprite. todo. Handle multiple sprites.
+    var selectedSprite =  global_ide.sprites.contents[0];
+
+    //Grab the "runTests" script.
+    var runTestsBlock = getWhenIReceiveBlockWithName("runTests", selectedSprite);
+    console.log("runTestsBlocks: ", runTestsBlock);
+
+    //Click on this.
+    runTestsBlock.mouseClickLeft();
+
+    return "running";
+
+}
+
+
+function getTestOutputs() {
+    return testOutputs;
+}
+
+
+function exportSprite(){
+    return 0;
+}
+
+
+
 
 
 function getSprite(spriteName) {
@@ -114,5 +149,41 @@ function getSprite(spriteName) {
 
     return selectedSprite;
 }
+
+
+
+function getWhenIReceiveBlockWithName(messageName, sprite) {
+    //Ex: Get the When I Receive HatBlockMorph that says "runTests".
+    var runTestsBlock = null;
+    for (var i = 0; i < sprite.scripts.children.length; i++) {
+        var tempBlock = sprite.scripts.children[i];
+
+        var inputSlotMorphBlock;
+        for(var j = 0; j < tempBlock.children.length; j++){
+            var tempMorphBlock = tempBlock.children[j];
+            if (tempMorphBlock instanceof InputSlotMorph){
+                inputSlotMorphBlock = tempMorphBlock;
+                break;
+            }
+        }
+
+        var tempMessage = inputSlotMorphBlock.children[0].text;
+        if (tempMessage == messageName) {
+            runTestsBlock = tempBlock;
+            break;
+        }
+
+    }
+
+    return runTestsBlock;
+}
+
+
+
+
+
+
+
+
 
 $(document).ready(main);
