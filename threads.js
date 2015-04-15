@@ -3888,6 +3888,8 @@ Process.prototype.doProgramInputs = function (listOfInputs) {
 
 	}
 
+    console.log("testInputs: ", testInputs);
+
 
 };
 
@@ -3913,7 +3915,32 @@ Process.prototype.doAnswer = function (input) {
 
 Process.prototype.doRunTeacherTests = function () {
 
-    ;
+    //Get the Grader sprite.
+    var graderSprite = getSprite("Grader");
+    console.log("graderSprite: ", graderSprite);
+
+    //Set the input. Ex: selectedCity = "Denver, CO".
+    var variableName = Object.keys(testInputs)[0];
+
+
+    //for (var counter = 0; counter < testInputs[variableName].length; counter++ ){
+
+        var tempo = testInputs[variableName].length;
+        console.log("tempo: ", tempo);
+
+        var counter = 0;
+
+        //Set the specific variable to a value.
+        graderSprite['variables']['vars'][variableName] = testInputs[variableName][counter];
+
+        //Then run the teacherProgram.
+        this.doBroadcastAndWait("teacherProgram");
+    //}
+
+
+    //Then print the results.
+    console.log("doBroadCastAndWait is done. testOutputs: ", testOutputs);
+
 
 };
 
