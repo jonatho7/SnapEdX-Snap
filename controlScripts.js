@@ -61,7 +61,7 @@ var main = function() {
     $(".exportSpriteAsXML").click(function () {
         //Get the teacher's Grader sprite as an XML string. For now, I will just assume there is only one sprite.
         var mySprite = global_ide.sprites.contents[0];
-        var graderXMLString = global_ide.exportSpriteAndReturnString(mySprite);
+        var graderXMLString = global_ide.exportSpriteAsXMLString(mySprite);
         console.log(graderXMLString);
 
         //Get the teacherProgram xml string.
@@ -93,8 +93,10 @@ var main = function() {
         //controlSpriteScripts.mouseClickLeft();
 
 
+        //Hopefully we can find a way that the user does not actually have to CLICK on the teacherProgram to import it.
+        importSprite();
 
-        runTests();
+        //runTests();
 
 
 
@@ -107,14 +109,15 @@ var main = function() {
 
 
 function runTests() {
-    //Grab the first sprite. todo. Handle multiple sprites.
-    var selectedSprite =  global_ide.sprites.contents[0];
+    //Grab the Grader sprite
+    var graderSprite = getSprite("Grader");
+
 
     //Grab the "runTests" script.
-    var runTestsBlock = getWhenIReceiveBlockWithName("runTests", selectedSprite);
+    var runTestsBlock = getWhenIReceiveBlockWithName("runTests", graderSprite);
     console.log("runTestsBlocks: ", runTestsBlock);
 
-    //Click on this.
+    //Click on this "runTests" script in order to run it.
     runTestsBlock.mouseClickLeft();
 
     return "running";
@@ -127,12 +130,15 @@ function getTestOutputs() {
 }
 
 
-function exportSprite(){
-    return 0;
+function importSprite(){
+    var file = null;
+    //Need some help selecting a file here.
+    //See fileNeeded.png to see what is expected.
+
+    //For now, the user will just have to select the XML file manually.
+    global_ide.selectFileFunction();
+
 }
-
-
-
 
 
 function getSprite(spriteName) {
@@ -177,8 +183,6 @@ function getWhenIReceiveBlockWithName(messageName, sprite) {
 
     return runTestsBlock;
 }
-
-
 
 
 
