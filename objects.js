@@ -1305,30 +1305,19 @@ SpriteMorph.prototype.initBlocks = function () {
         },
 
 
-        doInsertYourCodeHere: {
+        doStudentAnswer: {
             type: 'command',
             category: 'grading',
-            spec: 'Insert your code below this block'
+            spec: 'Report student answer: %txt'
         },
 
-        doAnswer: {
+        doTeacherAnswer: {
             type: 'command',
             category: 'grading',
-            spec: 'Report answer: %txt'
+            spec: 'Report teacher answer: %txt'
         },
 
 
-        doRunTeacherTests: {
-            type: 'command',
-            category: 'grading',
-            spec: 'Run tests on the teacher program'
-        },
-
-        doRunStudentTests: {
-            type: 'command',
-            category: 'grading',
-            spec: 'Run tests on the student program'
-        },
 
 
         //Start of Cloud Blocks.
@@ -2599,11 +2588,10 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('doProgramInputs'));
         blocks.push(block('reportInput'));
         blocks.push('=');
-        blocks.push(block('doInsertYourCodeHere'));
-        blocks.push(block('doAnswer'));
+        blocks.push(block('doStudentAnswer'));
+        blocks.push(block('doTeacherAnswer'));
         blocks.push('=');
-        blocks.push(block('doRunTeacherTests'));
-        blocks.push(block('doRunStudentTests'));
+
     }
     return blocks;
 };
@@ -5782,11 +5770,9 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('doProgramInputs'));
         blocks.push(block('reportInput'));
         blocks.push('=');
-        blocks.push(block('doInsertYourCodeHere'));
-        blocks.push(block('doAnswer'));
+        blocks.push(block('doStudentAnswer'));
+        blocks.push(block('doTeacherAnswer'));
         blocks.push('=');
-        blocks.push(block('doRunTeacherTests'));
-        blocks.push(block('doRunStudentTests'));
     }
 
     return blocks;

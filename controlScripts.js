@@ -125,8 +125,12 @@ function runTests() {
 }
 
 
-function getTestOutputs() {
-    return testOutputs;
+function getStudentOutputs() {
+    return studentOutputs;
+}
+
+function getTeacherOutputs() {
+    return teacherOutputs;
 }
 
 
@@ -136,7 +140,7 @@ function importSprite(){
     //See fileNeeded.png to see what is expected.
 
     //For now, the user will just have to select the XML file manually.
-    global_ide.selectFileFunction();
+    global_ide.selectSpriteToImport();
 
 }
 
