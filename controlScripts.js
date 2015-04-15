@@ -82,27 +82,18 @@ var main = function() {
     });
 
 
-    $(".broadcastAMethod").click(function () {
-        //Get the Control Sprite.
-        //var controlSprite = getSprite("Control");
-
-        //Get the Control sprite's script. Assume it only has one.
-        //var controlSpriteScripts = controlSprite.scripts.children[0];
-
-        //Click on this script, in order to run it.
-        //controlSpriteScripts.mouseClickLeft();
-
-
-        //Hopefully we can find a way that the user does not actually have to CLICK on the teacherProgram to import it.
+    $(".importSprite").click(function () {
         importSprite();
-
-        //runTests();
-
-
-
     });
 
+    $(".runTests").click(function () {
+        runTests();
+    });
 
+    $(".getResults").click(function () {
+        console.log("teacherOutputs: ", getTeacherOutputs());
+        console.log("studentOutputs: ", getStudentOutputs());
+    });
 
 
 };
