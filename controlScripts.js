@@ -90,6 +90,14 @@ var main = function() {
         runTests();
     });
 
+    $(".hideGraderSprite").click(function () {
+        hideGraderSprite();
+    });
+
+    $(".removeGraderSprite").click(function () {
+        removeGraderSprite();
+    });
+
     $(".getResults").click(function () {
         console.log("teacherOutputs: ", getTeacherOutputs());
         console.log("studentOutputs: ", getStudentOutputs());
@@ -114,6 +122,25 @@ function runTests() {
     return "running";
 
 }
+
+function hideGraderSprite() {
+    var graderSprite = getSprite("Grader");
+    var graderSpriteScriptsMorph = graderSprite.scripts;
+    graderSpriteScriptsMorph.hide();
+
+}
+
+function removeGraderSprite() {
+
+    var graderSprite = getSprite("Grader");
+
+    global_ide.removeSprite(graderSprite);
+
+
+}
+
+
+
 
 
 function getStudentOutputs() {
