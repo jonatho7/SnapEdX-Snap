@@ -3898,16 +3898,8 @@ Process.prototype.reportOutput = function (varName) {
 };
 
 
-Process.prototype.doStartTestNumber = function (testNumber) {
 
-    console.log("testNumber: ", testNumber);
-
-
-};
-
-
-
-Process.prototype.doStudentAnswer = function (answer) {
+Process.prototype.doAnswer = function (answer) {
 
     //VERY IMPORTANT. Do not delete. This saves the process so that we can use it later.
     activeProcess = this;
@@ -3926,28 +3918,6 @@ Process.prototype.doStudentAnswer = function (answer) {
     console.log("testOutputs: ", testOutputs);
 
 };
-
-
-Process.prototype.doTeacherAnswer = function (answer) {
-
-    //VERY IMPORTANT. Do not delete. This saves the process so that we can use it later.
-    activeProcess = this;
-
-    //Prevent the setup run-through from contributing to the testOutputs array.
-    if (currentTestNumber != -1){
-        //Store the answer.
-        testOutputs.push(answer.toString());
-
-        //Indicate that the individual test is finished, and that we can move on to the next one.
-        individualTestsStatus[currentTestNumber] = true;
-    }
-
-    currentTestNumber++;
-
-    console.log("testOutputs: ", testOutputs);
-
-};
-
 
 
 
