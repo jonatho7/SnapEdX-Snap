@@ -130,50 +130,68 @@ function getWhenIReceiveBlockWithName(messageName, sprite) {
 }
 
 
-function clickOnRunStudentProgramBlock() {
+function clickOnRunProgramBlock(messageName) {
     //Grab the sprite named Sprite, or just grab the first sprite.
     var sprite = getSprite("Sprite");
     if (sprite == null){
         sprite = getFirstSprite();
     }
 
-    //Grab the "runStudentProgram" block so I can click on it.
-    var runStudentProgramBlock = getWhenIReceiveBlockWithName("runStudentProgram", sprite);
+    //Ex: Grab the "runStudentProgram" block so I can click on it.
+    var runProgramBlock = getWhenIReceiveBlockWithName(messageName, sprite);
 
     //Click on it.
-    runStudentProgramBlock.mouseClickLeft();
+    runProgramBlock.mouseClickLeft();
 }
 
 
 
 
 function startStudentTests() {
+    return startStudentOrTeacherTests("student");
+}
 
-    //Initialize studentTestsStatus array.
+function startTeacherTests() {
+    return startStudentOrTeacherTests("teacher");
+}
+
+function startStudentOrTeacherTests(studentOrTeacher) {
+    //Initialize individualTestsStatus array.
     var firstInputName = Object.keys(testInputs[0])[0];
-    console.log(firstInputName);
     var numberOfTests = testInputs[0][firstInputName].length;
-    initializeStudentTestsStatus(numberOfTests);
+    initializeTestsStatusArray(individualTestsStatus, numberOfTests);
 
-    //Do a run-through of the student program, making sure it will run, and grabbing the active process.
-    clickOnRunStudentProgramBlock()
+    //Do a run-through of the program, making sure it will run, and grabbing the active process.
+    if (studentOrTeacher == "student"){
+        clickOnRunProgramBlock("runStudentProgram");
+    } else if (studentOrTeacher == "teacher"){
+        clickOnRunProgramBlock("runTeacherProgram");
+    }
 
     //Start the grading loop. This function will be called every 100ms and will manage the tests.
-    setInterval(gradingLoop, 100);
+    setInterval(gradingLoop, 100, studentOrTeacher);
 
-    return "student tests are running. Please check back later for results.";
+    //Return a message. Note that results will have to be collected later.
+    if (studentOrTeacher == "student"){
+        return "student tests are running. Please check back later for results.";
+    } else if (studentOrTeacher == "teacher"){
+        return "teacher tests are running. Please check back later for results.";
+    }
 
 }
+
+
+
 
 /**
- * Remember to check studentTestResults.finished to see whether it is true, false, or "failed".
- * @returns {{finished: string, errorMessage: null, studentOutputs: null, studentProgramXML: null}}
+ * Remember to check testResults.finished to see whether it is true, false, or "failed".
  */
-function retrieveStudentTestResults() {
-    return studentTestResults;
+function retrieveTestResults() {
+    return testResults;
 }
 
-function gradingLoop() {
+
+function gradingLoop(studentOrTeacher) {
 
     //Check to see if we have received an active Snap process to work with yet.
     //If there is an active process, the first run through has finished.
@@ -181,49 +199,48 @@ function gradingLoop() {
         return null;
     }
 
-    if (currentStudentTestNumber == -1){
-        studentTestResults.finished = "failed";
-        studentTestResults.errorMessage = "Student did not include a 'Report student answer' block'. Tests failed.";
-    } else if (currentStudentTestNumber >= studentTestsStatus.length){
+    if (currentTestNumber == -1){
+        testResults.finished = "failed";
+        testResults.errorMessage = "Did not include a 'Report answer' block'. Tests failed.";
+    } else if (currentTestNumber >= individualTestsStatus.length){
         //All the tests have run and finished. Just gather the variables now.
         //todo. Might want to make sure this does not keep running over and over.
 
-        studentTestResults.studentOutputs = studentOutputs;
-        studentTestResults.studentProgramXML = null; //todo.
+        testResults.testOutputs = testOutputs;
+        testResults.programXML = null; //todo.
 
-        studentTestResults.errorMessage = null;
-        studentTestResults.finished = true;
+        testResults.errorMessage = null;
+        testResults.finished = true;
 
     } else {
         //Check to see if there is an individual test that can start running.
-        if (studentTestsStatus[currentStudentTestNumber] == false){
+        if (individualTestsStatus[currentTestNumber] == false){
             //Start the next test.
-            studentTestsStatus[currentStudentTestNumber] = "running";
-            runIndividualStudentTest(currentStudentTestNumber);
+            individualTestsStatus[currentTestNumber] = "running";
+            runIndividualTest(studentOrTeacher, currentTestNumber);
         }
     }
 
 }
 
 
+
+var activeProcess;
 /*
-studentTestsStatus is an array which keeps track of which individual tests have finished.
+individualTestsStatus is an array which keeps track of which individual tests have finished.
 The array values are either:
     false: This test has not been called yet.
     "running": This test is currently running.
     true:   This test is finished.
  */
-var studentTestsStatus = [];
-var currentStudentTestNumber = -1;
-
-var studentTestResults = {
+var individualTestsStatus = [];
+var currentTestNumber = -1;
+var testResults = {
     "finished": false,
     "errorMessage": null,
-    "studentOutputs": null,
-    "studentProgramXML": null
+    "testOutputs": null,
+    "programXML": null
 };
-var activeProcess;
-
 
 
 //Inputs. todo. Need to get these dynamically.
@@ -243,15 +260,15 @@ var testInputs = [
 
 
 
-function initializeStudentTestsStatus(numberOfTests) {
+function initializeTestsStatusArray(testArray, numberOfTests) {
     for(var i = 0; i < numberOfTests; i++){
-        studentTestsStatus.push(false);
+        testArray.push(false);
     }
 }
 
 
 
-function runIndividualStudentTest(testNumber) {
+function runIndividualTest(studentOrTeacher, testNumber) {
 
     //Set the inputs.
     for(var i = 0; i < Object.keys(testInputs).length; i++){
@@ -260,9 +277,12 @@ function runIndividualStudentTest(testNumber) {
         manualDoSetVar(inputName, inputValue);
     }
 
-
     //Run the individual test.
-    clickOnRunStudentProgramBlock();
+    if (studentOrTeacher == "student"){
+        clickOnRunProgramBlock("runStudentProgram");
+    } else if (studentOrTeacher == "teacher"){
+        clickOnRunProgramBlock("runTeacherProgram");
+    }
 
 }
 

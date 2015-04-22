@@ -3912,33 +3912,42 @@ Process.prototype.doStudentAnswer = function (answer) {
     //VERY IMPORTANT. Do not delete. This saves the process so that we can use it later.
     activeProcess = this;
 
-    //Prevent the setup run-through from contributing to the studentOutputs array.
-    if (currentStudentTestNumber != -1){
+    //Prevent the setup run-through from contributing to the testOutputs array.
+    if (currentTestNumber != -1){
         //Store the answer.
-        studentOutputs.push(answer.toString());
+        testOutputs.push(answer.toString());
 
         //Indicate that the individual test is finished, and that we can move on to the next one.
-        studentTestsStatus[currentStudentTestNumber] = true;
+        individualTestsStatus[currentTestNumber] = true;
     }
 
-    currentStudentTestNumber++;
+    currentTestNumber++;
 
-
-    console.log("studentOutputs: ", studentOutputs);
-
-
-
+    console.log("testOutputs: ", testOutputs);
 
 };
 
 
 Process.prototype.doTeacherAnswer = function (answer) {
 
-    //Coming soon.
-    ;
+    //VERY IMPORTANT. Do not delete. This saves the process so that we can use it later.
+    activeProcess = this;
 
+    //Prevent the setup run-through from contributing to the testOutputs array.
+    if (currentTestNumber != -1){
+        //Store the answer.
+        testOutputs.push(answer.toString());
+
+        //Indicate that the individual test is finished, and that we can move on to the next one.
+        individualTestsStatus[currentTestNumber] = true;
+    }
+
+    currentTestNumber++;
+
+    console.log("testOutputs: ", testOutputs);
 
 };
+
 
 
 
@@ -5328,5 +5337,5 @@ function retrieveOrMakeGuid() {
 
 //For use with the grading blocks.
 var testInputs = {};
-var studentOutputs = [];
+var testOutputs = [];
 var teacherOutputs = [];
