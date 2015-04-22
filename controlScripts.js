@@ -150,7 +150,9 @@ function clickOnRunStudentProgramBlock() {
 function startStudentTests() {
 
     //Initialize studentTestsStatus array.
-    var numberOfTests = 10; //todo. This will not always be 10.
+    var firstInputName = Object.keys(testInputs[0])[0];
+    console.log(firstInputName);
+    var numberOfTests = testInputs[0][firstInputName].length;
     initializeStudentTestsStatus(numberOfTests);
 
     //Do a run-through of the student program, making sure it will run, and grabbing the active process.
