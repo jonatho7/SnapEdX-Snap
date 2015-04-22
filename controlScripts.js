@@ -222,10 +222,22 @@ var studentTestResults = {
 };
 var activeProcess;
 
+
+
 //Inputs. todo. Need to get these dynamically.
-var citiesList = ["Denver, CO", "Seattle, WA", "New York City, NY",
-    "New York City, NY","New York City, NY","New York City, NY","New York City," +
-    "NY","New York City, NY","New York City, NY","New York City, NY"];
+var testInputs = [
+    {
+        "selectedCity": ["Denver, CO", "Seattle, WA", "New York City, NY",
+        "New York City, NY","New York City, NY","New York City, NY","New York City," +
+        "NY","New York City, NY","New York City, NY","New York City, NY"]
+    }
+    //{
+    //    "input2": null,
+    //},
+    //{
+    //    "input3": null,
+    //},
+];
 
 
 
@@ -239,15 +251,12 @@ function initializeStudentTestsStatus(numberOfTests) {
 
 function runIndividualStudentTest(testNumber) {
 
-    //todo. Make this dynamic later.
-    var cityName = citiesList[testNumber];
-
-    //Set the inputs for the test.
-    //This way of setting variables does not seem to work.
-    //activeProcess.doSetVar("selectedCity", cityName);
-
-    //So I will try another way....
-    manualDoSetVar("selectedCity", cityName);
+    //Set the inputs.
+    for(var i = 0; i < Object.keys(testInputs).length; i++){
+        var inputName = Object.keys(testInputs[i])[0];
+        var inputValue = testInputs[i][inputName][testNumber];
+        manualDoSetVar(inputName, inputValue);
+    }
 
 
     //Run the individual test.
