@@ -1314,27 +1314,11 @@ SpriteMorph.prototype.initBlocks = function () {
             spec: 'output: %var'
         },
 
-
-        doStartTestNumber: {
+        doAnswer: {
             type: 'command',
             category: 'grading',
-            spec: 'Start test number: %n'
+            spec: 'Report answer: %txt'
         },
-
-
-        doStudentAnswer: {
-            type: 'command',
-            category: 'grading',
-            spec: 'Report student answer: %txt'
-        },
-
-        doTeacherAnswer: {
-            type: 'command',
-            category: 'grading',
-            spec: 'Report teacher answer: %txt'
-        },
-
-
 
 
         //Start of Cloud Blocks.
@@ -2602,17 +2586,11 @@ SpriteMorph.prototype.blockTemplates = function (category) {
 
 
     }   else if (cat === 'grading') {
-        blocks.push(block('doProgramInputs'));
-        blocks.push(block('reportInput'));
-        blocks.push(block('doProgramOutputs'));
-        blocks.push(block('reportOutput'));
-        blocks.push('=');
-        blocks.push(block('doStartTestNumber'));
-        blocks.push('=');
-        blocks.push(block('doStudentAnswer'));
-        blocks.push(block('doTeacherAnswer'));
-        blocks.push('=');
-
+        //blocks.push(block('doProgramInputs'));
+        //blocks.push(block('reportInput'));
+        //blocks.push(block('doProgramOutputs'));
+        //blocks.push(block('reportOutput'));
+        blocks.push(block('doAnswer'));
     }
     return blocks;
 };
@@ -5788,16 +5766,11 @@ StageMorph.prototype.blockTemplates = function (category) {
         //blocks.push(block('reportDataFromRow'));
 
     }   else if (cat === 'grading') {
-        blocks.push(block('doProgramInputs'));
-        blocks.push(block('reportInput'));
-        blocks.push(block('doProgramOutputs'));
-        blocks.push(block('reportOutput'));
-        blocks.push('=');
-        blocks.push(block('doStartTestNumber'));
-        blocks.push('=');
-        blocks.push(block('doStudentAnswer'));
-        blocks.push(block('doTeacherAnswer'));
-        blocks.push('=');
+        //blocks.push(block('doProgramInputs'));
+        //blocks.push(block('reportInput'));
+        //blocks.push(block('doProgramOutputs'));
+        //blocks.push(block('reportOutput'));
+        blocks.push(block('doAnswer'));
     }
 
     return blocks;
