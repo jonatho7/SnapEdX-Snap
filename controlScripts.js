@@ -53,23 +53,7 @@ var main = function() {
     });
 
 
-    $(".exportSpriteAsXML").click(function () {
-        //Get the teacher's Grader sprite as an XML string. For now, I will just assume there is only one sprite.
-        var mySprite = global_ide.sprites.contents[0];
-        var graderXMLString = global_ide.exportSpriteAsXMLString(mySprite);
-        console.log(graderXMLString);
-
-        //Get the teacherProgram xml string.
-        var teacherProgramXMLString = global_ide.exportProjectWithoutMessages();
-        console.log(teacherProgramXMLString);
-
-    });
-
-
 };
-
-
-
 
 
 
@@ -169,7 +153,7 @@ function startStudentOrTeacherTests(studentOrTeacher) {
     }
 
     //Start the grading loop. This function will be called every 100ms and will manage the tests.
-    setInterval(gradingLoop, 100, studentOrTeacher);
+    intervalID = setInterval(gradingLoop, 100, studentOrTeacher);
 
     //Return a message. Note that results will have to be collected later.
     if (studentOrTeacher == "student"){
@@ -204,13 +188,15 @@ function gradingLoop(studentOrTeacher) {
         testResults.errorMessage = "Did not include a 'Report answer' block'. Tests failed.";
     } else if (currentTestNumber >= individualTestsStatus.length){
         //All the tests have run and finished. Just gather the variables now.
-        //todo. Might want to make sure this does not keep running over and over.
-
         testResults.testOutputs = testOutputs;
-        testResults.programXML = null; //todo.
-
+        testResults.programXML = global_ide.exportProjectWithoutMessages();
         testResults.errorMessage = null;
         testResults.finished = true;
+
+        console.log("tests are finished");
+
+        //Tell the interval function to stop running.
+        clearInterval(intervalID);
 
     } else {
         //Check to see if there is an individual test that can start running.
@@ -226,6 +212,7 @@ function gradingLoop(studentOrTeacher) {
 
 
 var activeProcess;
+var intervalID;
 /*
 individualTestsStatus is an array which keeps track of which individual tests have finished.
 The array values are either:
