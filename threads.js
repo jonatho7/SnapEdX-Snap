@@ -3875,45 +3875,68 @@ Process.prototype.reportCSVValue = function (CSVAsList, field, CSVIndex) {
 };
 
 
-Process.prototype.doProgramInputs = function (listOfInputs) {
+Process.prototype.doProgramInputs = function (name) {
 
-    //Iterate through the list of inputs, adding each to the testInputs dictionary.
-	for(var i = 1; i <= listOfInputs.length(); i++){
-        var variableName = listOfInputs.at(i)[0];
-        var listOfVariableValues = listOfInputs.at(i)[1];
-        var valuesList = listOfVariableValues.contents;
+    testDataController.addInputName(name);
 
-        //Add to the testInputs JS dictionary.
-        testInputs[variableName] = valuesList;
+};
 
-	}
+Process.prototype.doProgramOutputs = function (name) {
 
-    console.log("testInputs: ", testInputs);
+    testDataController.addOutputName(name);
+
+};
+
+Process.prototype.reportInput = function (varName) {
+
+    return varName;
+};
+
+Process.prototype.reportOutput = function (varName) {
+
+    return varName;
+};
+
+
+Process.prototype.doStartTestNumber = function (testNumber) {
+
+    console.log("testNumber: ", testNumber);
 
 
 };
 
-Process.prototype.reportInput = function (varName, varValue) {
-
-    return [varName, varValue];
-};
 
 
+Process.prototype.doStudentAnswer = function (answer) {
 
-Process.prototype.doStudentAnswer = function (input) {
+    //VERY IMPORTANT. Do not delete. This saves the process so that we can use it later.
+    activeProcess = this;
 
-    studentOutputs.push(input.toString());
+    //Prevent the setup run-through from contributing to the studentOutputs array.
+    if (currentStudentTestNumber != -1){
+        //Store the answer.
+        studentOutputs.push(answer.toString());
+
+        //Indicate that the individual test is finished, and that we can move on to the next one.
+        studentTestsStatus[currentStudentTestNumber] = true;
+    }
+
+    currentStudentTestNumber++;
+
 
     console.log("studentOutputs: ", studentOutputs);
 
+
+
+
 };
 
 
-Process.prototype.doTeacherAnswer = function (input) {
+Process.prototype.doTeacherAnswer = function (answer) {
 
-    teacherOutputs.push(input.toString());
+    //Coming soon.
+    ;
 
-    console.log("teacherOutputs: ", teacherOutputs);
 
 };
 

@@ -50,11 +50,6 @@ var main = function() {
         console.log(check);
         alert(check)
 
-        //Here is code for how to access a parent ID element from inside of the iframe.
-        //window.parent.document.getElementById('target');
-        //from http://stackoverflow.com/questions/7027799/access-elements-of-parent-window-from-iframe
-
-;
     });
 
 
@@ -71,98 +66,18 @@ var main = function() {
     });
 
 
-
-    $(".testButton").click(function () {
-        //Testing.
-        console.log(world);
-        console.log(global_ide);
-        console.log(global_ide.stage.threads.processes);
-        console.log("testInputs:", testInputs);
-
-    });
-
-
-    $(".importSprite").click(function () {
-        importSprite();
-    });
-
-    $(".runTests").click(function () {
-        runTests();
-    });
-
-    $(".hideGraderSprite").click(function () {
-        hideGraderSprite();
-    });
-
-    $(".removeGraderSprite").click(function () {
-        removeGraderSprite();
-    });
-
-    $(".getResults").click(function () {
-        console.log("teacherOutputs: ", getTeacherOutputs());
-        console.log("studentOutputs: ", getStudentOutputs());
-    });
-
-
 };
 
 
-function runTests() {
-    //Grab the Grader sprite
-    var graderSprite = getSprite("Grader");
-
-
-    //Grab the "runTests" script.
-    var runTestsBlock = getWhenIReceiveBlockWithName("runTests", graderSprite);
-    console.log("runTestsBlocks: ", runTestsBlock);
-
-    //Click on this "runTests" script in order to run it.
-    runTestsBlock.mouseClickLeft();
-
-    return "running";
-
-}
-
-function hideGraderSprite() {
-    var graderSprite = getSprite("Grader");
-    var graderSpriteScriptsMorph = graderSprite.scripts;
-    graderSpriteScriptsMorph.hide();
-
-}
-
-function removeGraderSprite() {
-
-    var graderSprite = getSprite("Grader");
-
-    global_ide.removeSprite(graderSprite);
-
-
-}
 
 
 
 
-
-function getStudentOutputs() {
-    return studentOutputs;
-}
-
-function getTeacherOutputs() {
-    return teacherOutputs;
-}
-
-
-function importSprite(){
-    var file = null;
-    //Need some help selecting a file here.
-    //See fileNeeded.png to see what is expected.
-
-    //For now, the user will just have to select the XML file manually.
-    global_ide.selectSpriteToImport();
-
-}
-
-
+/**
+ *
+ * @param spriteName
+ * @returns {The sprite that has the specific name, or null.}
+ */
 function getSprite(spriteName) {
     //Get the selected sprite.
     var selectedSprite = null;
@@ -178,6 +93,14 @@ function getSprite(spriteName) {
     return selectedSprite;
 }
 
+/**
+ *
+ * @returns {the first sprite on the stage}
+ */
+function getFirstSprite() {
+    var selectedSprite = global_ide.sprites.contents[0];
+    return selectedSprite;
+}
 
 
 function getWhenIReceiveBlockWithName(messageName, sprite) {
@@ -207,6 +130,141 @@ function getWhenIReceiveBlockWithName(messageName, sprite) {
 }
 
 
+function clickOnRunStudentProgramBlock() {
+    //Grab the sprite named Sprite, or just grab the first sprite.
+    var sprite = getSprite("Sprite");
+    if (sprite == null){
+        sprite = getFirstSprite();
+    }
+
+    //Grab the "runStudentProgram" block so I can click on it.
+    var runStudentProgramBlock = getWhenIReceiveBlockWithName("runStudentProgram", sprite);
+
+    //Click on it.
+    runStudentProgramBlock.mouseClickLeft();
+}
+
+
+
+
+function startStudentTests() {
+
+    //Initialize studentTestsStatus array.
+    var numberOfTests = 10; //todo. This will not always be 10.
+    initializeStudentTestsStatus(numberOfTests);
+
+    //Do a run-through of the student program, making sure it will run, and grabbing the active process.
+    clickOnRunStudentProgramBlock()
+
+    //Start the grading loop. This function will be called every 100ms and will manage the tests.
+    setInterval(gradingLoop, 100);
+
+    return "student tests are running. Please check back later for results.";
+
+}
+
+/**
+ * Remember to check studentTestResults.finished to see whether it is true, false, or "failed".
+ * @returns {{finished: string, errorMessage: null, studentOutputs: null, studentProgramXML: null}}
+ */
+function retrieveStudentTestResults() {
+    return studentTestResults;
+}
+
+function gradingLoop() {
+
+    //Check to see if we have received an active Snap process to work with yet.
+    //If there is an active process, the first run through has finished.
+    if (!activeProcess){
+        return null;
+    }
+
+    if (currentStudentTestNumber == -1){
+        studentTestResults.finished = "failed";
+        studentTestResults.errorMessage = "Student did not include a 'Report student answer' block'. Tests failed.";
+    } else if (currentStudentTestNumber >= studentTestsStatus.length){
+        //All the tests have run and finished. Just gather the variables now.
+        //todo. Might want to make sure this does not keep running over and over.
+
+        studentTestResults.studentOutputs = studentOutputs;
+        studentTestResults.studentProgramXML = null; //todo.
+
+        studentTestResults.errorMessage = null;
+        studentTestResults.finished = true;
+
+    } else {
+        //Check to see if there is an individual test that can start running.
+        if (studentTestsStatus[currentStudentTestNumber] == false){
+            //Start the next test.
+            studentTestsStatus[currentStudentTestNumber] = "running";
+            runIndividualStudentTest(currentStudentTestNumber);
+        }
+    }
+
+}
+
+
+/*
+studentTestsStatus is an array which keeps track of which individual tests have finished.
+The array values are either:
+    false: This test has not been called yet.
+    "running": This test is currently running.
+    true:   This test is finished.
+ */
+var studentTestsStatus = [];
+var currentStudentTestNumber = -1;
+
+var studentTestResults = {
+    "finished": false,
+    "errorMessage": null,
+    "studentOutputs": null,
+    "studentProgramXML": null
+};
+var activeProcess;
+
+//Inputs. todo. Need to get these dynamically.
+var citiesList = ["Denver, CO", "Seattle, WA", "New York City, NY",
+    "New York City, NY","New York City, NY","New York City, NY","New York City," +
+    "NY","New York City, NY","New York City, NY","New York City, NY"];
+
+
+
+function initializeStudentTestsStatus(numberOfTests) {
+    for(var i = 0; i < numberOfTests; i++){
+        studentTestsStatus.push(false);
+    }
+}
+
+
+
+function runIndividualStudentTest(testNumber) {
+
+    //todo. Make this dynamic later.
+    var cityName = citiesList[testNumber];
+
+    //Set the inputs for the test.
+    //This way of setting variables does not seem to work.
+    //activeProcess.doSetVar("selectedCity", cityName);
+
+    //So I will try another way....
+    manualDoSetVar("selectedCity", cityName);
+
+
+    //Run the individual test.
+    clickOnRunStudentProgramBlock();
+
+}
+
+function manualDoSetVar(varName, varValue) {
+    //Grab the sprite named Sprite, or just grab the first sprite.
+    var sprite = getSprite("Sprite");
+    if (sprite == null){
+        sprite = getFirstSprite();
+    }
+
+    sprite.variables.parentFrame.vars[varName] = varValue;
+
+}
 
 
 

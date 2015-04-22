@@ -1295,13 +1295,30 @@ SpriteMorph.prototype.initBlocks = function () {
         doProgramInputs: {
             type: 'command',
             category: 'grading',
-            spec: 'Set the inputs to grade the student program to: %mult%txt'
+            spec: 'Set the program inputs to: %txt'
+        },
+        doProgramOutputs: {
+            type: 'command',
+            category: 'grading',
+            spec: 'Set the program outputs to: %txt'
         },
 
         reportInput: {
             type: 'reporter',
             category: 'grading',
-            spec: 'input: %var = %txt'
+            spec: 'input: %var'
+        },
+        reportOutput: {
+            type: 'reporter',
+            category: 'grading',
+            spec: 'output: %var'
+        },
+
+
+        doStartTestNumber: {
+            type: 'command',
+            category: 'grading',
+            spec: 'Start test number: %n'
         },
 
 
@@ -2587,6 +2604,10 @@ SpriteMorph.prototype.blockTemplates = function (category) {
     }   else if (cat === 'grading') {
         blocks.push(block('doProgramInputs'));
         blocks.push(block('reportInput'));
+        blocks.push(block('doProgramOutputs'));
+        blocks.push(block('reportOutput'));
+        blocks.push('=');
+        blocks.push(block('doStartTestNumber'));
         blocks.push('=');
         blocks.push(block('doStudentAnswer'));
         blocks.push(block('doTeacherAnswer'));
@@ -5769,6 +5790,10 @@ StageMorph.prototype.blockTemplates = function (category) {
     }   else if (cat === 'grading') {
         blocks.push(block('doProgramInputs'));
         blocks.push(block('reportInput'));
+        blocks.push(block('doProgramOutputs'));
+        blocks.push(block('reportOutput'));
+        blocks.push('=');
+        blocks.push(block('doStartTestNumber'));
         blocks.push('=');
         blocks.push(block('doStudentAnswer'));
         blocks.push(block('doTeacherAnswer'));
