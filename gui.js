@@ -2888,8 +2888,6 @@ IDE_Morph.prototype.exportProjectWithoutMessages = function () {
     var xml_string;
         try {
             xml_string = this.serializer.serialize(this.stage)
-            console.log("xml_str")
-            console.log(xml_string);
         } catch (err) {
             console.log("Could not create the XML description.")
         }
