@@ -184,7 +184,8 @@ function gradingLoop(studentOrTeacher) {
     }
 
     if (currentTestNumber == -1){
-        testResults.finished = "failed";
+        //The finished should be either set to true or false. This makes easy to parse the testResults.
+        testResults.finished = false;
         testResults.errorMessage = "Did not include a 'Report answer' block'. Tests failed.";
     } else if (currentTestNumber >= individualTestsStatus.length){
         //All the tests have run and finished. Just gather the variables now.
@@ -197,6 +198,12 @@ function gradingLoop(studentOrTeacher) {
 
         //Tell the interval function to stop running.
         clearInterval(intervalID);
+
+        // **************** NOTE ************
+        /*
+            Tests are completed so send a 'RESULT' event with results object to xblock
+         */
+        send_message_to_parent('RESULT', retrieveTestResults());
 
     } else {
         //Check to see if there is an individual test that can start running.
