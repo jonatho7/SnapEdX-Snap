@@ -570,7 +570,6 @@ IDE_Morph.prototype.createControlBar = function () {
     button.fixLayout();
     stopButton = button;
     this.controlBar.add(stopButton);
-    this.controlBar.stopButton = stopButton; // for stopping; fixed missing reference to stopButton
 
     //pauseButton
     button = new ToggleButtonMorph(
