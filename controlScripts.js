@@ -202,7 +202,14 @@ function gradingLoop(studentOrTeacher) {
         // **************** NOTE ************
         /*
             Tests are completed so send a 'RESULT' event with results object to xblock
+
+            Dirty hack (Stop the timer set for sending the results)
          */
+        if (timeoutFunctionForSubmit) {
+            clearTimeout(timeoutFunctionForSubmit);
+            timeoutFunctionForSubmit = undefined;
+        }
+
         send_message_to_parent('RESULT', retrieveTestResults());
 
     } else {
