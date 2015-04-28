@@ -87,27 +87,32 @@ function getFirstSprite() {
 }
 
 
+/**
+ * Ex: Get the When I Receive HatBlockMorph that has the message "runTests".
+ * @param messageName
+ * @param sprite
+ * @returns {*}
+ */
 function getWhenIReceiveBlockWithName(messageName, sprite) {
-    //Ex: Get the When I Receive HatBlockMorph that says "runTests".
     var runTestsBlock = null;
+
+    //Iterate over all of the scripts that this sprite may have.
     for (var i = 0; i < sprite.scripts.children.length; i++) {
         var tempBlock = sprite.scripts.children[i];
 
-        var inputSlotMorphBlock;
+        //Iterate over this block to find the inputSlotMorphBlock which contains a message..
         for(var j = 0; j < tempBlock.children.length; j++){
             var tempMorphBlock = tempBlock.children[j];
             if (tempMorphBlock instanceof InputSlotMorph){
-                inputSlotMorphBlock = tempMorphBlock;
-                break;
+                var inputSlotMorphBlock = tempMorphBlock;
+
+                var tempMessage = inputSlotMorphBlock.children[0].text;
+                if (tempMessage == messageName) {
+                    runTestsBlock = tempBlock;
+                    return runTestsBlock;
+                }
             }
         }
-
-        var tempMessage = inputSlotMorphBlock.children[0].text;
-        if (tempMessage == messageName) {
-            runTestsBlock = tempBlock;
-            break;
-        }
-
     }
 
     return runTestsBlock;
@@ -248,8 +253,8 @@ var testResults = {
 var testInputs = [
     {
         "selectedCity": ["Denver, CO", "Seattle, WA", "New York City, NY",
-        "New York City, NY","New York City, NY","New York City, NY","New York City," +
-        "NY","New York City, NY","New York City, NY","New York City, NY"]
+        "New York City, NY","New York City, NY","New York City, NY","New York City, NY",
+        "New York City, NY","New York City, NY","New York City, NY"]
     }
     //{
     //    "input2": null,
