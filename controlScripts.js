@@ -255,10 +255,14 @@ var testInputs = [
 */
 
 function initializeTestInputs() {
+    var url = window.location.hash;
+    url = url.substring(url.indexOf(':') + 1, url.lastIndexOf("/"));
+    url = url.substring(0, url.lastIndexOf("/"));
+    url += '/test_cases';
+
     $.ajax({
         type: 'GET',
-        //todo. Some more hard code here. change this later.
-        url: "http://temomachine3.bioinformatics.vt.edu:8010/snap/getProject/convertFtoC/test_cases",
+        url: url,
         success: function (result) {
             console.log("this is the result of the ajax call: ", result);
             testInputs = result;
