@@ -233,13 +233,7 @@ function gradingLoop(studentOrTeacher) {
 
 var activeProcess;
 var intervalID;
-/*
-individualTestsStatus is an array which keeps track of which individual tests have finished.
-The array values are either:
-    false: This test has not been called yet.
-    "running": This test is currently running.
-    true:   This test is finished.
- */
+
 
 
 //Inputs. todo. Need to get these dynamically.
@@ -256,6 +250,23 @@ var testInputs = [
     //    "input3": null,
     //},
 ];
+
+
+
+function initializeTestInputs() {
+    $.ajax({
+        type: 'POST',
+        url: "http://date.jsontest.com/",
+        data: JSON.stringify({
+                'watched': true
+        }),
+        success: function (result) {
+            console.log("this is the result of the ajax call: ", result);
+        }
+    });
+}
+
+var test = initializeTestInputs();
 
 
 function initializeIndividualTestsStatus() {
@@ -290,6 +301,13 @@ function initializeTestOutputs() {
     return [];
 }
 
+/*
+individualTestsStatus is an array which keeps track of which individual tests have finished.
+The array values are either:
+    false: This test has not been called yet.
+    "running": This test is currently running.
+    true:   This test is finished.
+ */
 var individualTestsStatus = initializeIndividualTestsStatus();
 var currentTestNumber = initializeCurrentTestNumber();
 var testResults = initializeTestResults();
