@@ -216,7 +216,7 @@ function gradingLoop(studentOrTeacher) {
             timeoutFunctionForSubmit = undefined;
         }
 
-        send_message_to_parent('RESULT', retrieveTestResults());
+        send_message_to_parent(MESSAGES_TYPE.RESULT, retrieveTestResults());
 
     } else {
         //Check to see if there is an individual test that can start running.

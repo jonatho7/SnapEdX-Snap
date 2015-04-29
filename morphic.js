@@ -2584,23 +2584,23 @@ Morph.prototype.drawTexture = function (url) {
     this.cachedTexture.src = this.texture = url; // make absolute
 };
 
-Morph.prototype.drawCachedTexture = function () {
-    var bg = this.cachedTexture,
-        cols = Math.floor(this.image.width / bg.width),
-        lines = Math.floor(this.image.height / bg.height),
-        x,
-        y,
-        context = this.image.getContext('2d');
+// Morph.prototype.drawCachedTexture = function () {
+//     var bg = this.cachedTexture,
+//         cols = Math.floor(this.image.width / bg.width),
+//         lines = Math.floor(this.image.height / bg.height),
+//         x,
+//         y,
+//         context = this.image.getContext('2d');
 
-    for (y = 0; y <= lines; y += 1) {
-        for (x = 0; x <= cols; x += 1) {
-            context.drawImage(bg, x * bg.width, y * bg.height);
-        }
-    }
-    this.changed();
-};
+//     for (y = 0; y <= lines; y += 1) {
+//         for (x = 0; x <= cols; x += 1) {
+//             context.drawImage(bg, x * bg.width, y * bg.height);
+//         }
+//     }
+//     this.changed();
+// };
 
-/*
+
 Morph.prototype.drawCachedTexture = function () {
     var context = this.image.getContext('2d'),
         pattern = context.createPattern(this.cachedTexture, 'repeat');
@@ -2608,7 +2608,7 @@ Morph.prototype.drawCachedTexture = function () {
     context.fillRect(0, 0, this.image.width, this.image.height);
     this.changed();
 };
-*/
+
 
 Morph.prototype.drawOn = function (aCanvas, aRect) {
     var rectangle, area, delta, src, context, w, h, sl, st;
