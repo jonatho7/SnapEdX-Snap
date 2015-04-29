@@ -145,10 +145,11 @@ function startTeacherTests() {
 }
 
 function startStudentOrTeacherTests(studentOrTeacher) {
-    //Initialize individualTestsStatus array.
-    var firstInputName = Object.keys(testInputs[0])[0];
-    var numberOfTests = testInputs[0][firstInputName].length;
-    initializeTestsStatusArray(individualTestsStatus, numberOfTests);
+    //Initialize variables.
+    individualTestsStatus = initializeIndividualTestsStatus();
+    currentTestNumber = initializeCurrentTestNumber();
+    testResults = initializeTestResults();
+    testOutputs = initializeTestOutputs();
 
     //Do a run-through of the program, making sure it will run, and grabbing the active process.
     if (studentOrTeacher == "student"){
@@ -239,14 +240,6 @@ The array values are either:
     "running": This test is currently running.
     true:   This test is finished.
  */
-var individualTestsStatus = [];
-var currentTestNumber = -1;
-var testResults = {
-    "finished": false,
-    "errorMessage": null,
-    "testOutputs": null,
-    "programXML": null
-};
 
 
 //Inputs. todo. Need to get these dynamically.
@@ -265,12 +258,48 @@ var testInputs = [
 ];
 
 
+function initializeIndividualTestsStatus() {
+    var tempArray = [];
 
-function initializeTestsStatusArray(testArray, numberOfTests) {
+    //Determine how many tests there will be (equal to the number of test inputs).
+    var firstInputName = Object.keys(testInputs[0])[0];
+    var numberOfTests = testInputs[0][firstInputName].length;
+
     for(var i = 0; i < numberOfTests; i++){
-        testArray.push(false);
+        tempArray.push(false);
     }
+
+    return tempArray;
 }
+
+function initializeCurrentTestNumber() {
+    return -1;
+}
+
+function initializeTestResults() {
+    var temp = {
+        "finished": false,
+        "errorMessage": null,
+        "testOutputs": null,
+        "programXML": null
+    };
+    return temp;
+}
+
+function initializeTestOutputs() {
+    return [];
+}
+
+var individualTestsStatus = initializeIndividualTestsStatus();
+var currentTestNumber = initializeCurrentTestNumber();
+var testResults = initializeTestResults();
+var testOutputs = initializeTestOutputs();
+
+
+
+
+
+
 
 
 

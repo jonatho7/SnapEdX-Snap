@@ -5306,6 +5306,3 @@ function retrieveOrMakeGuid() {
 }
 
 //For use with the grading blocks.
-var testInputs = {};
-var testOutputs = [];
-var teacherOutputs = [];
