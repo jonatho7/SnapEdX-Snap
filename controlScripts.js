@@ -238,22 +238,6 @@ var activeProcess;
 var intervalID;
 
 
-/*
-var testInputs = [
-    {
-        "selectedCity": ["Denver, CO", "Seattle, WA", "New York City, NY",
-        "New York City, NY","New York City, NY","New York City, NY","New York City, NY",
-        "New York City, NY","New York City, NY","New York City, NY"]
-    }
-    //{
-    //    "input2": null,
-    //},
-    //{
-    //    "input3": null,
-    //},
-];
-*/
-
 function initializeTestInputs() {
     var url = window.location.hash;
     url = url.substring(url.indexOf(':') + 1, url.lastIndexOf("/"));
