@@ -3904,18 +3904,21 @@ Process.prototype.doAnswer = function (answer) {
     //VERY IMPORTANT. Do not delete. This saves the process so that we can use it later.
     activeProcess = this;
 
-    //Prevent the setup run-through from contributing to the testOutputs array.
-    if (currentTestNumber != -1){
-        //Store the answer.
-        testOutputs.push(answer.toString());
+    //Prevent the user's mouse clicks before running the tests from interfering.
+    if (currentlyRunningTests) {
+        //Prevent the setup run-through from contributing to the testOutputs array.
+        if (currentTestNumber != -1){
+            //Store the answer.
+            testOutputs.push(answer.toString());
 
-        //Indicate that the individual test is finished, and that we can move on to the next one.
-        individualTestsStatus[currentTestNumber] = true;
+            //Indicate that the individual test is finished, and that we can move on to the next one.
+            individualTestsStatus[currentTestNumber] = true;
+        }
+
+        currentTestNumber++;
+
+        console.log("testOutputs: ", testOutputs);
     }
-
-    currentTestNumber++;
-
-    console.log("testOutputs: ", testOutputs);
 
 };
 

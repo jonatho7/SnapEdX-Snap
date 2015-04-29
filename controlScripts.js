@@ -150,6 +150,7 @@ function startStudentOrTeacherTests(studentOrTeacher) {
     currentTestNumber = initializeCurrentTestNumber();
     testResults = initializeTestResults();
     testOutputs = initializeTestOutputs();
+    currentlyRunningTests = true;
 
     //Do a run-through of the program, making sure it will run, and grabbing the active process.
     if (studentOrTeacher == "student"){
@@ -199,8 +200,10 @@ function gradingLoop(studentOrTeacher) {
         testResults.programXML = global_ide.exportProjectWithoutMessages();
         testResults.errorMessage = null;
         testResults.finished = true;
+        currentlyRunningTests = false;
 
         console.log("tests are finished");
+
 
         //Tell the interval function to stop running.
         clearInterval(intervalID);
@@ -235,8 +238,7 @@ var activeProcess;
 var intervalID;
 
 
-
-//Inputs. todo. Need to get these dynamically.
+/*
 var testInputs = [
     {
         "selectedCity": ["Denver, CO", "Seattle, WA", "New York City, NY",
@@ -250,29 +252,28 @@ var testInputs = [
     //    "input3": null,
     //},
 ];
-
-
+*/
 
 function initializeTestInputs() {
     $.ajax({
-        type: 'POST',
-        url: "http://date.jsontest.com/",
-        data: JSON.stringify({
-                'watched': true
-        }),
+        type: 'GET',
+        //todo. Some more hard code here. change this later.
+        url: "http://temomachine3.bioinformatics.vt.edu:8010/snap/getProject/convertFtoC/test_cases",
         success: function (result) {
             console.log("this is the result of the ajax call: ", result);
+            testInputs = result;
         }
     });
 }
-
-var test = initializeTestInputs();
 
 
 function initializeIndividualTestsStatus() {
     var tempArray = [];
 
     //Determine how many tests there will be (equal to the number of test inputs).
+
+    console.log("testInputs: ", testInputs);
+
     var firstInputName = Object.keys(testInputs[0])[0];
     var numberOfTests = testInputs[0][firstInputName].length;
 
@@ -308,10 +309,13 @@ The array values are either:
     "running": This test is currently running.
     true:   This test is finished.
  */
-var individualTestsStatus = initializeIndividualTestsStatus();
+var testInputs;
+initializeTestInputs();
+var individualTestsStatus;
 var currentTestNumber = initializeCurrentTestNumber();
 var testResults = initializeTestResults();
 var testOutputs = initializeTestOutputs();
+var currentlyRunningTests = false;
 
 
 
