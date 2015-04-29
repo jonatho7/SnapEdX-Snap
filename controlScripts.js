@@ -264,7 +264,6 @@ function initializeTestInputs() {
         type: 'GET',
         url: url,
         success: function (result) {
-            console.log("this is the result of the ajax call: ", result);
             testInputs = result;
         }
     });
