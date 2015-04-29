@@ -4868,17 +4868,33 @@ StageMorph.prototype.drawOn = function (aCanvas, aRect) {
         hs = h / this.scale;
         context.save();
         context.scale(this.scale, this.scale);
-        context.drawImage(
-            this.penTrails(),
-            src.left() / this.scale,
-            src.top() / this.scale,
-            ws,
-            hs,
-            area.left() / this.scale,
-            area.top() / this.scale,
-            ws,
-            hs
-        );
+        try {
+            context.drawImage(
+                this.penTrails(),
+                src.left() / this.scale,
+                src.top() / this.scale,
+                ws,
+                hs,
+                area.left() / this.scale,
+                area.top() / this.scale,
+                ws,
+                hs
+            );
+        } catch (err) { // sometimes triggered only by Firefox
+            // console.log(err);
+            context.restore();
+            context.drawImage(
+                this.penTrails(),
+                0,
+                0,
+                this.dimensions.x,
+                this.dimensions.y,
+                this.left(),
+                this.top(),
+                this.dimensions.x * this.scale,
+                this.dimensions.y * this.scale
+            );
+        }
         context.restore();
     }
 };
