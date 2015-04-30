@@ -240,15 +240,26 @@ var intervalID;
 
 function initializeTestInputs() {
     var url = window.location.hash;
-    url = url.substring(url.indexOf(':') + 1, url.lastIndexOf("/"));
-    url = url.substring(0, url.lastIndexOf("/"));
+    console.log("testInputs ajax call, url_before: ", url);
+
+    var lastCharacter = url.charAt( url.length - 1 );
+    if (lastCharacter == "/"){
+        url = url.substring(url.indexOf(':') + 1, url.lastIndexOf("/"));
+        url = url.substring(0, url.lastIndexOf("/"));
+    } else {
+        url = url.substring(url.indexOf(':') + 1, url.lastIndexOf("/"));
+    }
+
     url += '/test_cases';
+    console.log("testInputs ajax call, url_after: ", url);
 
     $.ajax({
         type: 'GET',
         url: url,
         success: function (result) {
+
             testInputs = result;
+            console.log("testInputs ajax call, testInputs: ", testInputs);
         }
     });
 }
